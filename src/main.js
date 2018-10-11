@@ -9,6 +9,7 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import './assets/css/common.css'
 import './assets/css/font/iconfont.css'
+import $ from 'jquery'
 
 Vue.config.productionTip = false
 Vue.use(iView)

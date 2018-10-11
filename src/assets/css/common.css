@@ -79,26 +79,44 @@ li{
 }
 
 
-.zxGate .nav_left{
-  float:left;
+.nav_left{
+  position:fixed;
   width: 90px;
-  height:100%;
-  line-height: 500px;
   text-align: center;
-  background-color: crimson;
+  background-color: #A93439;
+  overflow-y: auto;
+  padding:20px 0;
 }
+.nav_left ul li{
+  width:100%;
+  height: 90px;
+  overflow: hidden;
+  text-align: center;
+  padding:10px 0;
+}
+.nav_left ul li:hover{
+  background: #d82b33;
+}
+.nav_left ul li span{
+  display: block;
+  width: 100%;
+  height: 43px;
+}
+.nav_left ul li p{
+  color: #fff;
+  line-height: 20px;
+  margin-top: 8px;
+  font-size:12px;
+}
+
 .zxGate .content{
   width: 100%;
+  padding-top:80px;
 
 }
 .zxGate .main{
-  height: 500px;
-  line-height: 500px;
-  text-align: center;
-  background-color: bisque;
-  margin-top: 80px;
-  border:1px solid #000;
-  margin-left: 100px;
+  margin-left: 90px;
+  background: #f6f8fa;
 }
 
 .serchBar{
@@ -127,6 +145,10 @@ li{
   background:transparent;
 
 }
+.mian-wr{
+  width: 100%;
+  padding:0 30px;
+}
 /*滚动条样式 */
 ::-webkit-scrollbar{
 	width:4px;
@@ -146,3 +168,4 @@ li{
 ::-webkit-scrollbar-corner{
 	background: #f6f6f6;
 }
+
