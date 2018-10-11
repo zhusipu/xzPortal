@@ -25,6 +25,18 @@
                   <span><img src="../../assets/images/22.png" alt=""/></span>
                   <span><img src="../../assets/images/11.png" alt=""/></span>
                 </div>
+                <!--轮播图{-->
+                <div class="slide-wr">
+                  <Carousel autoplay>
+                    <Carousel-item v-for="(item,index) in slideData">
+                      <div><img :src="item.pic" alt=""/></div>
+                      <div class="slide-tit">
+                        <p><span>●</span> {{item.title}}</p>
+                      </div>
+                    </Carousel-item>
+                  </Carousel>
+                </div>
+                <!--}-->
               </div>
             </Col>
             <Col span="8">col-8</Col>
@@ -53,6 +65,11 @@
           {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
           {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
           {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}
+        ],
+        slideData:[
+          {pic:require('../../assets/images/temp/slide1.png'),title:'切实关注基层人民生活状况切实关注基层人民生活状况切实关注基层人民生活状况'},
+          {pic:require('../../assets/images/temp/slide2.jpg'),title:'热烈庆祝'},
+          {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'},
         ]
       }
   },
@@ -88,6 +105,7 @@
   padding:20px;
   box-shadow: 0 2px 10px 0 rgba(146,156,181,0.10);
   border-radius: 6px;
+  height: 340px;
 }
 .h-model-tit{
   width: 100%;
@@ -120,5 +138,40 @@
   color: #c5c5c5;
   line-height: 22px;
   margin-right: 3px;
+  cursor: pointer;
+}
+.slide-wr{
+  position: relative;
+  width: 100%;
+  padding-top: 20px;
+  height: 270px;
+  overflow: hidden;
+}
+.slide-wr img{
+  width: 100%;
+  height: 250px;
+}
+.slide-tit{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  opacity: 0.8;
+  background: #333333;
+  padding:0 40px;
+}
+.slide-tit p{
+  color: #fff;
+  line-height: 80px;
+  width: 100%;
+  white-space: nowrap;/*让文字不换行*/
+  overflow:hidden;
+  text-overflow:ellipsis;
+  -o-text-overflow:ellipsis;
+  -icab-text-overflow: ellipsis;
+  -khtml-text-overflow: ellipsis;
+  -moz-text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
 }
 </style>
