@@ -1,0 +1,148 @@
+/*公共样式*/
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+input {
+  background: none;
+  outline: none;
+  border: 0px;
+}
+a{
+  color: #444;
+}
+html,body{height:100%;background:#E2E2E2;font-size: 14px !important;
+  color: #444;}
+li{
+	list-style: none;
+}
+.ivu-table th{
+    text-align: center;
+}
+
+
+.header{
+  position:fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  line-height: 60px;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 6px 0 rgba(0,0,0,0.05);
+}
+.header-right{
+  float: right;
+  width: 600px;
+  padding:10px 0;
+  height: 60px;
+  margin-right: 40px;
+}
+.header-right-logo{
+  width:40px;
+  height:40px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  background: #D0021B;
+  text-align: center;
+  vertical-align: middle;
+}
+.header-right-logo img{
+  display: inline-block;
+  margin-top: 10px;
+  width: 22px;
+  height: auto;
+}
+.header-right span, .header-right a{
+  display: inline-block;
+  margin-left: 20px;
+  line-height: 40px;
+  float: right;
+}
+.header-right a i:hover{
+  transform: scale(1.4);
+}
+
+.header-right i{
+  display: inline-block;
+}
+.header-logo{
+  width: 178px;
+  height: 31px;
+  background: url('../images/logo.png');
+  margin-left: 40px;
+  margin-top: 15px;
+  float: left;
+}
+
+
+.zxGate .nav_left{
+  float:left;
+  width: 90px;
+  height:100%;
+  line-height: 500px;
+  text-align: center;
+  background-color: crimson;
+}
+.zxGate .content{
+  width: 100%;
+
+}
+.zxGate .main{
+  height: 500px;
+  line-height: 500px;
+  text-align: center;
+  background-color: bisque;
+  margin-top: 80px;
+  border:1px solid #000;
+  margin-left: 100px;
+}
+
+.serchBar{
+  width:240px;
+  height: 40px;
+  padding:5px 20px;
+  background: #EFF1F4;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  float: right;
+}
+.serchBar input, .serchBar .serchBtn{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 30px;
+  float: left;
+}
+.serchBar .serchBtn{
+  margin: 0;
+  color: #E1E1E1;
+}
+.serchBar input{
+  width:170px;
+  border:none;
+  background:transparent;
+
+}
+/*滚动条样式 */
+::-webkit-scrollbar{
+	width:4px;
+	height:4px;
+}
+::-webkit-scrollbar-track{
+	background: #f6f6f6;
+	border-radius:2px;
+}
+::-webkit-scrollbar-thumb{
+	background: #aaa;
+	border-radius:2px;
+}
+::-webkit-scrollbar-thumb:hover{
+	background: #747474;
+}
+::-webkit-scrollbar-corner{
+	background: #f6f6f6;
+}
