@@ -59,6 +59,11 @@
               <div class="presonalInfo-pic">
                 <img src="../../assets/images/temp/timg.jpg" alt="" />
               </div>
+             <div class="presonalInfo-tit">
+               <h3>张朝阳</h3>
+               <p>运营分公司/企划部</p>
+               <p>IT管理员</p>
+             </div>
            </div>
         </TabPane>
         <TabPane label="个人假期信息"  class="selfService">个人假期信息</TabPane>
@@ -197,6 +202,7 @@ export default {
 }
 .presonalInfo-hd{
   width:100%;
+  height: 140px;
 }
 .presonalInfo-pic{
   width: 120px;
@@ -207,5 +213,15 @@ export default {
 .presonalInfo-pic img{
   width: 100%;
   height: auto;
+}
+.presonalInfo-tit{
+  padding-left: 160px;
+}
+.presonalInfo-tit h3{
+  margin-bottom: 25px;
+}
+.presonalInfo-tit p{
+  margin-bottom: 10px;
+  color: #9b9b9b;
 }
 </style>
