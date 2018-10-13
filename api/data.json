@@ -1,0 +1,351 @@
+{
+  "newsList":[
+    {
+      "originatorTime":"2018-10-01",
+      "newsTitle":"驻美记者：美国对华政策，连常识都守不住了？",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/cmsn/20181011/20181011013931.html"
+    },
+    {
+      "originatorTime":"2018-10-02",
+      "newsTitle":"美方指责中方试图影响美商界领袖 商务部回应",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/omn/20181011/20181011A1828X.html"
+    },
+    {
+      "originatorTime":"2018-10-03",
+      "newsTitle":"少年班40年：由培养顶尖科学家到培养领军人物",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/omn/20181011/20181011A0BLBY.html"
+    },
+    {
+      "originatorTime":"2018-10-04",
+      "newsTitle":"道指期货跌逾200点，蔚来、趣头条盘前均大跌约8%",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/zt/template/?id=STO2018101001333900"
+    },
+    {
+      "originatorTime":"2018-10-05",
+      "newsTitle":"住建部否认棚改货币化“推高房价”：要因地制宜 不是取消",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/cmsn/20181011/20181011013808.html"
+    },
+    {
+      "originatorTime":"2018-10-06",
+      "newsTitle":"企业申报上市辅导就奖百万 地方政府补贴IPO热情重燃",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/omn/20181011/20181011A1UBXZ.html"
+    },
+    {
+      "originatorTime":"2018-10-07",
+      "newsTitle":"乐视控股被列入经营异常名录 对外投资有36家公司",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/cmsn/20181011/20181011013846.html"
+    },
+    {
+      "originatorTime":"2018-10-08",
+      "newsTitle":"一线｜官宣了！迪丽热巴接棒唐嫣成为新任金鹰女神",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/cmsn/20181011/20181011009001.html"
+    },
+    {
+      "originatorTime":"2018-10-09",
+      "newsTitle":"鹿晗与关晓彤恋爱的这一整年，实力诠释什么叫“痛并快乐着”",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/zt/template/?id=ENT2018080802375000"
+    },
+    {
+      "originatorTime":"2018-10-10",
+      "newsTitle":"《邪不压正》凭什么可以去竞逐奥斯卡？",
+      "originator":"张三",
+      "department":"办公室",
+      "company":"运营公司",
+      "href":"https://new.qq.com/omn/20181010/20181010A0F5Y5.html"
+    }
+  ],
+  "msgData": {
+    "msgType":[
+      {
+        "value": "公司发文",
+        "label": "公司发文"
+      },
+      {
+        "value": "系统提醒",
+        "label": "系统提醒"
+      },
+      {
+        "value": "通知公告",
+        "label": "通知公告"
+      },
+      {
+        "value": "事物提醒",
+        "label": "事物提醒"
+      }
+    ],
+    "dataSources":[
+      {
+        "value": "合同管理",
+        "label": "合同管理"
+      },
+      {
+        "value": "项目管理",
+        "label": "项目管理"
+      },
+      {
+        "value": "客户反映",
+        "label": "客户反映"
+      },
+      {
+        "value": "投诉管理",
+        "label": "投诉管理"
+      }
+    ],
+    "msgList":[
+      {
+        "originatorTime": "2018-10-01",
+        "msgTitle": "股份、现金对价6:4 钱江生化重大资产重组预案有玄机",
+        "dataSources":"合同管理",
+        "msgType":"公司发文",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1V3YS.html"
+      },
+      {
+        "originatorTime": "2018-10-02",
+        "msgTitle": "易游天下经营不善拖累探路者 后者注资急救风险难料",
+        "dataSources":"项目管理",
+        "msgType":"公司发文",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1TADF.html"
+      },
+      {
+        "originatorTime": "2018-10-03",
+        "msgTitle": "中本聪的创世地址到底隐藏着什么样的秘密？",
+        "dataSources":"项目管理",
+        "msgType":"系统提醒",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1378S.html"
+      },
+      {
+        "originatorTime": "2018-10-04",
+        "msgTitle": "汇源通信：控股股东所持5%公司股权被司法冻结",
+        "dataSources":"客户反映",
+        "msgType":"系统提醒",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1L9VX.html"
+      },
+      {
+        "originatorTime": "2018-10-05",
+        "msgTitle": "云南白药谋求整体上市 陈发树豪赌254亿谁来买单？",
+        "dataSources":"客户反映",
+        "msgType":"通知公告",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A0WOD8.html"
+      },
+      {
+        "originatorTime": "2018-10-06",
+        "msgTitle": "学习时报： 经济增长由过去依靠投资转向消费为主",
+        "dataSources":"投诉管理",
+        "msgType":"通知公告",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/cmsn/20181011/20181011013501.html"
+      },
+      {
+        "originatorTime": "2018-10-07",
+        "msgTitle": "报告显示：中国企业依然拥有大量境外并购机会",
+        "dataSources":"投诉管理",
+        "msgType":"事物提醒",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1SQRR.html"
+      },
+      {
+        "originatorTime": "2018-10-08",
+        "msgTitle": "农发行前三季度累计放贷11305亿元 拨备前利润482亿",
+        "dataSources":"合同管理",
+        "msgType":"事物提醒",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1FVJ2.html"
+      },
+      {
+        "originatorTime": "2018-10-09",
+        "msgTitle": "联合国报告：过去20年自然灾害共造成约2.9万亿美元经济损失",
+        "dataSources":"客户反映",
+        "msgType":"通知公告",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1FNCA.html"
+      },
+      {
+        "originatorTime": "2018-10-10",
+        "msgTitle": "外贸企业出海投资有了最新风险指南 中国信保这份报告值得一读",
+        "dataSources":"项目管理",
+        "msgType":"公司发文",
+        "originator": "张三",
+        "department": "办公室",
+        "company": "运营公司",
+        "href": "https://new.qq.com/omn/20181011/20181011A1FXM0.html"
+      }
+    ]
+  },
+  "salaryList":[
+    {
+      "staffNum":"301",
+      "staffName":"张三",
+      "department":"办公室",
+      "position":"信息管理岗",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"5000.00",
+      "providentFund":"800.00",
+      "taxableIncome":"700.00",
+      "incomeTax":"21.00",
+      "actualSalary":"4179.00"
+    },
+    {
+      "staffNum":"302",
+      "staffName":"李四",
+      "department":"秘书室",
+      "position":"秘书长",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"8000.00",
+      "providentFund":"1000.00",
+      "taxableIncome":"800.00",
+      "incomeTax":"45.00",
+      "actualSalary":"7255.00"
+    },
+    {
+      "staffNum":"303",
+      "staffName":"王五",
+      "department":"财务室",
+      "position":"财务总监",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"10000.00",
+      "providentFund":"1200.00",
+      "taxableIncome":"1000.00",
+      "incomeTax":"100.00",
+      "actualSalary":"8100.00"
+    },
+    {
+      "staffNum":"304",
+      "staffName":"小明",
+      "department":"开发部",
+      "position":"前端工程师",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"5000.00",
+      "providentFund":"800.00",
+      "taxableIncome":"800.00",
+      "incomeTax":"21.00",
+      "actualSalary":"4179.00"
+    },
+    {
+      "staffNum":"305",
+      "staffName":"小红",
+      "department":"开发部",
+      "position":"UI设计师",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"8000.00",
+      "providentFund":"1000.00",
+      "taxableIncome":"800.00",
+      "incomeTax":"45.00",
+      "actualSalary":"7255.00"
+    },
+    {
+      "staffNum":"306",
+      "staffName":"小鲁",
+      "department":"办公室",
+      "position":"行政总监",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"10000.00",
+      "providentFund":"1200.00",
+      "taxableIncome":"1000.00",
+      "incomeTax":"100.00",
+      "actualSalary":"8100.00"
+    },
+    {
+      "staffNum":"307",
+      "staffName":"小赵",
+      "department":"财务室",
+      "position":"会计",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"5000.00",
+      "providentFund":"800.00",
+      "taxableIncome":"700.00",
+      "incomeTax":"21.00",
+      "actualSalary":"4179.00"
+    },
+    {
+      "staffNum":"308",
+      "staffName":"小吴",
+      "department":"技术科",
+      "position":"网络维护工程师",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"8000.00",
+      "providentFund":"1000.00",
+      "taxableIncome":"800.00",
+      "incomeTax":"45.00",
+      "actualSalary":"7255.00"
+    },
+    {
+      "staffNum":"309",
+      "staffName":"小舒",
+      "department":"办公室",
+      "position":"总经理",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"10000.00",
+      "providentFund":"1200.00",
+      "taxableIncome":"1000.00",
+      "incomeTax":"100.00",
+      "actualSalary":"8100.00"
+    },
+    {
+      "staffNum":"310",
+      "staffName":"静静",
+      "department":"开发部",
+      "position":"Java工程师",
+      "salaryTime":"2018-09-01 至 2018-10-01",
+      "salary":"7000.00",
+      "providentFund":"850.00",
+      "taxableIncome":"750.00",
+      "incomeTax":"80.00",
+      "actualSalary":"6000.00"
+    }
+  ],
+  "personInfo":
+    {
+      "photo":"../../src/asset/images/temp/timg.jpg",
+      "name":"张朝阳"
+    }
+}
