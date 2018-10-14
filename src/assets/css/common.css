@@ -316,3 +316,10 @@ li{
 .ivu-select-single .ivu-select-selection{
   height: 40px;
 }
+.presonalInfo-bd .ivu-tabs-bar{
+  float: left;
+  width: 150px;
+}
+.presonalInfo-bd .ivu-tabs-content{
+  float: right;
+}
