@@ -1,12 +1,12 @@
 <template>
   <div class="pageBox">
-    <div class="breadnav">
+    <div class="breadCrub">
       <Breadcrumb>
         <BreadcrumbItem to="/">首页</BreadcrumbItem>
         <BreadcrumbItem>领导驾驶舱</BreadcrumbItem>
       </Breadcrumb>
     </div>
-    <div class="statisticsList pd20">
+    <div class="statisticsList pageareMain">
       统计图列表
     </div>
   </div>

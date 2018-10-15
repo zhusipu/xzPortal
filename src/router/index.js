@@ -2,15 +2,13 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/components/layout/layout'
 import Index from '@/components/index/index'
-<<<<<<< HEAD
 import Cockpit from '@/components/cockpit/cockpit'
 import NewsCenter from '@/components/newsCenter/newsCenter'
 import MsgCenter from '@/components/msgCenter/msgCenter'
 import WaitDoCenter from '@/components/waitDoCenter/waitDoCenter'
 import SelfService from '@/components/selfService/selfService'
+import SalaryDetail from '@/components/selfService/salaryDetail'
 import Theme from '@/components/theme/theme'
-=======
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
 import Login from '@/components/login/login'
 
 Vue.use(Router)
@@ -33,7 +31,6 @@ export default new Router({
               path:'index',
               component:Index
           },
-<<<<<<< HEAD
           {
             path:'cockpit',
             component:Cockpit
@@ -51,16 +48,17 @@ export default new Router({
             component:WaitDoCenter
           },
           {
-            path:'selfService',
+            path:'selfService/:name',
             component:SelfService
+          },
+          {
+            path:'salaryDetail',
+            component:SalaryDetail
           },
           {
             path:'theme',
             component:Theme
           }
-=======
-
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
         ]
       },
       {

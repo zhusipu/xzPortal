@@ -18,11 +18,7 @@
               <div class="h-model">
                 <span class="h-model-c"></span>
                 <div class="h-model-tit">
-<<<<<<< HEAD
                   图片轮播新闻 / NEWS
-=======
-                  新闻轮播图
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
                 </div>
                 <div class="h-model-tool">
                   <span><img src="../../assets/images/33.png" alt=""/></span>
@@ -32,11 +28,7 @@
                 <!--轮播图{-->
                 <div class="slide-wr">
                   <Carousel autoplay>
-<<<<<<< HEAD
-                    <Carousel-item v-for="(item,index) in slideData"  >
-=======
-                    <Carousel-item v-for="(item,index) in slideData">
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
+                    <Carousel-item v-for="(item,index) in slideData" :key="index" >
                       <div><img :src="item.pic" alt=""/></div>
                       <div class="slide-tit">
                         <p><span>●</span> {{item.title}}</p>
@@ -47,7 +39,6 @@
                 <!--}-->
               </div>
             </Col>
-<<<<<<< HEAD
             <Col span="8">
               <div class="h-model">
                 <span class="h-model-c"></span>
@@ -84,16 +75,16 @@
               </div>
               <div class="selfHelp">
                 <div class="selfHelpItem">
-                  <router-link to="/layout/selfService"><img src="../../assets/images/zizhu2.png" alt=""/><br/><span>薪资管理</span></router-link>
+                  <router-link to="/layout/selfService/0"><img src="../../assets/images/zizhu2.png" alt=""/><br/><span>薪资管理</span></router-link>
                 </div>
                 <div class="selfHelpItem">
-                  <a href="#"><img src="../../assets/images/zizhu3.png" alt=""/><br/><span>企业通讯录</span></a>
+                  <router-link to="/layout/selfService/1"><img src="../../assets/images/zizhu3.png" alt=""/><br/><span>企业通讯录</span></router-link>
                 </div>
                 <div class="selfHelpItem">
-                  <a href="#"><img src="../../assets/images/zhuzhu1.png" alt=""/><br/><span>个人考勤休假</span></a>
+                  <router-link to="/layout/selfService/2"><img src="../../assets/images/zhuzhu1.png" alt=""/><br/><span>个人考勤休假</span></router-link>
                 </div>
                 <div class="selfHelpItem">
-                  <a href="#"><img src="../../assets/images/zizhu4.png" alt=""/><br/><span>个人信息维护</span></a>
+                  <router-link to="/layout/selfService/3"><img src="../../assets/images/zizhu4.png" alt=""/><br/><span>个人信息维护</span></router-link>
                 </div>
               </div>
             </div>
@@ -134,7 +125,7 @@
                   </div>
                   <div class="h-model-tool">
                     <router-link to="/layout/waitDoCenter">
-                    <span><img src="../../assets/images/33.png" alt=""/></span>
+                      <span><img src="../../assets/images/33.png" alt=""/></span>
                     </router-link>
                     <span><img src="../../assets/images/22.png" alt=""/></span>
                     <span><img src="../../assets/images/11.png" alt=""/></span>
@@ -168,13 +159,6 @@
             </div>
           </div>
         </div>
-=======
-            <Col span="8">col-8</Col>
-            <Col span="8">col-8</Col>
-          </Row>
-        </div>
-
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
         <!--<router-link to="/test">123</router-link>-->
       </div>
     </div>
@@ -187,10 +171,7 @@
     data(){
       return {
         clientHeight:'',
-<<<<<<< HEAD
         clientWidth:'',
-=======
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
         nav_left:[
           {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
           {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
@@ -204,7 +185,6 @@
         slideData:[
           {pic:require('../../assets/images/temp/slide1.png'),title:'切实关注基层人民生活状况切实关注基层人民生活状况切实关注基层人民生活状况'},
           {pic:require('../../assets/images/temp/slide2.jpg'),title:'热烈庆祝'},
-<<<<<<< HEAD
           {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'}
         ],
         /**消息中心数据**/
@@ -290,39 +270,11 @@
       }
     }
   }
-=======
-          {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'},
-        ]
-      }
-  },
-  mounted(){
-    this.initHeight();
-  },
-  watch: {
-    clientHeight: function () {
-      this.changeFixed(this.clientHeight)
-    }
-  },
-  methods:{
-    changeFixed(clientHeight){
-      this.$refs.homePage.style.height = clientHeight+'px';
-
-    },
-    initHeight(){
-      this.clientHeight = $(document).height()-80;
-      window.onresize = () => {
-        this.clientHeight = $(document).height()-80;
-      };
-    }
-  }
-  }
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
 </script>
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-<<<<<<< HEAD
 
 .h-model{
   position: relative;
@@ -332,15 +284,6 @@
   border-radius: 6px;
   height: 340px;
   margin-bottom: 16px;
-=======
-.h-model{
-  position: relative;
-  background: #fff;
-  padding:20px;
-  box-shadow: 0 2px 10px 0 rgba(146,156,181,0.10);
-  border-radius: 6px;
-  height: 340px;
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
 }
 .h-model-tit{
   width: 100%;
@@ -396,21 +339,14 @@
   background: #333333;
   padding:0 40px;
 }
-<<<<<<< HEAD
 .slideItem{
   position: absolute;
 }
-=======
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
 .slide-tit p{
   color: #fff;
   line-height: 80px;
   width: 100%;
-<<<<<<< HEAD
   white-space: nowrap;
-=======
-  white-space: nowrap;/*让文字不换行*/
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
   overflow:hidden;
   text-overflow:ellipsis;
   -o-text-overflow:ellipsis;
@@ -419,7 +355,6 @@
   -moz-text-overflow: ellipsis;
   -webkit-text-overflow: ellipsis;
 }
-<<<<<<< HEAD
   .h-newsList{
     width: 100%;
   }
@@ -490,6 +425,4 @@
   background: #ff8a00;
   color: #fff;
 }
-=======
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
 </style>

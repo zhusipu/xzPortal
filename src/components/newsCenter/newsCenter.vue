@@ -22,7 +22,7 @@
             </FormItem>
             </Col>
           </Row>
-          <Row :gutter="64">
+          <Row :gutter="16">
             <Col span="8">
             <FormItem label="发起时间：">
               <DatePicker v-model="searchData.originatorTime" type="date" placeholder="选择时间" ></DatePicker>
@@ -43,8 +43,6 @@
             <Button size="large" type="error" icon="ios-search">搜索</Button>
           </div>
         </Form>
-
-
       </div>
       <div class="tableData">
         <Table border  :columns="theadData" :data="tbodyData"></Table>

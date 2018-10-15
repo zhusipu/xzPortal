@@ -1,8 +1,8 @@
 /*公共样式*/
 *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 input, button{
   background: none;
@@ -35,7 +35,7 @@ a:hover{
 html,body{height:100%;background:#F6F8FA;font-size: 14px !important;
   color: #444;}
 li{
-  list-style: none;
+	list-style: none;
 }
 
 .h-model .ivu-table td, .h-model  .ivu-table th{
@@ -265,22 +265,22 @@ li{
 
 /*滚动条样式 */
 ::-webkit-scrollbar{
-  width:4px;
-  height:4px;
+	width:4px;
+	height:4px;
 }
 ::-webkit-scrollbar-track{
-  background: #f6f6f6;
-  border-radius:2px;
+	background: #f6f6f6;
+	border-radius:2px;
 }
 ::-webkit-scrollbar-thumb{
-  background: #aaa;
-  border-radius:2px;
+	background: #aaa;
+	border-radius:2px;
 }
 ::-webkit-scrollbar-thumb:hover{
-  background: #747474;
+	background: #747474;
 }
 ::-webkit-scrollbar-corner{
-  background: #f6f6f6;
+	background: #f6f6f6;
 }
 
 /**fuying**/
@@ -315,11 +315,4 @@ li{
 }
 .ivu-select-single .ivu-select-selection{
   /*height: 40px;*/
-}
-.presonalInfo-bd .ivu-tabs-bar{
-  float: left;
-  width: 150px;
-}
-.presonalInfo-bd .ivu-tabs-content{
-  float: right;
 }

@@ -1,8 +1,4 @@
 'use strict'
-<<<<<<< HEAD
-=======
-var webpack=require('webpack')
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
@@ -26,16 +22,6 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
-<<<<<<< HEAD
-=======
-  plugins: [
-    new webpack.ProvidePlugin({
-      $:"jquery",
-      jQuery:"jquery",
-      "windows.jQuery":"jquery"
-    })
-  ],
->>>>>>> 8ab0a5525d7bd2fd98df4afe49ce3ab5dd18ec4d
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
