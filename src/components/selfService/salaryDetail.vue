@@ -5,7 +5,7 @@
         <BreadcrumbItem to="/">首页</BreadcrumbItem>
         <BreadcrumbItem>员工自助</BreadcrumbItem>
         <BreadcrumbItem to="/layout/selfService">个人薪资</BreadcrumbItem>
-        <BreadcrumbItem>薪资详情</BreadcrumbItem>
+        <BreadcrumbItem>薪资详情2</BreadcrumbItem>
       </Breadcrumb>
     </div>
     <div class="pageareMain">

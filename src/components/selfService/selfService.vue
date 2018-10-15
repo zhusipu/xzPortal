@@ -54,11 +54,37 @@
           </div>
         </TabPane>
         <TabPane name="个人基本信息" label="个人基本信息" class="selfInfo">
-           <div class="presonalInfo-hd">
-              <div class="presonalInfo-pic">
-                <img src="../../assets/images/temp/timg.jpg" alt="" />
+          <div class="presonalInfo-hd">
+            <div class="presonalInfo-pic">
+              <img src="../../assets/images/temp/timg.jpg" alt="" />
+            </div>
+            <div class="presonalInfo-tit">
+              <h3>张朝阳</h3>
+              <p>运营分公司/企划部</p>
+              <p>IT管理员</p>
+            </div>
+          </div>
+          <div class="presonalInfo-bd clearfix">
+
+            <div class="presonalInfo-bd-list">
+              <ul>
+                <li
+                  v-for="(item,index) in tabs"
+                  :class="{active:index == num}"
+                  @click="tab(index)">{{item}}</li>
+              </ul>
+            </div>
+            <div class="tabCon">
+              <!--<div
+                v-for='(itemCon,index) in tabContents'
+                v-show=" index == num">{{itemCon}}</div>-->
+              <div
+                v-for='(itemCon,index) in tabContents'
+                v-show=" index == num">{{itemCon.title}}
               </div>
-           </div>
+            </div>
+
+          </div>
         </TabPane>
         <TabPane name="个人假期信息" label="个人假期信息"  class="selfService">
           <div class="searchBox">
@@ -284,7 +310,24 @@ export default {
       salaryData:[],//个人薪资数据
       addrBookData:[],//通讯录数据
       pageData:{total:11,pageSize:10,pageNum:1},//分页参数
-      tabName:""
+      tabs: ["基本信息", "联系方式","任职资格","职业信息", "企业任职经历","任职资格"],
+        /*tabContents: ["内容一", "内容二","内容三"],*/
+        tabContents:[{
+        title:"基本信息",
+        infosList: {
+          a:"基本信息一",
+          a:"基本信息二 ",
+        }
+      },
+        {
+          title:"联系方式",
+          infosList: {
+            a:"联系方式一",
+            a:"联系方式二 ",
+          }
+        }
+      ],
+  num: 1
     }
   },
   created(){
@@ -340,6 +383,10 @@ export default {
       this.$refs.table.exportCsv({
         filename: '导出'
       });
+    },
+
+    tab(index) {
+      this.num = index;
     }
   }
 }
@@ -364,6 +411,38 @@ export default {
 .presonalInfo-pic img{
   width: 100%;
   height: auto;
+}
+.presonalInfo-tit{
+  padding-left: 160px;
+}
+.presonalInfo-tit h3{
+  margin-bottom: 25px;
+}
+.presonalInfo-tit p{
+  margin-bottom: 10px;
+  color: #9b9b9b;
+}
+.presonalInfo-bd{
+  padding-top: 40px;
+}
+.presonalInfo-bd-list{
+  float: left;
+  width: 150px;
+  border-right: 1px solid #ccc;
+  padding-top: 10px 0;
+}
+.presonalInfo-bd-list ul li{
+  line-height: 50px;
+  padding-right:30px;
+  text-align: right;
+  cursor: pointer;
+}
+.presonalInfo-bd-list ul li.active{
+  border-right:2px solid #A93439;
+  color: #A93439;
+}
+.tabCon{
+  padding-left: 200px;
 }
 /*个人假期详情*/
 .holidayType{
