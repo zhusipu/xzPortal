@@ -8,7 +8,6 @@
     </div>
     <div class="pageareMain">
       <div class="">
-
         <Form  label-position="left" :label-width="100">
           <Row :gutter="64">
             <Col span="16">
@@ -57,7 +56,7 @@
             </Col>
             <Col span="8">
             <div class="serchBtn-wr">
-              <Button size="large" type="error" icon="ios-search">搜索</Button>
+              <Button size="large" type="error" icon="ios-search" @click="searchFunc">搜索</Button>
             </div>
             </Col>
           </Row>
@@ -110,6 +109,7 @@ export default {
     this.getData();
   },
   methods:{
+    // 时间参数需要格式化new Date(时间参数).Format('时间格式')
     getData(){
       this.$ajax({
         method:'get',
@@ -121,6 +121,10 @@ export default {
         this.msgTypeList=res.data.data.msgType;
         this.dataSourcesList=res.data.data.dataSources;
       })
+    },
+    searchFunc(){
+      this.pageData.pageNum=1;
+      this.getData();
     },
     changePage (value) {
       //选择页码

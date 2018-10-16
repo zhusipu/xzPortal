@@ -32,7 +32,7 @@
               <Row :gutter="64">
                 <Col span="8">
                   <FormItem label="期   间：">
-                    <DatePicker :v-model="searchSalaryParam.duration" type="daterange" clearable split-panels placeholder="选择时间段"></DatePicker>
+                    <DatePicker @on-change="changeSalaryDate" type="daterange" clearable split-panels placeholder="选择时间段"></DatePicker>
                   </FormItem>
                 </Col>
                 <Col span="16">
@@ -155,7 +155,7 @@
               <Row :gutter="64">
                 <Col span="8">
                 <FormItem label="假期期间：">
-                  <DatePicker :v-model="searchHolidayParam.duration" type="daterange" clearable split-panels placeholder="选择时间段"></DatePicker>
+                  <DatePicker @on-change="changeHolidayDate" type="daterange" clearable split-panels placeholder="选择时间段"></DatePicker>
                 </FormItem>
                 </Col>
               </Row>
@@ -219,33 +219,33 @@
             </div>
           </div>
           <div style="margin-top: 40px;">
-            <Form  label-position="left" :label-width="100">
+            <Form  label-position="left" :label-width="100" :model="postHolidayParam">
               <Row :gutter="64">
                 <Col span="8">
                 <FormItem label="请假开始时间:">
-                  <DatePicker  type="date" clearable s placeholder="选择时间"></DatePicker>
+                  <DatePicker  type="date" v-model="postHolidayParam.startTime" clearable placeholder="选择时间"></DatePicker>
                 </FormItem>
                 </Col>
                 <Col span="8">
                 <FormItem label="请假结束时间:">
-                  <DatePicker  type="date" clearable s placeholder="选择时间"></DatePicker>
+                  <DatePicker  type="date" v-model="postHolidayParam.endTime" clearable placeholder="选择时间"></DatePicker>
                 </FormItem>
                 </Col>
                 <Col span="8">
                 <FormItem label="请假长度:">
-                  <Input clearable></Input>
+                  <Input clearable v-model="postHolidayParam.longTime"></Input>
                 </FormItem>
                 </Col>
               </Row>
               <Row :gutter="64">
                 <Col span="16">
                 <FormItem label="请假说明:">
-                  <Input type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
+                  <Input type="textarea" v-model="postHolidayParam.explain" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
                 </FormItem>
                 </Col>
                 <Col span="8">
                 <FormItem label="上传附件:">
-                  <Upload action="//jsonplaceholder.typicode.com/posts/">
+                  <Upload action="上传地址">
                     <Button icon="ios-cloud-upload-outline">选择文件</Button>
                   </Upload>
                 </FormItem>
@@ -254,7 +254,7 @@
               <Row :gutter="64">
                 <Col span="24">
                   <div class="serchBtn-wr">
-                    <Button size="large" type="error">提交</Button>
+                    <Button size="large" type="error" @click="postHolidayData">提交</Button>
                   </div>
                 </Col>
               </Row>
@@ -314,7 +314,8 @@ export default {
     return {
       searchSalaryParam:{group:"",empNo:"",empName:"",duration:""},//个人薪资搜索参数
       searchTelParam:{group:"",empNo:"",empName:"",phoneNo:""}, //通讯录搜索参数
-      searchHolidayParam:{group:"",empNo:"",empName:"",phoneNo:""}, //个人假期信息搜索参数
+      searchHolidayParam:{group:"",empNo:"",empName:"",duration:""}, //个人假期信息搜索参数
+      postHolidayParam:{startTime:"",endTime:"",longTime:"",explain:""},//上传假期信息
       salaryThead:[ //个人薪资表头
         {title:'员工编号',key:'staffNum'},
         {title:'姓名',key:'staffName'},
@@ -401,27 +402,44 @@ export default {
       this.tabName="个人假期信息"
     }else{
       this.tabName="个人基本信息"
-    }
-    this.switchTab(this.tabName)
+    };
+    this.switchTab(this.tabName);
   },
   methods:{
     switchTab(name){
       this.tabName=name;
       if(name=="个人薪资"){
         this.getSalary();
+        this.$router.push('/layout/selfService/0');
       }else if(name=="个人基本情况"){
         this.getBaseInfo()
+         this.$router.push('/layout/selfService/1');
       }else if(name=="个人假期信息"){
-        this.getHolidayInfo()
+        this.getHolidayInfo();
+         this.$router.push('/layout/selfService/2');
       }else{
         this.getAddrBook();//调用通讯录
+         this.$router.push('/layout/selfService/3');
       }
     },
+    // 时间段日期返回的是一个数组需要拼接
+    changeSalaryDate(date){//个人薪资搜索时间
+      this.searchSalaryParam.duration=date[0]+'-'+date[1]
+    },
+    changeHolidayDate(date){//个人假期搜索时间
+      this.searchHolidayParam.duration=date[0]+'-'+date[1]
+    },
     searchSalary(){//搜索个人薪资方法
+      if(this.searchSalaryParam.duration=='-'){
+        this.searchSalaryParam.duration='';
+      }
       this.salaryPageParam.pageNum=1;
       this.getSalary();
     },
     searchHoliday(){//搜索个人假期信息方法
+      if(this.searchSalaryParam.duration=='-'){
+        this.searchSalaryParam.duration='';
+      }
       this.getHolidayInfo()
     },
     searchTel(){//搜索通讯录方法
@@ -462,6 +480,21 @@ export default {
         params:{}
       }).then(res=>{
         this.addrBookData=res.data.data;
+      })
+    },
+    postHolidayData(){//上传假期信息
+    // 日期需要格式化
+    console.log("开始时间:"+new Date(this.postHolidayParam.startTime).Format('yyyy-MM-dd')+"-----结束时间:"+new Date(this.postHolidayParam.endTime).Format('yyyy-MM-dd'));
+    console.log("请假长度:"+this.postHolidayParam.longTime+"-----请假说明:"+this.postHolidayParam.explain);
+      let postData = this.$qs.stringify({//请求参数
+        
+      })
+      this.$ajax({
+        method:'post',
+        url:'',
+        data:postData
+      }).then(res=>{
+        console.log(res);
       })
     },
     changeSalaryPage (value) {//个人薪资-选择页码方法

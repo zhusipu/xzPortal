@@ -40,7 +40,7 @@
             </Col>
           </Row>
           <div class="serchBtn-wr">
-            <Button size="large" type="error" icon="ios-search">搜索</Button>
+            <Button size="large" type="error" icon="ios-search" @click="searchFunc">搜索</Button>
           </div>
         </Form>
       </div>
@@ -87,6 +87,7 @@ export default {
     this.getData();
   },
   methods:{
+    // 时间参数需要格式化new Date(时间参数).Format('时间格式')
     getData(){
       this.$ajax({
         method:'get',
@@ -96,6 +97,10 @@ export default {
         console.log(res);
         this.tbodyData=res.data.data;
       })
+    },
+    searchFunc(){
+      this.pageData.pageNum=1;
+      this.getData();
     },
     changePage (value) {
       //选择页码
