@@ -144,13 +144,11 @@
     left: 50%;
     width: 362px;
     height: 458px;
-    height: 458px;
-
     background: #FFFFFF;
     box-shadow: 0 1px 10px 0 rgba(74,74,74,0.40);
     border-radius: 3px;
-    margin-top: -181px;
-    margin-left: -229px;
+    margin-left: -181px;
+    margin-top: -229px;
   }
 .loginrotate{
   transform: rotate(-3deg);
@@ -162,7 +160,7 @@
     right: 74px;
     width: 400px;
     height: 28px;
-    background: url('../../assets/images/loginditie.png');
+    background: url('../../assets/images/loginditie.png') no-repeat;
   }
 .loginLogo{
   padding-top: 70px;
