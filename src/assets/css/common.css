@@ -40,7 +40,7 @@ li{
 
 .h-model .ivu-table td, .h-model  .ivu-table th{
   border-bottom:none !important;
-  font-size:15px;
+  /* font-size:15px; */
   height: 43px;
 }
 .h-model .ivu-table-wrapper{
@@ -315,4 +315,31 @@ li{
 }
 .ivu-select-single .ivu-select-selection{
   /*height: 40px;*/
+}
+
+.centerList .ivu-tabs-bar{
+  border: none;
+}
+.centerList .ivu-tabs-ink-bar{
+  background-color: transparent;
+}
+.centerList .ivu-tabs-nav .ivu-tabs-tab{
+  background-color: #F7F8F9;
+  padding: 0 30px;
+  line-height: 30px;
+  border-radius: 6px;
+}
+.centerList .ivu-tabs-nav-container{
+  margin-bottom: 0;
+}
+.centerList .ivu-tabs-content{
+  display: none;
+}
+.centerList .ivu-tabs-nav .ivu-tabs-tab-active{
+  color:#fff;
+  background-color: #D0021B !important;
+}
+.centerList .ivu-tabs-nav .ivu-tabs-tab:hover{
+  color:#fff;
+  background-color: #FF8A00;
 }

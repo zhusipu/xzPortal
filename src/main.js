@@ -12,6 +12,8 @@ import './assets/css/font/iconfont.css'
 import common from './assets/js/util'
 import qs from 'qs';
 
+import store from './store/store'
+
 Vue.config.productionTip = false
 Vue.use(iView)
 Vue.use(vueResource)
@@ -24,6 +26,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

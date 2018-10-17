@@ -107,10 +107,9 @@
                     <span><img src="../../assets/images/11.png" alt=""/></span>
                   </div>
                   <div class="centerList">
-                    <span>全部</span> <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
+                    <Tabs>
+                        <TabPane v-for="(item,index) in newsTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    </Tabs>
                   </div>
                   <div class="centerList-bd">
                     <Table stripe :columns="columns1" :data="data1"></Table>
@@ -131,10 +130,9 @@
                     <span><img src="../../assets/images/11.png" alt=""/></span>
                   </div>
                   <div class="centerList">
-                    <span>全部</span> <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
+                    <Tabs>
+                      <TabPane v-for="(item,index) in newsTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    </Tabs>
                   </div>
                   <div class="centerList-bd">
                     <Table stripe :columns="columns1" :data="data1"></Table>
@@ -149,7 +147,9 @@
               领导驾驶舱 / COCKPIT
             </div>
             <div class="h-model-tool">
-              <span><img src="../../assets/images/33.png" alt=""/></span>
+              <router-link to="/layout/cockpit">
+                <span><img src="../../assets/images/33.png" alt=""/></span>
+              </router-link>
               <span><img src="../../assets/images/22.png" alt=""/></span>
               <span><img src="../../assets/images/11.png" alt=""/></span>
             </div>
@@ -245,6 +245,13 @@
             type: '2016-10-03',
             initiator:'张小小'
           }
+        ],
+        newsTabs:[
+          {name:"全部",num:"13"},
+          {name:"合同",num:"3"},
+          {name:"OA",num:"5"},
+          {name:"人资",num:"5"},
+          {name:"其他",num:"5"}
         ]
       }
     },
@@ -282,7 +289,7 @@
   padding:20px 30px;
   box-shadow: 0 2px 10px 0 rgba(146,156,181,0.10);
   border-radius: 6px;
-  height: 340px;
+  height: 350px;
   margin-bottom: 16px;
 }
 .h-model-tit{
@@ -425,4 +432,5 @@
   background: #ff8a00;
   color: #fff;
 }
+
 </style>

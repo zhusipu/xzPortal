@@ -14,7 +14,7 @@
           </a>
 
           <span>
-                  <i class="header-right-logo"> <img src="../../assets/images/logo1.png" alt=""/></i> 14287895@qq.com
+                  <i class="header-right-logo"> <img src="../../assets/images/logo1.png" alt=""/></i> {{this.$store.state.title}}
               </span>
           <div class="serchBar">
             <input type="text" placeholder="输入搜索的内容"/>
@@ -33,9 +33,22 @@
 </template>
 
 <script>
-    export default {
+  import * as types from '../../store/types'
+  import {mapState} from 'vuex'
+  export default {
+    data(){
+      return {
 
-    }
+      }
+    },
+    created:function(){
+      console.log("用户名:"+this.$store.state.title+"密码:"+this.$store.state.token)
+    },
+    computed: mapState({
+      title: state => state.title,
+      token: state => state.token
+    }),
+  }
 </script>
 
 <style>

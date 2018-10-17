@@ -34,35 +34,34 @@
 </template>
 
 <script>
+  import * as types from '../../store/types'
   export default {
     data () {
-
-
-  return {
-    clientHeight:'',
-    backgroundPic:require('../../assets/images/temp/loginBg.jpg'),
-    password_ji:'',
-    formInline: {
-      user: '',
-      password: ''
+      return {
+        clientHeight:'',
+        backgroundPic:require('../../assets/images/temp/loginBg.jpg'),
+        password_ji:'',
+        formInline: {
+          user: '',
+          password: ''
+        },
+        ruleInline: {
+          user: [
+            { required: true, message: '请输入用户名', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' }
+          ]
+        }
+      }
     },
-    ruleInline: {
-      user: [
-        { required: true, message: '请输入用户名', trigger: 'blur' }
-      ],
-      password: [
-        { required: true, message: '请输入密码', trigger: 'blur' }
-      ]
-    }
-
-  }
-  },
   watch: {
     clientHeight: function () {
       this.changeFixed(this.clientHeight)
     }
   },
   mounted(){
+    this.$store.commit(types.TITLE, 'Login');
     this.initHeight();
     this.getCookie();
   },
@@ -82,7 +81,13 @@
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-          this.$Message.success('登陆成功!');
+
+            this.$store.commit(types.LOGIN,this.formInline.password);
+            this.$store.commit(types.TITLE,this.formInline.user);
+            let redirect = decodeURIComponent(this.$route.query.redirect || '/');
+            this.$router.push({path: redirect});
+
+            this.$Message.success('登陆成功!');
         } else {
           this.$Message.error('登陆失败!');
         }

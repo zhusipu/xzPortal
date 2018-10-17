@@ -11,10 +11,13 @@ import SalaryDetail from '@/components/selfService/salaryDetail'
 import Theme from '@/components/theme/theme'
 import Login from '@/components/login/login'
 
+import store from '@/store/store'
+import * as types from '@/store/types'
+
 Vue.use(Router)
 
-export default new Router({
-  routes: [
+// export default new Router({
+  const routes=[
       {
           path:'/',
           redirect: '/layout'
@@ -23,9 +26,9 @@ export default new Router({
           path: '/layout',
           component: Layout,
           redirect:'/layout/index',
-          // meta: {
-          //     requireAuth: true,
-          // },
+          meta: {
+              requireAuth: true,
+          },
         children:[
           {
               path:'index',
@@ -66,4 +69,33 @@ export default new Router({
         component:Login
       }
   ]
+// })
+// 页面刷新时，重新赋值token
+if (window.sessionStorage.getItem('token')) {
+  store.commit(types.LOGIN, window.sessionStorage.getItem('token'))
+}
+if (window.sessionStorage.getItem('title')) {
+  store.commit(types.TITLE, window.sessionStorage.getItem('title'))
+}
+
+const router = new Router({
+    routes
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(r => r.meta.requireAuth)) {
+        if (store.state.token) {
+            next();
+        }
+        else {
+            next({
+                path: '/login',
+            })
+        }
+    }
+    else {
+        next();
+    }
 })
+
+export default router;
