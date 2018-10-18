@@ -3,15 +3,22 @@
       <header class="header">
         <div class="header-logo"></div>
         <div class="header-right">
-          <router-link to="/layout/theme">
-            <Icon type="md-settings"  size="24" color="#c5c5c5"/>
-          </router-link>
-          <a href="#">
-            <Icon custom="iconfont icon-emailFilled" size="24" color="#c5c5c5"/>
-          </a>
-          <a href="#">
+          <div class="headerlinks">
+            <Dropdown>
+              <Icon type="md-settings"  size="24" color="#c5c5c5"/>
+              <DropdownMenu slot="list">
+                <DropdownItem>布局设置</DropdownItem>
+                <DropdownItem><router-link  to="/layout/theme">皮肤设置</router-link></DropdownItem>
+                <DropdownItem divided><router-link to="/layout/selfService/3">个人中心</router-link></DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+          <div class="headerlinks">
+            <router-link to="/layout/msgCenter"><Icon custom="iconfont icon-emailFilled" size="24" color="#c5c5c5"/></router-link>
+          </div>
+          <!--<div  class="headerlinks">
             <Icon custom="iconfont icon-gengduo1" size="24" color="#c5c5c5"/>
-          </a>
+          </div>-->
 
           <span>
                   <i class="header-right-logo"> <img src="../../assets/images/logo1.png" alt=""/></i> {{this.$store.state.title}}

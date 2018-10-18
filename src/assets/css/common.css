@@ -70,7 +70,7 @@ li{
   width: 600px;
   padding:10px 0;
   height: 60px;
-  margin-right: 60px;
+  margin-right: 80px;
 }
 .header-right-logo{
   width:40px;
@@ -88,13 +88,16 @@ li{
   width: 22px;
   height: auto;
 }
-.header-right span, .header-right a{
+.header-right span, .header-right .headerlinks{
   display: inline-block;
   margin-left: 20px;
   line-height: 40px;
   float: right;
 }
-.header-right a i:hover{
+.header-right .headerlinks{
+  cursor: pointer;
+}
+.header-right .headerlinks i:hover{
   transform: scale(1.4);
 }
 
