@@ -377,7 +377,7 @@
   float: left;
   line-height: 30px;
   font-style: normal;
-  font-size:16px;
+  font-size:14px;
   color: #333;
 }
 .h-newsList ul li span{
@@ -385,10 +385,10 @@
 
 }
 .h-newsList ul li em{
-  width: 70%;
+  width: 68%;
 }
 .h-newsList ul li i{
-  width:18%;
+  width:28%;
   text-align: right;
   color: #9B9B9B;
 }
