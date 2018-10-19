@@ -75,7 +75,7 @@ export default {
             return h('a', {
               on: {
                 click: () => {
-                  this.$router.push('')
+                  this.$router.push('/layout/noticeDetail')
                 }
               }
             }, '查看')

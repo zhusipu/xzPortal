@@ -7,6 +7,7 @@ import NewsCenter from '@/components/newsCenter/newsCenter'
 import MsgCenter from '@/components/msgCenter/msgCenter'
 import WaitDoCenter from '@/components/waitDoCenter/waitDoCenter'
 import NoticesCenter from '@/components/noticesCenter/noticesCenter'
+import NoticeDetail from '@/components/noticesCenter/noticeDetail'
 import SelfService from '@/components/selfService/selfService'
 import SalaryDetail from '@/components/selfService/salaryDetail'
 import Theme from '@/components/theme/theme'
@@ -76,6 +77,10 @@ Vue.use(Router)
           {
             path:'msgDetail',
             component:MsgDetail
+          },
+          {
+            path:'noticeDetail',
+            component:NoticeDetail
           }
         ]
       },

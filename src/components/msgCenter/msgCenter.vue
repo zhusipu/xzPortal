@@ -87,10 +87,15 @@ export default {
         {title:'标题',key:'newsTitle',className: 'overEllipsis',width:300,
           render: (h, params) => {
             return h('a', {
-              attrs:{
-                href:this.tbodyData[params.index].href,
-                title:this.tbodyData[params.index].msgTitle,
-                target:"_blank"
+              // attrs:{
+              //   href:this.tbodyData[params.index].href,
+              //   title:this.tbodyData[params.index].msgTitle,
+              //   target:"_blank"
+              // },
+              on: {
+                click: () => {
+                  this.$router.push('/layout/msgDetail')
+                }
               }
             },this.tbodyData[params.index].msgTitle);
           }
