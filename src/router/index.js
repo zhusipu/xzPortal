@@ -10,6 +10,8 @@ import SelfService from '@/components/selfService/selfService'
 import SalaryDetail from '@/components/selfService/salaryDetail'
 import Theme from '@/components/theme/theme'
 import Login from '@/components/login/login'
+import NewsDetail from '@/components/newsCenter/newsDetail'
+import MsgDetail from '@/components/msgCenter/msgDetail'
 
 import store from '@/store/store'
 import * as types from '@/store/types'
@@ -61,6 +63,14 @@ Vue.use(Router)
           {
             path:'theme',
             component:Theme
+          },
+          {
+            path:'newsDetail',
+            component:NewsDetail
+          },
+          {
+            path:'msgDetail',
+            component:MsgDetail
           }
         ]
       },
@@ -70,7 +80,7 @@ Vue.use(Router)
       }
   ]
 // })
-// 页面刷新时，重新赋值token
+// 椤甸潰鍒锋柊鏃讹紝閲嶆柊璧嬪�紅oken
 if (window.sessionStorage.getItem('token')) {
   store.commit(types.LOGIN, window.sessionStorage.getItem('token'))
 }

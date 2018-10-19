@@ -63,7 +63,7 @@ li{
   background-color: #fff;
   text-align: center;
   box-shadow: 0 4px 6px 0 rgba(0,0,0,0.05);
-  z-index: 2;
+  z-index: 11;
 }
 .header-right{
   float: right;
@@ -259,11 +259,19 @@ li{
   left: 0;
 }
 .footer{
-  height: 50px;
   width: 100%;
-  background-color: #F6F8FA;
+  background-color: #f6f8fa;
   text-align: center;
-  padding: 10px 0;
+  padding: 20px 0;
+  border-top: 1px solid #EBEEF5;
+}
+.footer p{
+  font-family: PingFang-SC-Regular;
+  font-size: 12px;
+  color: #9B9B9B;
+  text-align: center;
+  line-height: 25px;
+
 }
 
 /*滚动条样式 */
@@ -345,4 +353,43 @@ li{
 .centerList .ivu-tabs-nav .ivu-tabs-tab:hover{
   color:#fff;
   background-color: #FF8A00;
+}
+.pageDetail{
+  background: #fff;
+  width: 100%;
+  padding:80px 50px;
+}
+.pageDetail h1{
+  margin-bottom: 20px;
+  text-align: center;
+  font-size:20px;
+}
+.pageInfos{
+  width: 100%;
+  text-align: center;
+}
+.pageInfos span{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 20px;
+  color: #999;
+}
+.pageDetailMain{
+  width: 100%;
+  border-top: 1px solid #EBEEF5;
+  margin-top: 30px;
+  padding-top: 30px;
+  padding-bottom: 80px;
+}
+.pageDetailMain p{
+  line-height: 31px;
+  margin-bottom: 15px;
+  color: #4A4A4A;
+}
+.pageDetailMain a{
+
+  color: #5583B9;
+}
+.pageDetailMain p img{
+  max-width: 100%;
 }

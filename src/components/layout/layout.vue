@@ -7,7 +7,7 @@
             <Dropdown>
               <Icon type="md-settings"  size="24" color="#c5c5c5"/>
               <DropdownMenu slot="list">
-                <DropdownItem>布局设置</DropdownItem>
+                <DropdownItem><router-link  to="/layout/theme">布局设置</router-link></DropdownItem>
                 <DropdownItem><router-link  to="/layout/theme">皮肤设置</router-link></DropdownItem>
                 <DropdownItem divided><router-link to="/layout/selfService/3">个人中心</router-link></DropdownItem>
               </DropdownMenu>
