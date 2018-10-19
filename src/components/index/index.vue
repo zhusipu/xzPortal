@@ -29,10 +29,12 @@
                 <div class="slide-wr">
                   <Carousel autoplay>
                     <Carousel-item v-for="(item,index) in slideData" :key="index" >
-                      <div><img :src="item.pic" alt=""/></div>
-                      <div class="slide-tit">
-                        <p><span>●</span> {{item.title}}</p>
+                      <div class="slide-Pic"><img :src="item.pic" alt=""/>
+                        <div class="slide-tit">
+                          <p><span>●</span> {{item.title}}</p>
+                        </div>
                       </div>
+
                     </Carousel-item>
                   </Carousel>
                 </div>
@@ -336,6 +338,9 @@
 .slide-wr img{
   width: 100%;
   height: 250px;
+}
+.slide-Pic{
+  position: relative;
 }
 .slide-tit{
   position: absolute;
