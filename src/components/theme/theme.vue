@@ -63,6 +63,16 @@
               </div>
 
             </TabPane>
+            <TabPane label="设置应用" name="设置应用">
+              <div class="modelList">
+
+                <div class="btn-wr">
+                  <button type="submit">确定</button>
+                  <button type="submit" class="reset">取消</button>
+                </div>
+              </div>
+
+            </TabPane>
           </Tabs>
         </div>
       </div>
