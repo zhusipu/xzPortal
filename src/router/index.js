@@ -6,6 +6,7 @@ import Cockpit from '@/components/cockpit/cockpit'
 import NewsCenter from '@/components/newsCenter/newsCenter'
 import MsgCenter from '@/components/msgCenter/msgCenter'
 import WaitDoCenter from '@/components/waitDoCenter/waitDoCenter'
+import NoticesCenter from '@/components/noticesCenter/noticesCenter'
 import SelfService from '@/components/selfService/selfService'
 import SalaryDetail from '@/components/selfService/salaryDetail'
 import Theme from '@/components/theme/theme'
@@ -49,6 +50,10 @@ Vue.use(Router)
           {
             path:'waitDoCenter',
             component:WaitDoCenter
+          },
+          {
+            path:'noticesCenter',
+            component:NoticesCenter
           },
           {
             path:'selfService/:name',

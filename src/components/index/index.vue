@@ -258,11 +258,7 @@
     mounted(){
       this.initHeight();
     },
-    watch: {
-      clientHeight: function () {
-        this.changeFixed(this.clientHeight)
-      }
-    },
+    
     methods:{
       changeFixed(clientHeight){
         this.$refs.homePage.style.height = clientHeight+'px';
@@ -275,7 +271,12 @@
           this.clientHeight = document.body.clientHeight-80;
         };
       }
-    }
+    },
+    watch: {
+      clientHeight: function () {
+        this.changeFixed(this.clientHeight)
+      }
+    },
   }
 </script>
 

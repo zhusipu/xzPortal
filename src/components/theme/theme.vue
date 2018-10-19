@@ -15,12 +15,12 @@
             <TabPane label="主题管理" name="主题管理">
               <div class="themeList">
                 <ul class="clearfix">
-                  <li v-for="(item,index) in thmeList">
+                  <li v-for="(item,index) in thmeList" @click="chooseTheme(index)">
                     <div class="themeBg" :style="{backgroundColor:item.bg}"></div>
                     <div class="titbg">
                       <p>{{item.title}} </p>
                     </div>
-                    <span class="checked"><Icon type="ios-checkmark" color="#fff" size="20"/></span>
+                    <span class="checked" :style="isChoose==index?'background:green;opacity:1':''"><Icon type="ios-checkmark" color="#fff" size="20"/></span>
                   </li>
                 </ul>
                 <div class="pagnation-wr"><Page placement="top" show-total show-sizer :total="themePageParam.total" :current="themePageParam.pageNum" :page-size="themePageParam.pageSize"
@@ -146,10 +146,15 @@
           {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}],
         editable: true,
         isDragging: false,
-        delayedDragging: false
+        delayedDragging: false,
+        isChoose:0
       }
     },
     methods:{
+      chooseTheme(e){
+        console.log(e)
+        this.isChoose=e;
+      },
       switchTab(name){
         this.tabName=name;
       },

@@ -38,14 +38,14 @@
                 <Col span="16">
                 <div class="serchBtn-wr">
                   <Button size="large" type="error" icon="ios-search" @click="searchSalary">搜索</Button>
-                  <Button size="large" type="error"  ghost icon="ios-download-outline"  @click="exportData()">导出</Button>
+                  <Button size="large" type="error"  ghost icon="ios-download-outline"  :loading="exportLoading" @click="exportSalaryExcel">导出</Button>
                 </div>
                 </Col>
               </Row>
             </Form>
           </div>
           <div class="tableData">
-            <Table border  :columns="salaryThead" :data="salaryData" ref="table"></Table>
+            <Table border  :columns="salaryThead" :data="salaryData"></Table>
             <div class="pagnation-wr">
               <Page placement="top" show-total show-sizer :total="salaryPageParam.total" :current="salaryPageParam.pageNum" :page-size="salaryPageParam.pageSize"  @on-change="changeSalaryPage" @on-page-size-change="changeSalaryPageSize"></Page>
             </div>
@@ -290,7 +290,7 @@
                 <Col span="16">
                 <div class="serchBtn-wr">
                   <Button size="large" type="error" icon="ios-search" @click="searchTel">搜索</Button>
-                  <Button size="large" type="error"  ghost icon="ios-download-outline"  @click="exportData()">导出</Button>
+                  <Button size="large" type="error"  ghost icon="ios-download-outline"  @click="exportTelExcel()">导出</Button>
                 </div>
                 </Col>
               </Row>
@@ -309,9 +309,11 @@
 </template>
 
 <script>
+import excel from '@/assets/js/excel'
 export default {
   data(){
     return {
+      exportLoading: false,
       searchSalaryParam:{group:"",empNo:"",empName:"",duration:""},//个人薪资搜索参数
       searchTelParam:{group:"",empNo:"",empName:"",phoneNo:""}, //通讯录搜索参数
       searchHolidayParam:{group:"",empNo:"",empName:"",duration:""}, //个人假期信息搜索参数
@@ -340,7 +342,7 @@ export default {
         },
       ],
       addrBookThead:[//通讯录表头
-        {title:'序号',key:'',
+        {title:'序号',key:'a',
           render: (h, params) => {
             return h('div', {},params.index+1)
           }
@@ -413,13 +415,13 @@ export default {
         this.$router.push('/layout/selfService/0');
       }else if(name=="个人基本情况"){
         this.getBaseInfo()
-         this.$router.push('/layout/selfService/1');
+        this.$router.push('/layout/selfService/3');
       }else if(name=="个人假期信息"){
         this.getHolidayInfo();
          this.$router.push('/layout/selfService/2');
       }else{
         this.getAddrBook();//调用通讯录
-         this.$router.push('/layout/selfService/3');
+         this.$router.push('/layout/selfService/1');
       }
     },
     // 时间段日期返回的是一个数组需要拼接
@@ -513,10 +515,37 @@ export default {
       this.telPageParam.pageSize = value;
       this.getAddrBook();
     },
-    exportData () {
-      this.$refs.table.exportCsv({
-        filename: '导出'
-      });
+    exportSalaryExcel () {//导出个人薪资表
+      if (this.salaryData.length) {
+        this.exportLoading = true
+        const params = {
+          title: ['员工编号', '姓名', '所属组织','岗位','薪资期间','应付工资','代扣保险公积金合计','应税所得','代扣代缴个人所得税','实发工资'],
+          key: ['staffNum', 'staffName', 'department','position','salaryTime','salary','providentFund','taxableIncome','incomeTax','actualSalary'],
+          data: this.salaryData,
+          autoWidth: true,
+          filename: '个人薪资'
+        }
+        excel.export_array_to_excel(params)
+        this.exportLoading = false
+      } else {
+        this.$Message.info('表格数据不能为空！')
+      }
+    },
+    exportTelExcel () {//导出通讯录
+      if (this.addrBookData.length) {
+        this.exportLoading = true
+        const params = {
+          title: ['员工编号','姓名', '所属组织','岗位','手机号码','办公电话','电子邮件','通讯地址','通讯电子编码','其他'],
+          key: ['staffNo', 'staffName','department','position','phoneNo','officeNo','email','address','addrCode','other'],
+          data: this.addrBookData,
+          autoWidth: true,
+          filename: '通信录'
+        }
+        excel.export_array_to_excel(params)
+        this.exportLoading = false
+      } else {
+        this.$Message.info('表格数据不能为空！')
+      }
     },
     tab(index) { // 个人基本信息选项卡方法
       this.num = index;

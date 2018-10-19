@@ -14,7 +14,7 @@
             </Dropdown>
           </div>
           <div class="headerlinks">
-            <router-link to="/layout/msgCenter"><Icon custom="iconfont icon-emailFilled" size="24" color="#c5c5c5"/></router-link>
+            <router-link to="/layout/noticesCenter"><Icon custom="iconfont icon-emailFilled" size="24" color="#c5c5c5"/></router-link>
           </div>
           <!--<div  class="headerlinks">
             <Icon custom="iconfont icon-gengduo1" size="24" color="#c5c5c5"/>
