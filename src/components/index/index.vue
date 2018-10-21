@@ -109,12 +109,12 @@
                     <span><img src="../../assets/images/11.png" alt=""/></span>
                   </div>
                   <div class="centerList">
-                    <Tabs>
-                        <TabPane v-for="(item,index) in newsTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    <Tabs :animated="false" @on-click="switchMsgTab">
+                        <TabPane :name="item.name" v-for="(item,index) in msgTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
                     </Tabs>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe :columns="columns1" :data="data1"></Table>
+                    <Table stripe :columns="msgHead" :data="msgData"></Table>
                   </div>
                 </div>
             </Col>
@@ -132,12 +132,12 @@
                     <span><img src="../../assets/images/11.png" alt=""/></span>
                   </div>
                   <div class="centerList">
-                    <Tabs>
-                      <TabPane v-for="(item,index) in newsTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    <Tabs :animated="false" @on-click="switchWaitDoTab">
+                      <TabPane :name="item.name" v-for="(item,index) in waitDoTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
                     </Tabs>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe :columns="columns1" :data="data1"></Table>
+                    <Table stripe :columns="waitDoHead" :data="waitDoData"></Table>
                   </div>
                 </div>
             </Col>
@@ -190,7 +190,7 @@
           {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'}
         ],
         /**消息中心数据**/
-        columns1: [
+        msgHead: [
           {
             title: '发布时间',
             key: 'times',
@@ -218,7 +218,7 @@
             key: 'initiator'
           }
         ],
-        data1: [
+        msgData: [
           {
             times: '2018-10-13',
             consuming: 18,
@@ -248,8 +248,74 @@
             initiator:'张小小'
           }
         ],
-        newsTabs:[
-          {name:"全部",num:"13"},
+        /**待办中心数据**/
+        waitDoHead: [
+          {
+            title: '发布时间',
+            key: 'times',
+            className: 'overEllipsis',
+            width:120,
+          },
+          {
+            title: '耗时',
+            key: 'consuming'
+          },
+          {
+            title: '标题',
+            key: 'title',
+            className: 'overEllipsis',
+            width:150,
+          },
+          {
+            title: '类型',
+            key: 'type',
+            className: 'overEllipsis',
+            width:120,
+          },
+          {
+            title: '发起人',
+            key: 'initiator'
+          }
+        ],
+        waitDoData: [
+          {
+            times: '2018-10-13',
+            consuming: 18,
+            title: '后有效，当表格的',
+            type: '2016-10-03',
+            initiator:'张小小'
+          },
+          {
+            times: 'John Brown',
+            consuming: 18,
+            title: '后有效，当表格的',
+            type: '2016-10-03',
+            initiator:'张小小'
+          },
+          {
+            times: 'John Brown',
+            consuming: 18,
+            title: '后有效，当表格的',
+            type: '2016-10-03',
+            initiator:'张小小'
+          },
+          {
+            times: 'John Brown',
+            consuming: 18,
+            title: '后有效，当表格的',
+            type: '2016-10-03',
+            initiator:'张小小'
+          }
+        ],
+        msgTabs:[
+          {name:"全部",num:"18"},
+          {name:"合同",num:"3"},
+          {name:"OA",num:"5"},
+          {name:"人资",num:"5"},
+          {name:"其他",num:"5"}
+        ],
+        waitDoTabs:[
+          {name:"全部",num:"18"},
           {name:"合同",num:"3"},
           {name:"OA",num:"5"},
           {name:"人资",num:"5"},
@@ -262,9 +328,44 @@
     },
     
     methods:{
+      getNewsData(){//获取新闻数据
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          console.log(res);
+        })
+      },
+      getMsgData(){//获取消息数据
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          console.log(res);
+        })
+      },
+      getWaitDoData(){//获取代办中心数据
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          console.log(res);
+        })
+      },
+      switchMsgTab(name){//点击消息中心tabs标签搜索对应数据
+        console.log(name);
+        this.getMsgData();
+      },
+      switchWaitDoTab(name){//点击待办中心tabs标签搜索对应数据
+        console.log(name);
+        this.getWaitDoData();
+      },
+
       changeFixed(clientHeight){
         this.$refs.homePage.style.height = clientHeight+'px';
-
       },
       initHeight(){
         this.clientHeight = document.body.clientHeight-80;

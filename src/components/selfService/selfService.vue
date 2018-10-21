@@ -132,7 +132,7 @@
             </div>
           </div>
         </TabPane>
-        <TabPane name="个人假期信息" label="个人假期信息"  class="selfService">
+        <TabPane name="个人假期信息" label="个人假期信息" class="selfService">
           <div class="searchBox">
             <Form  label-position="left" :label-width="100">
               <Row :gutter="64">
@@ -392,7 +392,8 @@ export default {
         }
       ],
       num: 0,
-      title:'基本信息'
+      title:'基本信息',
+      tabName:''
     }
   },
   created(){
@@ -410,6 +411,7 @@ export default {
   methods:{
     switchTab(name){
       this.tabName=name;
+      console.log(this.tabName)
       if(name=="个人薪资"){
         this.getSalary();
         this.$router.push('/layout/selfService/0');
