@@ -56,14 +56,14 @@
             </Col>
             <Col span="8">
             <div class="serchBtn-wr">
-              <Button size="large" type="error" icon="ios-search">搜索</Button>
+              <Button size="large" type="error" icon="ios-search" @click="searchFunc">搜索</Button>
             </div>
             </Col>
           </Row>
         </Form>
       </div>
       <div class="tableData">
-        <Table border  :loading="loading" :columns="theadData" :data="tbodyData"></Table>
+        <Table border :loading="loading" :columns="theadData" :data="tbodyData"></Table>
         <div style="margin: 10px;height:35px;">
           <div style="float: right;">
             <Page placement="top" show-total show-sizer :total="pageData.total" :current="pageData.pageNum" :page-size="pageData.pageSize"
@@ -163,6 +163,10 @@ export default {
           this.compList = res.data
         }
       })
+    },
+    searchFunc(){
+      this.pageData.pageNum=1;
+      this.getData();
     },
     changePage (value) {
       //选择页码

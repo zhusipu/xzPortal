@@ -4,8 +4,8 @@
       <Breadcrumb>
         <BreadcrumbItem to="/">首页</BreadcrumbItem>
         <BreadcrumbItem>员工自助</BreadcrumbItem>
-        <BreadcrumbItem to="/layout/selfService">个人薪资</BreadcrumbItem>
-        <BreadcrumbItem>薪资详情2</BreadcrumbItem>
+        <BreadcrumbItem to="/layout/selfService/0">个人薪资</BreadcrumbItem>
+        <BreadcrumbItem>薪资详情</BreadcrumbItem>
       </Breadcrumb>
     </div>
     <div class="pageareMain">
@@ -31,12 +31,12 @@
           <Row :gutter="64">
             <Col span="8">
             <FormItem label="期 间：">
-              <DatePicker :v-model="searchData.duration" type="daterange" clearable split-panels placeholder="选择时间段"></DatePicker>
+              <DatePicker  @on-change="changeDate" type="daterange" clearable split-panels placeholder="选择时间段"></DatePicker>
             </FormItem>
             </Col>
             <Col span="16">
             <div class="serchBtn-wr">
-              <Button size="large" type="error" icon="ios-search">搜索</Button>
+              <Button size="large" type="error" icon="ios-search" @click="searchFunc">搜索</Button>
               <Button size="large" type="error"  ghost icon="ios-download-outline"  @click="exportData()">导出</Button>
             </div>
             </Col>
@@ -152,13 +152,39 @@
 </template>
 
 <script>
-    export default {
-        data(){
-          return {
-            searchData:{group:"",empNo:"",empName:"",duration:""}
-          }
+  export default {
+    data(){
+      return {
+        searchData:{group:"",empNo:"",empName:"",duration:""}
+      }
+    },
+    created(){
+      this.getData();
+    },
+    methods:{
+      // 时间段日期返回的是一个数组需要拼接
+      changeDate(date){
+        this.searchData.duration=date[0]+'-'+date[1]
+      },
+      
+      getData(){
+        if(this.dateVal=='-'){
+            this.searchData.duration='';
         }
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          console.log(res)
+        })
+      },
+      searchFunc(){
+        console.log(this.searchData.duration);
+        this.getData();
+      }
     }
+  }
 </script>
 
 <style scoped>

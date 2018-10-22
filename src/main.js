@@ -10,11 +10,17 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import './assets/css/common.css'
 import './assets/css/font/iconfont.css'
+import common from './assets/js/util'
+import qs from 'qs';
+
+import store from './store/store'
 
 Vue.config.productionTip = false
 Vue.use(element)
 Vue.use(iView)
 Vue.use(vueResource)
+Vue.use(common)
+Vue.prototype.$qs = qs;
 Vue.prototype.$ajax = axios
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -22,6 +28,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

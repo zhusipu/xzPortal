@@ -3,7 +3,7 @@
     <div class="breadCrub">
       <Breadcrumb>
         <BreadcrumbItem to="/">首页</BreadcrumbItem>
-        <BreadcrumbItem>新闻中心</BreadcrumbItem>
+        <BreadcrumbItem>通知公告</BreadcrumbItem>
       </Breadcrumb>
     </div>
     <div class="pageareMain">
@@ -12,36 +12,30 @@
         <Form  label-position="left" :label-width="100">
           <Row :gutter="16">
             <Col span="16">
-            <FormItem label="新闻标题：">
-              <Input v-model="searchData.newsTitle"  clearable /></Input>
-            </FormItem>
+              <FormItem label="新闻标题：">
+                <Input v-model="searchData.newsTitle"  clearable /></Input>
+              </FormItem>
             </Col>
             <Col span="8">
-            <FormItem label="发起人：">
-              <Input v-model="searchData.originator"  clearable ></Input>
-            </FormItem>
+              <FormItem label="所在公司：">
+                <Input v-model="searchData.company" clearable />
+              </FormItem>
             </Col>
+            
           </Row>
           <Row :gutter="16">
             <Col span="8">
-            <FormItem label="发起时间：">
-              <DatePicker v-model="searchData.originatorTime" type="date" placeholder="选择时间" ></DatePicker>
-            </FormItem>
+              <FormItem label="发起时间：">
+                <DatePicker v-model="searchData.originatorTime" type="date" placeholder="选择时间" ></DatePicker>
+              </FormItem>
             </Col>
-            <Col span="8">
-            <FormItem label="所在部门：">
-              <Input v-model="searchData.department" clearable />
-            </FormItem>
-            </Col>
-            <Col span="8">
-            <FormItem label="所在公司：">
-              <Input v-model="searchData.company" clearable />
-            </FormItem>
+            <Col span="8" offset="8">
+              <div class="serchBtn-wr">
+                <Button size="large" type="error" icon="ios-search" @click="searchFunc">搜索</Button>
+              </div>
             </Col>
           </Row>
-          <div class="serchBtn-wr">
-            <Button size="large" type="error" icon="ios-search" @click="searchFunc">搜索</Button>
-          </div>
+          
         </Form>
       </div>
       <div class="tableData">
@@ -63,26 +57,30 @@ export default {
     return {
       searchData:{newsTitle:"",originator:"",originatorTime:"",department:"",company:""},
       theadData:[ //表头
-        {title:'发布时间',key:'originatorTime'},
-        {title:'标题',key:'newsTitle',className: 'overEllipsis',width:350,
+        {title:'发布时间',key:'originatorTime',width:200},
+        {title:'标题',key:'newsTitle',className: 'overEllipsis',width:500,
           render: (h, params) => {
             return h('a', {
-              // attrs:{
-              //   href:this.tbodyData[params.index].href,
-              //   title:this.tbodyData[params.index].newsTitle,
-              //   target:"_blank"
-              // },
-              on: {
-                click: () => {
-                  this.$router.push('/layout/newsDetail')
-                }
+              attrs:{
+                href:this.tbodyData[params.index].href,
+                title:this.tbodyData[params.index].newsTitle,
+                target:"_blank"
               }
             },this.tbodyData[params.index].newsTitle);
           }
         },
-        {title:'发起人',key:'originator'},
-        {title:'部门',key:'department'},
-        {title:'公司',key:'company'}
+        {title:'公司',key:'company'},
+        {title:'操作',key:'action',width:100,
+          render: (h, params) => {
+            return h('a', {
+              on: {
+                click: () => {
+                  this.$router.push('/layout/noticeDetail')
+                }
+              }
+            }, '查看')
+          }
+        }
       ],
       tbodyData:[],
       pageData:{total:11,pageSize:10,pageNum:1}//分页参数

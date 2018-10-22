@@ -29,10 +29,12 @@
                 <div class="slide-wr">
                   <Carousel autoplay>
                     <Carousel-item v-for="(item,index) in slideData" :key="index" >
-                      <div><img :src="item.pic" alt=""/></div>
-                      <div class="slide-tit">
-                        <p><span>●</span> {{item.title}}</p>
+                      <div class="slide-Pic"><img :src="item.pic" alt=""/>
+                        <div class="slide-tit">
+                          <p><span>●</span> {{item.title}}</p>
+                        </div>
                       </div>
+
                     </Carousel-item>
                   </Carousel>
                 </div>
@@ -107,13 +109,12 @@
                     <span><img src="../../assets/images/11.png" alt=""/></span>
                   </div>
                   <div class="centerList">
-                    <span>全部</span> <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
+                    <Tabs :animated="false" @on-click="switchMsgTab">
+                        <TabPane :name="item.name" v-for="(item,index) in msgTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    </Tabs>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe :columns="columnsMessage" :data="message"></Table>
+                    <Table stripe :loading="loadingMsg" :columns="columnsMessage" :data="message"></Table>
                   </div>
                 </div>
             </Col>
@@ -131,13 +132,12 @@
                     <span><img src="../../assets/images/11.png" alt=""/></span>
                   </div>
                   <div class="centerList">
-                    <span>全部</span> <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
-                    <span>全部</span>
+                    <Tabs :animated="false" @on-click="switchWaitDoTab">
+                      <TabPane :name="item.name" v-for="(item,index) in waitDoTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    </Tabs>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe :columns="columnsSchedule" :data="schedule"></Table>
+                    <Table stripe loadingSchedule :columns="columnsSchedule" :data="schedule"></Table>
                   </div>
                 </div>
             </Col>
@@ -149,7 +149,9 @@
               领导驾驶舱 / COCKPIT
             </div>
             <div class="h-model-tool">
-              <span><img src="../../assets/images/33.png" alt=""/></span>
+              <router-link to="/layout/cockpit">
+                <span><img src="../../assets/images/33.png" alt=""/></span>
+              </router-link>
               <span><img src="../../assets/images/22.png" alt=""/></span>
               <span><img src="../../assets/images/11.png" alt=""/></span>
             </div>
@@ -269,35 +271,21 @@ import { getMessage } from 'api/message'
         ],
         message: [],
         schedule: [],
-        data1: [
-          {
-            times: '2018-10-13',
-            consuming: 18,
-            title: '后有效，当表格的',
-            type: '2016-10-03',
-            initiator:'张小小'
-          },
-          {
-            times: 'John Brown',
-            consuming: 18,
-            title: '后有效，当表格的',
-            type: '2016-10-03',
-            initiator:'张小小'
-          },
-          {
-            times: 'John Brown',
-            consuming: 18,
-            title: '后有效，当表格的',
-            type: '2016-10-03',
-            initiator:'张小小'
-          },
-          {
-            times: 'John Brown',
-            consuming: 18,
-            title: '后有效，当表格的',
-            type: '2016-10-03',
-            initiator:'张小小'
-          }
+        loadingMsg: false,
+        loadingSchedule: false,
+        msgTabs:[
+          {name:"全部",num:"18"},
+          {name:"合同",num:"3"},
+          {name:"OA",num:"5"},
+          {name:"人资",num:"5"},
+          {name:"其他",num:"5"}
+        ],
+        waitDoTabs:[
+          {name:"全部",num:"18"},
+          {name:"合同",num:"3"},
+          {name:"OA",num:"5"},
+          {name:"人资",num:"5"},
+          {name:"其他",num:"5"}
         ]
       }
     },
@@ -306,29 +294,45 @@ import { getMessage } from 'api/message'
       this._getMessage()
       this._getSchedule()
     },
-    watch: {
-      clientHeight: function () {
-        this.changeFixed(this.clientHeight)
-      }
-    },
+    
     methods:{
       _getMessage() {
+        this.loadingMsg = true
         getMessage(1, 4, '0').then(res => {
           if (res.code === 1) {
             this.message = res.data.list
           }
+          this.loadingMsg = false
         })
       },
       _getSchedule() {
+        this.loadingSchedule = false
         getMessage(1, 4, '1').then(res => {
           if (res.code === 1) {
             this.schedule = res.data.list
           }
+          this.loadingSchedule = false
         })
+      },
+      getNewsData(){ //获取新闻数据
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          console.log(res);
+        })
+      },
+      switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
+        console.log(name);
+        this.getMsgData();
+      },
+      switchWaitDoTab(name){ //点击待办中心tabs标签搜索对应数据
+        console.log(name);
+        this.getWaitDoData();
       },
       changeFixed(clientHeight){
         this.$refs.homePage.style.height = clientHeight+'px';
-
       },
       initHeight(){
         this.clientHeight = document.body.clientHeight-80;
@@ -336,7 +340,12 @@ import { getMessage } from 'api/message'
           this.clientHeight = document.body.clientHeight-80;
         };
       }
-    }
+    },
+    watch: {
+      clientHeight: function () {
+        this.changeFixed(this.clientHeight)
+      }
+    },
   }
 </script>
 
@@ -350,7 +359,7 @@ import { getMessage } from 'api/message'
   padding:20px 30px;
   box-shadow: 0 2px 10px 0 rgba(146,156,181,0.10);
   border-radius: 6px;
-  height: 340px;
+  height: 350px;
   margin-bottom: 16px;
 }
 .h-model-tit{
@@ -397,6 +406,9 @@ import { getMessage } from 'api/message'
   width: 100%;
   height: 250px;
 }
+.slide-Pic{
+  position: relative;
+}
 .slide-tit{
   position: absolute;
   left: 0;
@@ -438,7 +450,7 @@ import { getMessage } from 'api/message'
   float: left;
   line-height: 30px;
   font-style: normal;
-  font-size:16px;
+  font-size:14px;
   color: #333;
 }
 .h-newsList ul li span{
@@ -446,10 +458,10 @@ import { getMessage } from 'api/message'
 
 }
 .h-newsList ul li em{
-  width: 70%;
+  width: 68%;
 }
 .h-newsList ul li i{
-  width:18%;
+  width:28%;
   text-align: right;
   color: #9B9B9B;
 }
@@ -493,4 +505,5 @@ import { getMessage } from 'api/message'
   background: #ff8a00;
   color: #fff;
 }
+
 </style>

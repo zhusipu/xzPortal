@@ -6,28 +6,28 @@
           <Breadcrumb>
             <BreadcrumbItem to="/">首页</BreadcrumbItem>
             <BreadcrumbItem to="/components/breadcrumb">个人设置</BreadcrumbItem>
-            <BreadcrumbItem>设置主题</BreadcrumbItem>
+            <BreadcrumbItem>{{tabName}}</BreadcrumbItem>
           </Breadcrumb>
         </div>
 
         <div class="pageareMain">
-          <Tabs type="card" :animated="false">
-            <TabPane label="主题管理">
+          <Tabs type="card" :animated="false" @on-click="switchTab" :value="tabName">
+            <TabPane label="主题管理" name="主题管理">
               <div class="themeList">
                 <ul class="clearfix">
-                  <li v-for="(item,index) in thmeList">
+                  <li v-for="(item,index) in thmeList" @click="chooseTheme(index)">
                     <div class="themeBg" :style="{backgroundColor:item.bg}"></div>
                     <div class="titbg">
                       <p>{{item.title}} </p>
                     </div>
-                    <span class="checked"><Icon type="ios-checkmark" color="#fff" size="20"/></span>
+                    <span class="checked" :style="isChoose==index?'background:green;opacity:1':''"><Icon type="ios-checkmark" color="#fff" size="20"/></span>
                   </li>
                 </ul>
-                <div class="pagnation-wr"><Page placement="top" show-total show-sizer :total="pageData.total" :current="pageData.pageNum" :page-size="pageData.pageSize"
-                                                @on-change="changePage" @on-page-size-change="changePageSize"></Page></div>
+                <div class="pagnation-wr"><Page placement="top" show-total show-sizer :total="themePageParam.total" :current="themePageParam.pageNum" :page-size="themePageParam.pageSize"
+                                                @on-change="changeThemePage" @on-page-size-change="changeThemePageSize"></Page></div>
               </div>
             </TabPane>
-            <TabPane label="布局管理">
+            <TabPane label="布局管理" name="布局管理">
               <div class="layoutList">
                 <ul class="clearfix">
                   <li v-for="(item,index) in thmeList">
@@ -40,13 +40,13 @@
                     </div>
                   </li>
                 </ul>
-                <div class="pagnation-wr"><Page placement="top" show-total show-sizer :total="pageData.total" :current="pageData.pageNum" :page-size="pageData.pageSize"
-                                                @on-change="changePage" @on-page-size-change="changePageSize"></Page></div>
+                <div class="pagnation-wr"><Page placement="top" show-total show-sizer :total="layoutPageParam.total" :current="layoutPageParam.pageNum" :page-size="layoutPageParam.pageSize"
+                                                @on-change="changeLayoutPage" @on-page-size-change="changeLayoutPageSize"></Page></div>
               </div>
             </TabPane>
-            <TabPane label="界面设置">
+            <TabPane label="界面设置" name="界面设置">
               <div class="modelList">
-                <ul>
+                <ul class="clear">
                   <li v-for="(item,index) in modleList">
                     <h3>{{item.modleName}}</h3>
                     <div class="modelSwitch">
@@ -63,32 +63,67 @@
               </div>
 
             </TabPane>
+            <TabPane label="设置应用" name="设置应用">
+              <div class="appList-wr">
+                <div class="appList">
+                  <h3>已添加应用</h3>
+                  <draggable class="list-group clearfix" element="ul" v-model="list" :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
+                    <transition-group type="transition" :name="'flip-list'">
+                      <li class="list-group-item" v-for="(element,index) in list" :key="index">
+                        <span class="pic"><img :src="element.pic" alt=""></span>
+                        <p>{{element.title}}</p>
+                      </li>
+                    </transition-group>
+                  </draggable>
+                </div>
+                <div class="appList">
+                  <h3>未添加应用</h3>
+                  <draggable element="span" v-model="list2" :options="dragOptions" :move="onMove">
+                    <transition-group name="no" class="list-group clearfix" tag="ul">
+                      <li class="list-group-item" v-for="(element,index) in list2" :key="index">
+                        <span class="pic"><img :src="element.pic" alt=""></span>
+                        <p>{{element.title}}</p>
+                      </li>
+                    </transition-group>
+                  </draggable>
+                </div>
+                <div class="btn-wr">
+                  <button type="submit">确定</button>
+                  <button type="submit" class="reset">取消</button>
+                </div>
+              </div>
+
+            </TabPane>
           </Tabs>
         </div>
-
-        <!--<router-link to="/test">123</router-link>-->
       </div>
     </div>
 
   </div>
 </template>
 
+
 <script>
+  import draggable from 'vuedraggable'
   export default {
+
+    components: {
+      draggable
+    },
     data(){
       return {
-          thmeList:[
-            {bg:'#F1823D',title:'活力橙'},
-            {bg:'#A93439',title:'酒红色'},
-            {bg:'#4A90E2 ',title:'天空蓝'},
-            {bg:'#B8E986 ',title:'清新绿'},
-            {bg:'#9A704B ',title:'护眼褐'},
-            {bg:'#F1823D',title:'活力橙'},
-            {bg:'#A93439',title:'酒红色'},
-            {bg:'#4A90E2 ',title:'天空蓝'},
-            {bg:'#B8E986 ',title:'清新绿'},
-            {bg:'#9A704B ',title:'护眼褐'}
-          ],
+        thmeList:[
+          {bg:'#F1823D',title:'活力橙'},
+          {bg:'#A93439',title:'酒红色'},
+          {bg:'#4A90E2 ',title:'天空蓝'},
+          {bg:'#B8E986 ',title:'清新绿'},
+          {bg:'#9A704B ',title:'护眼褐'},
+          {bg:'#F1823D',title:'活力橙'},
+          {bg:'#A93439',title:'酒红色'},
+          {bg:'#4A90E2 ',title:'天空蓝'},
+          {bg:'#B8E986 ',title:'清新绿'},
+          {bg:'#9A704B ',title:'护眼褐'}
+        ],
         modleList:[
           {modleName:'新闻中心',switch1: false},
           {modleName:'新闻中心',switch1: true},
@@ -97,26 +132,110 @@
           {modleName:'新闻中心',switch1: true},
           {modleName:'新闻中心',switch1: true}
         ],
-        pageData:{total:11,pageSize:10,pageNum:1}//分页参数
-        }
-    },
-    mounted(){
-
-    },
-    watch: {
-
+        themePageParam:{total:11,pageSize:10,pageNum:1},//主题管理分页参数
+        layoutPageParam:{total:11,pageSize:10,pageNum:1},//主题管理分页参数
+        tabName:"主题管理",
+        list: [{pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
+          {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
+          {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
+          {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
+          {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
+          ],
+        list2: [{pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
+          {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
+          {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}],
+        editable: true,
+        isDragging: false,
+        delayedDragging: false,
+        isChoose:0
+      }
     },
     methods:{
-
-      changePage (value) {
-        //选择页码
-        this.pageData.pageNum=value;
-        this.getData();
+      chooseTheme(e){
+        console.log(e)
+        this.isChoose=e;
       },
-      changePageSize(value){
-        //选择每页显示多少条数据
-        this.pageData.pageSize = value;
-        this.getData();
+      switchTab(name){
+        this.tabName=name;
+      },
+      getThemeData(){//获取主题管理数据
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          // console.log(res);
+        })
+      },
+      getLayoutData(){//获取布局管理数据
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          // console.log(res);
+        })
+      },
+      getInterfaceData(){//获取界面设置数据
+        this.$ajax({
+          method:'get',
+          url:'',
+          params:{}
+        }).then(res=>{
+          // console.log(res);
+        })
+      },
+
+      changeThemePage (value) { //主题管理选择页码
+        this.themePageParam.pageNum=value;
+        this.getThemeData();
+      },
+      changeThemePageSize(value){//主题管理选择每页显示多少条数据
+        this.themePageParam.pageSize = value;
+        this.getThemeData();
+      },
+      changeLayoutPage (value) { //布局管理选择页码
+        this.layoutPageParam.pageNum=value;
+        this.getLayoutData();
+      },
+      changeLayoutPageSize(value){//布局管理选择每页显示多少条数据
+        this.layoutPageParam.pageSize = value;
+        this.getLayoutData();
+      },
+
+      onMove({ relatedContext, draggedContext }) {
+        const relatedElement = relatedContext.element;
+        const draggedElement = draggedContext.element;
+        return (
+          (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+        );
+      }
+    },
+    computed:{
+      dragOptions() {
+        return {
+          animation: 0,
+          group: "description",
+          disabled: !this.editable,
+          ghostClass: "ghost"
+        };
+      },
+      listString() {
+        return JSON.stringify(this.list, null, 2);
+      },
+      list2String() {
+        return JSON.stringify(this.list2, null, 2);
+      }
+    },
+    watch:{
+      isDragging(newValue) {
+        if (newValue) {
+          this.delayedDragging = true;
+          return;
+        }
+        this.$nextTick(() => {
+          this.delayedDragging = false;
+        });
       }
     }
   }
@@ -214,6 +333,7 @@
     float: left;
     width: 100px;
     font-weight: 400;font-size:14px;
+
   }
   .modelSwitch{
     float: right;
@@ -243,5 +363,63 @@
   .btn-wr button:hover{
     background: #D0021B;
     color: #fff;
+  }
+  .clear::after{
+    display: block;
+    content: " ";
+    clear: both;
+  }
+  .appList-wr{
+    padding: 40px;
+    width: 100%;
+  }
+  .appList{
+    padding:30px;
+  }
+  .appList h3{
+    border-left: 3px solid #A93439;
+    line-height: 20px;
+    padding-left: 20px;
+    font-size:14px;
+    margin-bottom: 40px;
+  }
+  .appList ul li{
+    float: left;
+    width: 120px;
+  }
+  .appList ul li .pic{
+    display: block;
+    width: 100%;
+    height: 43px;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .appList ul li p{
+    text-align: center;
+    font-size:13px;
+  }
+  .appList ul li .pic img{
+    width: 40px;
+    height: auto;
+  }
+  .flip-list-move {
+    transition: transform 0.5s;
+  }
+
+  .no-move {
+    transition: transform 0s;
+  }
+
+  .ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+  }
+
+  .list-group {
+    min-height: 20px;
+  }
+
+  .list-group-item {
+    cursor: move;
   }
 </style>

@@ -50,7 +50,8 @@
             </Col>
             <Col span="8">
             <div class="serchBtn-wr">
-              <Button size="large" type="error" icon="ios-search" @click="_getList">搜索</Button>
+              <!-- <Button size="large" type="error" icon="ios-search" @click="_getList">搜索</Button> -->
+              <Button size="large" type="error" icon="ios-search" @click="searchFunc">搜索</Button>
             </div>
             </Col>
           </Row>
@@ -89,10 +90,15 @@ export default {
         {title:'标题',key:'messageName',className: 'overEllipsis',
           render: (h, params) => {
             return h('a', {
-              attrs:{
-                href:this.tbodyData[params.index].url,
-                title:this.tbodyData[params.index].messageName,
-                target:"_blank"
+              // attrs:{
+              //   href:this.tbodyData[params.index].url,
+              //   title:this.tbodyData[params.index].messageName,
+              //   target:"_blank"
+              // },
+              on: {
+                click: () => {
+                  this.$router.push('/layout/msgDetail')
+                }
               }
             },this.tbodyData[params.index].messageName);
           }
@@ -141,6 +147,10 @@ export default {
           this.compList = res.data
         }
       })
+    },
+    searchFunc(){
+      this.pageData.pageNum=1;
+      this.getData();
     },
     changePage (value) {
       //选择页码
