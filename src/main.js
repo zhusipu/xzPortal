@@ -5,12 +5,14 @@ import App from './App'
 import router from './router'
 import vueResource from 'vue-resource'
 import axios from 'axios'
+import element from 'element-ui'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import './assets/css/common.css'
 import './assets/css/font/iconfont.css'
 
 Vue.config.productionTip = false
+Vue.use(element)
 Vue.use(iView)
 Vue.use(vueResource)
 Vue.prototype.$ajax = axios

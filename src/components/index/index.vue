@@ -3,7 +3,7 @@
     <div class="content">
       <div class="nav_left"  ref="homePage">
         <ul>
-          <li v-for="(item,index) in nav_left">
+          <li v-for="(item,index) in nav_left" :key="index">
             <a href="#">
               <span><img :src="item.pic" alt=""/></span>
               <p>{{item.title}}</p>
@@ -113,7 +113,7 @@
                     <span>全部</span>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe :columns="columns1" :data="data1"></Table>
+                    <Table stripe :columns="columnsMessage" :data="message"></Table>
                   </div>
                 </div>
             </Col>
@@ -137,7 +137,7 @@
                     <span>全部</span>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe :columns="columns1" :data="data1"></Table>
+                    <Table stripe :columns="columnsSchedule" :data="schedule"></Table>
                   </div>
                 </div>
             </Col>
@@ -167,12 +167,21 @@
 </template>
 
 <script>
+import { getMessage } from 'api/message'
   export default {
     data(){
       return {
         clientHeight:'',
         clientWidth:'',
         nav_left:[
+          {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
+          {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
+          {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
+          {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
+          {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
+          {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
+          {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
+          {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'},
           {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
           {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
           {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
@@ -188,34 +197,78 @@
           {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'}
         ],
         /**消息中心数据**/
-        columns1: [
+        columnsMessage: [
           {
             title: '发布时间',
-            key: 'times',
+            key: 'postDt',
             className: 'overEllipsis',
-            width:120,
+            width: 120
           },
           {
             title: '耗时',
-            key: 'consuming'
+            key: 'duration',
+            width: 80
           },
           {
             title: '标题',
-            key: 'title',
+            key: 'messageName',
             className: 'overEllipsis',
-            width:150,
-          },
-          {
-            title: '类型',
-            key: 'type',
-            className: 'overEllipsis',
-            width:120,
+            render: (h, params) => {
+              return h('a', {
+                attrs:{
+                  href:this.message[params.index].url,
+                  title:this.message[params.index].messageName,
+                  target:"_blank"
+                }
+              },this.message[params.index].messageName);
+            }
           },
           {
             title: '发起人',
-            key: 'initiator'
+            key: 'name',
+            width:150
           }
         ],
+        columnsSchedule: [
+          {
+            title: '发布时间',
+            key: 'postDt',
+            className: 'overEllipsis',
+            width:120
+          },
+          {
+            title: '耗时',
+            key: 'duration',
+            width: 80
+          },
+          {
+            title: '标题',
+            key: 'messageName',
+            className: 'overEllipsis',
+            render: (h, params) => {
+              return h('a', {
+                attrs:{
+                  href:this.schedule[params.index].url,
+                  title:this.schedule[params.index].messageName,
+                  target:"_blank"
+                }
+              },this.schedule[params.index].messageName);
+            }
+          },
+          {
+            title: '类型',
+            key: 'messageTodoState',
+            className: 'overEllipsis',
+            width: 80,
+          },
+          {
+            title: '发起人',
+            key: 'name',
+            width: 150
+          }
+        ],
+        message: [],
+        schedule: [],
         data1: [
           {
             times: '2018-10-13',
@@ -250,6 +303,8 @@
     },
     mounted(){
       this.initHeight();
+      this._getMessage()
+      this._getSchedule()
     },
     watch: {
       clientHeight: function () {
@@ -257,13 +312,26 @@
       }
     },
     methods:{
+      _getMessage() {
+        getMessage(1, 4, '0').then(res => {
+          if (res.code === 1) {
+            this.message = res.data.list
+          }
+        })
+      },
+      _getSchedule() {
+        getMessage(1, 4, '1').then(res => {
+          if (res.code === 1) {
+            this.schedule = res.data.list
+          }
+        })
+      },
       changeFixed(clientHeight){
         this.$refs.homePage.style.height = clientHeight+'px';
 
       },
       initHeight(){
         this.clientHeight = document.body.clientHeight-80;
-        console.log(this.clientHeight);
         window.onresize = () => {
           this.clientHeight = document.body.clientHeight-80;
         };

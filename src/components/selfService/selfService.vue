@@ -80,6 +80,7 @@
                 v-show=" index == num">{{itemCon}}</div>-->
               <div
                 v-for='(itemCon,index) in tabContents'
+                :key="index"
                 v-show=" index == num">{{itemCon.title}}
               </div>
             </div>
