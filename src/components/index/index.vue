@@ -294,7 +294,7 @@ import { getMessage } from 'api/message'
       this._getMessage()
       this._getSchedule()
     },
-    
+
     methods:{
       _getMessage() {
         this.loadingMsg = true

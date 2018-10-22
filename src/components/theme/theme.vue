@@ -67,33 +67,33 @@
               <div class="appList-wr">
                 <div class="appList">
 
-                  <!--<h3>已添加应用</h3>
-                  <draggable class="list-group clearfix" element="ul" v-model="list" :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
-                    <transition-group type="transition" :name="'flip-list'">
-                      <li class="list-group-item" v-for="(element,index) in list" :key="index">
-                        <span class="pic"><img :src="element.pic" alt=""></span>
-                        <p>{{element.title}}</p>
-                      </li>
-                    </transition-group>
-                  </draggable>
-                  -->
+                  <h3>应用管理</h3>
+                  <!-- <draggable class="list-group clearfix" element="ul" v-model="list" :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
+                     <transition-group type="transition" :name="'flip-list'">
+                       <li class="list-group-item" v-for="(element,index) in list" :key="index">
+                         <span class="pic"><img :src="element.pic" alt=""></span>
+                         <p>{{element.title}}</p>
+                       </li>
+                     </transition-group>
+                   </draggable>
+                   -->
                   <grid
                     :draggable="true"
                     :sortable="true"
                     :items="list"
                     :height="100"
-                    :width="100">
-                    <template slot="cell" slot-scope="props">
+
+                    :cellWidth="120">
+                    <template slot="cell"  slot-scope="props">
                       <div class="list-group-item">
-                        <span class="pic"><img :src="props.item.pic" alt=""></span>
+                        <!--<span class="pic"><img :src="props.item.pic" alt=""></span>-->
+                        <span class="pic" :style="'background-image: url('+props.item.pic+');'"></span>
                         <p>{{props.item.title}}</p>
                       </div>
                     </template>
                   </grid>
                 </div>
-                <div class="appList">
-                  <h3>未添加应用</h3>
-                </div>
+
                 <div class="btn-wr">
                   <button type="submit">确定</button>
                   <button type="submit" class="reset">取消</button>
@@ -446,5 +446,13 @@
     animation-duration: 0.07s;
     animation-iteration-count: infinite;
     animation-direction: alternate;
+  }
+  .list-group-item{
+    text-align:center;
+  }
+  .list-group-item .pic{
+    display: inline-block;
+    width: 40px;
+    height: 43px;
   }
 </style>
