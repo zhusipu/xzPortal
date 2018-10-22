@@ -66,7 +66,8 @@
             <TabPane label="设置应用" name="设置应用">
               <div class="appList-wr">
                 <div class="appList">
-                  <h3>已添加应用</h3>
+
+                  <!--<h3>已添加应用</h3>
                   <draggable class="list-group clearfix" element="ul" v-model="list" :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
                     <transition-group type="transition" :name="'flip-list'">
                       <li class="list-group-item" v-for="(element,index) in list" :key="index">
@@ -75,17 +76,23 @@
                       </li>
                     </transition-group>
                   </draggable>
+                  -->
+                  <grid
+                    :draggable="true"
+                    :sortable="true"
+                    :items="list"
+                    :height="100"
+                    :width="100">
+                    <template slot="cell" slot-scope="props">
+                      <div class="list-group-item">
+                        <span class="pic"><img :src="props.item.pic" alt=""></span>
+                        <p>{{props.item.title}}</p>
+                      </div>
+                    </template>
+                  </grid>
                 </div>
                 <div class="appList">
                   <h3>未添加应用</h3>
-                  <draggable element="span" v-model="list2" :options="dragOptions" :move="onMove">
-                    <transition-group name="no" class="list-group clearfix" tag="ul">
-                      <li class="list-group-item" v-for="(element,index) in list2" :key="index">
-                        <span class="pic"><img :src="element.pic" alt=""></span>
-                        <p>{{element.title}}</p>
-                      </li>
-                    </transition-group>
-                  </draggable>
                 </div>
                 <div class="btn-wr">
                   <button type="submit">确定</button>
@@ -104,11 +111,9 @@
 
 
 <script>
-  import draggable from 'vuedraggable'
   export default {
 
     components: {
-      draggable
     },
     data(){
       return {
@@ -148,6 +153,11 @@
         isDragging: false,
         delayedDragging: false,
         isChoose:0
+      }
+    },
+    mounted() {
+      document.getElementsByTagName('img')[0].onmousedown = function(e){
+        e.preventDefault()
       }
     },
     methods:{
@@ -420,6 +430,21 @@
   }
 
   .list-group-item {
-    cursor: move;
+    cursor: pointer;
+  }
+  @keyframes shake {
+    from {
+      transform: rotate(-4deg);
+    },
+    to {
+      transform: rotate(4deg);
+    }
+  }
+  /* .v-grid-item-dragging .pic { */
+  .v-grid-item-dragging .list-group-item  {
+    animation-name: shake;
+    animation-duration: 0.07s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
   }
 </style>
