@@ -160,7 +160,15 @@
         e.preventDefault()
       }
     },
+    created() {
+      this.changeTab()
+    },
     methods:{
+      changeTab() {
+        if (this.$route.params.hasOwnProperty('id')) {
+          this.tabName = this.$route.params['id']
+        }
+      },
       chooseTheme(e){
         console.log(e)
         this.isChoose=e;
@@ -222,6 +230,13 @@
       }
     },
     computed:{
+      id() {
+        if (this.$route.params.hasOwnProperty('id')) {
+          return this.$route.params['id']
+        } else {
+          return false
+        }
+      },
       dragOptions() {
         return {
           animation: 0,
@@ -246,6 +261,12 @@
         this.$nextTick(() => {
           this.delayedDragging = false;
         });
+      },
+      id() {
+        this.changeTab()
+      },
+      tabName(val) {
+        this.$router.push({path: '/layout/setting/' + val})
       }
     }
   }

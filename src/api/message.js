@@ -1,4 +1,4 @@
-import request from '@/assets/js/request'
+import request from 'utils/request'
 
 // 获取消息和待办
 export function getMessage(page, pageSize, type = '0', title = '', sender = '', postTime = '', todoStatus = '', dept = '', msgSrc = '', comp = '') {

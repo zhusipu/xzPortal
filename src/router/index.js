@@ -10,13 +10,12 @@ import NoticesCenter from '@/components/noticesCenter/noticesCenter'
 import NoticeDetail from '@/components/noticesCenter/noticeDetail'
 import SelfService from '@/components/selfService/selfService'
 import SalaryDetail from '@/components/selfService/salaryDetail'
-import Theme from '@/components/theme/theme'
+import Setting from '@/components/setting/index'
 import Login from '@/components/login/login'
 import NewsDetail from '@/components/newsCenter/newsDetail'
 import MsgDetail from '@/components/msgCenter/msgDetail'
 
-import store from '@/store/store'
-import * as types from '@/store/types'
+import store from '@/store'
 
 Vue.use(Router)
 
@@ -67,8 +66,8 @@ Vue.use(Router)
             component:SalaryDetail
           },
           {
-            path:'theme',
-            component:Theme
+            path: 'setting/:id',
+            component: Setting
           },
           {
             path:'newsDetail',
@@ -89,22 +88,14 @@ Vue.use(Router)
         component:Login
       }
   ]
-// })
-// 椤甸潰鍒锋柊鏃讹紝閲嶆柊璧嬪�紅oken
-if (window.sessionStorage.getItem('token')) {
-  store.commit(types.LOGIN, window.sessionStorage.getItem('token'))
-}
-if (window.sessionStorage.getItem('title')) {
-  store.commit(types.TITLE, window.sessionStorage.getItem('title'))
-}
-
 const router = new Router({
     routes
 });
 
 router.beforeEach((to, from, next) => {
+  console.log(store.getters)
     if (to.matched.some(r => r.meta.requireAuth)) {
-        if (store.state.token) {
+        if (store.getters.token) {
             next();
         }
         else {

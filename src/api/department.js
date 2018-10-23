@@ -1,4 +1,4 @@
-import request from '@/assets/js/request'
+import request from 'utils/request'
 
 // 获取公司列表
 export function getCompList() {

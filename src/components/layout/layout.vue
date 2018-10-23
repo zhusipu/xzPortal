@@ -7,8 +7,10 @@
             <Dropdown>
               <Icon type="md-settings"  size="24" color="#c5c5c5"/>
               <DropdownMenu slot="list">
-                <DropdownItem><router-link  to="/layout/theme">布局设置</router-link></DropdownItem>
-                <DropdownItem><router-link  to="/layout/theme">皮肤设置</router-link></DropdownItem>
+                <DropdownItem><router-link  to="/layout/setting/主题管理">主题管理</router-link></DropdownItem>
+                <DropdownItem><router-link  to="/layout/setting/布局管理">布局管理</router-link></DropdownItem>
+                <DropdownItem><router-link  to="/layout/setting/界面设置">界面设置</router-link></DropdownItem>
+                <DropdownItem><router-link  to="/layout/setting/设置应用">设置应用</router-link></DropdownItem>
                 <DropdownItem divided><router-link to="/layout/selfService/3">个人中心</router-link></DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -21,14 +23,14 @@
           </div>-->
 
           <span>
-                  <i class="header-right-logo"> <img src="../../assets/images/logo1.png" alt=""/></i> {{this.$store.state.title}}
-              </span>
+            <i class="header-right-logo"> <img src="../../assets/images/logo1.png" alt=""/></i> {{this.$store.state.title}}
+          </span>
           <div class="serchBar">
             <input type="text" placeholder="输入搜索的内容"/>
             <a href="#" class="serchBtn"><Icon type="ios-search" size="26"/></a>
           </div>
         </div>
-        <router-link  to="/layout/theme" class="skinBtn">
+        <router-link  to="/layout/setting/主题管理" class="skinBtn">
           <div id="AD_0" class="mc1cf294a1_container mc1cf294a1_corner mc1cf294a1_corner_css3" ><span  class="mc1cf294a1_masker">
             <img src="../../assets/images/c.png">
           </span>
@@ -59,7 +61,6 @@
       }
     },
     created:function(){
-      console.log("用户名:"+this.$store.state.title+"密码:"+this.$store.state.token)
     },
     computed: mapState({
       title: state => state.title,

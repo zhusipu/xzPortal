@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import * as types from '../../store/types'
+  import { login } from 'api/action'
   export default {
     data () {
       return {
@@ -43,7 +43,8 @@
         password_ji:'',
         formInline: {
           user: '',
-          password: ''
+          password: '',
+          remember: false
         },
         ruleInline: {
           user: [
@@ -61,7 +62,6 @@
     }
   },
   mounted(){
-    this.$store.commit(types.TITLE, 'Login');
     this.initHeight();
     this.getCookie();
   },
@@ -73,25 +73,24 @@
     },
     initHeight(){
       this.clientHeight = document.body.clientHeight;
-      console.log(this.clientHeight);
       window.onresize = () => {
         this.clientHeight = document.body.clientHeight;
       };
     },
-      handleSubmit(name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-
-            this.$store.commit(types.LOGIN,this.formInline.password);
-            this.$store.commit(types.TITLE,this.formInline.user);
+    handleSubmit(name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.$store.dispatch('Login', this.formInline).then((data) => {
             let redirect = decodeURIComponent(this.$route.query.redirect || '/');
             this.$router.push({path: redirect});
-
             this.$Message.success('登陆成功!');
+          }).catch((msg) => {
+              this.$Message.error(msg);
+          })
         } else {
           this.$Message.error('登陆失败!');
         }
-      })
+    })
     },
 
   //设置cookie
