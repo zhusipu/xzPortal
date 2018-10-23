@@ -1,7 +1,9 @@
 <template>
   <div class="zxGate">
     <div class="content">
-      <div class="nav_left"  ref="homePage">
+      <span class="navBtn" :class="{'navHideB':isA,'navShowB':!isA}" @click="toggle()"></span>
+      <div class="nav_left"  ref="homePage" :class="{'navHide':isA,'navShow':!isA}" >
+
         <ul>
           <li v-for="(item,index) in nav_left" :key="index">
             <a href="#">
@@ -11,7 +13,7 @@
           </li>
         </ul>
       </div>
-      <div class="main">
+      <div class="main" :class="{'mainW':isA,'mainWhide':!isA}">
         <div class="mian-wr">
           <Row :gutter="16">
             <Col span="8">
@@ -173,6 +175,7 @@ import { getMessage } from 'api/message'
   export default {
     data(){
       return {
+        isA: false,
         clientHeight:'',
         clientWidth:'',
         nav_left:[
@@ -339,6 +342,9 @@ import { getMessage } from 'api/message'
         window.onresize = () => {
           this.clientHeight = document.body.clientHeight-80;
         };
+      },
+      toggle:function () {
+        this.isA=!this.isA
       }
     },
     watch: {
@@ -505,5 +511,46 @@ import { getMessage } from 'api/message'
   background: #ff8a00;
   color: #fff;
 }
+.navBtn{
+  display: block;
+  width: 12px;
+  height: 54px;
+  position: fixed;
+  top: 80px;
+  left: 90px;
+  cursor: pointer;
+  background: url("../../assets/images/hide.png");
 
+}
+  .nav_left, .navBtn, .mainW, .mainWhide{
+    /*  Webkit内核浏览器：Safari and Chrome*/
+    -webkit-transition-property: all;
+    -webkit-transition-duration: .5s;
+    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    /*  Mozilla内核浏览器：firefox3.5+*/
+    -moz-transition-property: all;
+    -moz-transition-duration: .5s;
+    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    /*  Opera*/
+    -o-transition-property: all;
+    -o-transition-duration: .5s;
+    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    /*  IE9*/
+    -ms-transition-property: all;
+    -ms-transition-duration: .5s;
+    -ms-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  }
+  .navHide{
+    width:0;
+  }
+  .navHideB{
+    left: 0;
+    background: url("../../assets/images/show.png");
+  }
+  .mainW{
+    margin-left: 0;
+  }
+  .mainWhide{
+    margin-left: 90px;
+  }
 </style>
