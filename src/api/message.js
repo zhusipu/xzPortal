@@ -27,3 +27,14 @@ export function getMsgSrcList() {
     method: 'get'
   })
 }
+
+// 获取消息和待办各系统的消息数量
+export function getMsgCount(typeId = 0) {
+  return request({
+    url: '/Message/getMsgCount',
+    method: 'get',
+    params: {
+      typeId
+    }
+  })
+}

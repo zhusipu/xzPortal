@@ -59,7 +59,7 @@
       }
     },
     created:function(){
-      console.log("用户名:"+this.$store.state.title+"密码:"+this.$store.state.token)
+      // console.log("用户名:"+this.$store.state.title+"密码:"+this.$store.state.token)
     },
     computed: mapState({
       title: state => state.title,

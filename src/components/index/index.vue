@@ -106,11 +106,11 @@
                       <span><img src="../../assets/images/33.png" alt=""/></span>
                     </router-link>
                     <span><img src="../../assets/images/22.png" alt=""/></span>
-                    <span><img src="../../assets/images/11.png" alt=""/></span>
+                    <span><img src="../../assets/images/11.png" alt="" @click="_refreshMsg"/></span>
                   </div>
                   <div class="centerList">
-                    <Tabs :animated="false" @on-click="switchMsgTab">
-                        <TabPane :name="item.name" v-for="(item,index) in msgTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    <Tabs :animated="false" @on-click="switchMsgTab" v-model="msgTabVal">
+                        <TabPane :name="item.sysName" v-for="(item,index) in msgTabs" :label="item.name+'('+item.count+')'" :key="index"></TabPane>
                     </Tabs>
                   </div>
                   <div class="centerList-bd">
@@ -129,15 +129,15 @@
                       <span><img src="../../assets/images/33.png" alt=""/></span>
                     </router-link>
                     <span><img src="../../assets/images/22.png" alt=""/></span>
-                    <span><img src="../../assets/images/11.png" alt=""/></span>
+                    <span><img src="../../assets/images/11.png" alt="" @click="_refreshSchedule"/></span>
                   </div>
                   <div class="centerList">
-                    <Tabs :animated="false" @on-click="switchWaitDoTab">
-                      <TabPane :name="item.name" v-for="(item,index) in waitDoTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    <Tabs :animated="false" @on-click="switchWaitDoTab" v-model="scheduleTabVal">
+                      <TabPane :name="item.sysName" v-for="(item,index) in waitDoTabs" :label="item.name+'('+item.count+')'" :key="index"></TabPane>
                     </Tabs>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe loadingSchedule :columns="columnsSchedule" :data="schedule"></Table>
+                    <Table stripe :loading="loadingSchedule" :columns="columnsSchedule" :data="schedule"></Table>
                   </div>
                 </div>
             </Col>
@@ -169,184 +169,220 @@
 </template>
 
 <script>
-import { getMessage } from 'api/message'
-  export default {
-    data(){
-      return {
-        clientHeight:'',
-        clientWidth:'',
-        nav_left:[
-          {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
-          {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
-          {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
-          {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
-          {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
-          {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
-          {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
-          {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'},
-          {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
-          {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
-          {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
-          {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
-          {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
-          {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
-          {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
-          {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}
-        ],
-        slideData:[
-          {pic:require('../../assets/images/temp/slide1.png'),title:'切实关注基层人民生活状况切实关注基层人民生活状况切实关注基层人民生活状况'},
-          {pic:require('../../assets/images/temp/slide2.jpg'),title:'热烈庆祝'},
-          {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'}
-        ],
-        /**消息中心数据**/
-        columnsMessage: [
-          {
-            title: '发布时间',
-            key: 'postDt',
-            className: 'overEllipsis',
-            width: 120
-          },
-          {
-            title: '耗时',
-            key: 'duration',
-            width: 80
-          },
-          {
-            title: '标题',
-            key: 'messageName',
-            className: 'overEllipsis',
-            render: (h, params) => {
-              return h('a', {
-                attrs:{
-                  href:this.message[params.index].url,
-                  title:this.message[params.index].messageName,
-                  target:"_blank"
-                }
-              },this.message[params.index].messageName);
-            }
-          },
-          {
-            title: '发起人',
-            key: 'name',
-            width:150
+import { getMessage, getMsgCount } from 'api/message'
+import { getAppList } from 'api/application'
+export default {
+  data(){
+    return {
+      clientHeight:'',
+      clientWidth:'',
+      appList: [],
+      nav_left:[
+        {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
+        {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
+        {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
+        {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
+        {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
+        {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
+        {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
+        {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'},
+        {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
+        {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
+        {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
+        {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
+        {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
+        {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
+        {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
+        {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}
+      ],
+      slideData:[
+        {pic:require('../../assets/images/temp/slide1.png'),title:'切实关注基层人民生活状况切实关注基层人民生活状况切实关注基层人民生活状况'},
+        {pic:require('../../assets/images/temp/slide2.jpg'),title:'热烈庆祝'},
+        {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'}
+      ],
+      /**消息中心数据**/
+      columnsMessage: [
+        {
+          title: '发布时间',
+          key: 'postDt',
+          className: 'overEllipsis',
+          width: 120
+        },
+        {
+          title: '耗时',
+          key: 'duration',
+          width: 80
+        },
+        {
+          title: '标题',
+          key: 'messageName',
+          className: 'overEllipsis',
+          render: (h, params) => {
+            return h('a', {
+              attrs:{
+                href:this.message[params.index].url,
+                title:this.message[params.index].messageName,
+                target:"_blank"
+              }
+            },this.message[params.index].messageName);
           }
-        ],
-        columnsSchedule: [
-          {
-            title: '发布时间',
-            key: 'postDt',
-            className: 'overEllipsis',
-            width:120
-          },
-          {
-            title: '耗时',
-            key: 'duration',
-            width: 80
-          },
-          {
-            title: '标题',
-            key: 'messageName',
-            className: 'overEllipsis',
-            render: (h, params) => {
-              return h('a', {
-                attrs:{
-                  href:this.schedule[params.index].url,
-                  title:this.schedule[params.index].messageName,
-                  target:"_blank"
-                }
-              },this.schedule[params.index].messageName);
-            }
-          },
-          {
-            title: '类型',
-            key: 'messageTodoState',
-            className: 'overEllipsis',
-            width: 80,
-          },
-          {
-            title: '发起人',
-            key: 'name',
-            width: 150
+        },
+        {
+          title: '发起人',
+          key: 'name',
+          width:150
+        }
+      ],
+      columnsSchedule: [
+        {
+          title: '发布时间',
+          key: 'postDt',
+          className: 'overEllipsis',
+          width:120
+        },
+        {
+          title: '耗时',
+          key: 'duration',
+          width: 80
+        },
+        {
+          title: '标题',
+          key: 'messageName',
+          className: 'overEllipsis',
+          render: (h, params) => {
+            return h('a', {
+              attrs:{
+                href:this.schedule[params.index].url,
+                title:this.schedule[params.index].messageName,
+                target:"_blank"
+              }
+            },this.schedule[params.index].messageName);
           }
-        ],
-        message: [],
-        schedule: [],
-        loadingMsg: false,
-        loadingSchedule: false,
-        msgTabs:[
-          {name:"全部",num:"18"},
-          {name:"合同",num:"3"},
-          {name:"OA",num:"5"},
-          {name:"人资",num:"5"},
-          {name:"其他",num:"5"}
-        ],
-        waitDoTabs:[
-          {name:"全部",num:"18"},
-          {name:"合同",num:"3"},
-          {name:"OA",num:"5"},
-          {name:"人资",num:"5"},
-          {name:"其他",num:"5"}
-        ]
-      }
+        },
+        {
+          title: '类型',
+          key: 'messageTodoState',
+          className: 'overEllipsis',
+          width: 80,
+        },
+        {
+          title: '发起人',
+          key: 'name',
+          width: 150
+        }
+      ],
+      message: [],
+      schedule: [],
+      loadingMsg: false,
+      loadingSchedule: false,
+      msgTabs:[],
+      waitDoTabs:[],
+      msgTabVal: '',
+      scheduleTabVal: ''
+    }
+  },
+  mounted(){
+    this.initHeight();
+    this._getMessage()
+    this._getSchedule()
+    this._getAppList()
+    this._getMsgCount()
+    this._getScheduleCount()
+  },
+  
+  methods:{
+    _getAppList() {
+      getAppList().then(res => {
+        if (res.code === 1) {
+          this.appList = res.data
+        }
+      })
     },
-    mounted(){
-      this.initHeight();
-      this._getMessage()
-      this._getSchedule()
+    _getMsgCount() {
+      getMsgCount().then(res => {
+        if (res.code === 1) {
+          this.msgTabs = res.data
+          this.msgTabVal = res.data[0].sysName
+        }
+      })
     },
-    
-    methods:{
-      _getMessage() {
-        this.loadingMsg = true
-        getMessage(1, 4, '0').then(res => {
-          if (res.code === 1) {
-            this.message = res.data.list
-          }
-          this.loadingMsg = false
-        })
-      },
-      _getSchedule() {
+    _getScheduleCount() {
+      getMsgCount(1).then(res => {
+        if (res.code === 1) {
+          this.waitDoTabs = res.data
+          this.scheduleTabVal = res.data[0].sysName
+        }
+      })
+    },
+    _getMessage() {
+      this.loadingMsg = true
+      getMessage(1, 4, '0').then(res => {
+        if (res.code === 1) {
+          this.message = res.data.list
+        }
+        this.loadingMsg = false
+      })
+    },
+    _getSchedule() {
+      this.loadingSchedule = true
+      getMessage(1, 4, '1').then(res => {
+        if (res.code === 1) {
+          this.schedule = res.data.list
+        }
         this.loadingSchedule = false
-        getMessage(1, 4, '1').then(res => {
-          if (res.code === 1) {
-            this.schedule = res.data.list
-          }
-          this.loadingSchedule = false
-        })
-      },
-      getNewsData(){ //获取新闻数据
-        this.$ajax({
-          method:'get',
-          url:'',
-          params:{}
-        }).then(res=>{
-          console.log(res);
-        })
-      },
-      switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
-        console.log(name);
-        this.getMsgData();
-      },
-      switchWaitDoTab(name){ //点击待办中心tabs标签搜索对应数据
-        console.log(name);
-        this.getWaitDoData();
-      },
-      changeFixed(clientHeight){
-        this.$refs.homePage.style.height = clientHeight+'px';
-      },
-      initHeight(){
+      })
+    },
+    _refreshMsg() {
+      this._getMessage()
+      this._getMsgCount()
+    },
+    _refreshSchedule() {
+      this._getSchedule()
+      this._getScheduleCount()
+    },
+    getNewsData(){ //获取新闻数据
+      this.$ajax({
+        method:'get',
+        url:'',
+        params:{}
+      }).then(res=>{
+        console.log(res);
+      })
+    },
+    switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
+      this.loadingMsg = true
+      getMessage(1, 4, '0', '', '', '', '', '', name).then(res => {
+        if (res.code === 1) {
+          this.message = res.data.list
+        }
+        this.loadingMsg = false
+      })
+    },
+    switchWaitDoTab(name){ //点击待办中心tabs标签搜索对应数据
+      this.loadingSchedule = true
+      getMessage(1, 4, '1', '', '', '', '', '', name).then(res => {
+        if (res.code === 1) {
+          this.schedule = res.data.list
+        }
+        this.loadingSchedule = false
+      })
+    },
+    changeFixed(clientHeight){
+      this.$refs.homePage.style.height = clientHeight+'px';
+    },
+    initHeight(){
+      this.clientHeight = document.body.clientHeight-80;
+      window.onresize = () => {
         this.clientHeight = document.body.clientHeight-80;
-        window.onresize = () => {
-          this.clientHeight = document.body.clientHeight-80;
-        };
-      }
-    },
-    watch: {
-      clientHeight: function () {
-        this.changeFixed(this.clientHeight)
-      }
-    },
-  }
+      };
+    }
+  },
+  watch: {
+    clientHeight: function () {
+      this.changeFixed(this.clientHeight)
+    }
+  },
+}
 </script>
 
 

@@ -149,8 +149,8 @@ export default {
       })
     },
     searchFunc(){
-      this.pageData.pageNum=1;
-      this.getData();
+      this.pageData.pageNum = 1;
+      this._getList()
     },
     changePage (value) {
       //选择页码
