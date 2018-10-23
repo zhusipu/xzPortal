@@ -299,7 +299,7 @@
           <div class="tableData">
             <Table border  :columns="addrBookThead" :data="addrBookData" ref="table"></Table>
             <div class="pagnation-wr">
-              <Page placement="top" show-total show-sizer :total="telPageParam.total" :current="telPageParam.pageNum" :page-size="telPageParam.pageSize"  @on-change="changeTelPage" @on-page-size-change="changeTelPageSize"></Page>
+              <Page placement="top" :loading="loadingAddrBook" show-total show-sizer :total="telPageParam.total" :current="telPageParam.pageNum" :page-size="telPageParam.pageSize"  @on-change="changeTelPage" @on-page-size-change="changeTelPageSize"></Page>
             </div>
           </div>
         </TabPane>
@@ -314,10 +314,10 @@ export default {
   data(){
     return {
       exportLoading: false,
-      searchSalaryParam:{group:"",empNo:"",empName:"",duration:""},//个人薪资搜索参数
-      searchTelParam:{group:"",empNo:"",empName:"",phoneNo:""}, //通讯录搜索参数
-      searchHolidayParam:{group:"",empNo:"",empName:"",duration:""}, //个人假期信息搜索参数
-      postHolidayParam:{startTime:"",endTime:"",longTime:"",explain:""},//上传假期信息
+      searchSalaryParam:{ group: '',empNo: '',empName: '',duration: '' }, //个人薪资搜索参数
+      searchTelParam:{ group: '', empNo: '', empName: '', phoneNo: '' }, //通讯录搜索参数
+      searchHolidayParam:{ group: '', empNo: '', empName: '', duration: '' }, //个人假期信息搜索参数
+      postHolidayParam:{ startTime: '',endTime: '',longTime: '',explain: '' }, //上传假期信息
       salaryThead:[ //个人薪资表头
         {title:'员工编号',key:'staffNum'},
         {title:'姓名',key:'staffName'},
@@ -342,27 +342,25 @@ export default {
         },
       ],
       addrBookThead:[//通讯录表头
-        {title:'序号',key:'a',
+        { title: '序号',key: 'a', width: 80,
           render: (h, params) => {
-            return h('div', {},params.index+1)
+            return h('div', {}, params.index + 1)
           }
         },
-        {title:'员工编号',key:'staffNo'},
-        {title:'姓名',key:'staffName'},
-        {title:'所属组织',key:'department'},
-        {title:'岗位',key:'position'},
-        {title:'手机号码',key:'phoneNo'},
-        {title:'办公电话',key:'officeNo'},
-        {title:'电子邮件',key:'email'},
-        {title:'通讯地址',key:'address'},
-        {title:'通讯电子编码',key:'addrCode'},
-        {title:'其他',key:'other'}
+        { title: '员工编号', key: 'staffNo' },
+        { title: '姓名', key: 'staffName' },
+        { title: '所属组织', key: 'department' },
+        { title: '岗位', key: 'position' },
+        { title: '手机号码', key: 'phoneNo' },
+        { title: '办公电话', key: 'officeNo' },
+        { title: '电子邮件', key: 'email' },
+        { title: '通讯地址', key: 'address' }
       ],
       salaryData:[],//个人薪资数据
       addrBookData:[],//通讯录数据
-      salaryPageParam:{total:0,pageSize:10,pageNum:1},//个人薪资分页参数
-      telPageParam:{total:0,pageSize:10,pageNum:1},//通讯录分页参数
-      tabs: ["基本信息", "联系方式","任职资格","职业信息", "企业任职经历","任职资格"],//个人基本信息tab
+      salaryPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //个人薪资分页参数
+      telPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //通讯录分页参数
+      tabs: [ '基本信息', '联系方式', '任职资格', '职业信息', '企业任职经历', '任职资格' ],//个人基本信息tab
       tabContents:[ //个人基本信息数据
         {
           name:"张朝阳",
@@ -391,27 +389,28 @@ export default {
           b:'北京市朝阳区'
         }
       ],
+      loadingAddrBook: false,
       num: 0,
       title:'基本信息',
       tabName:''
     }
   },
   created(){
-    if (this.$route.params.name==0){
-      this.tabName="个人薪资"
-    }else if(this.$route.params.name==1){
-      this.tabName="通讯录"
-    }else if(this.$route.params.name==2){
-      this.tabName="个人假期信息"
+    if (this.$route.params.name == 0){
+      this.tabName = "个人薪资"
+    }else if(this.$route.params.name == 1){
+      this.tabName = "通讯录"
+      this._getAddressbook()
+    }else if(this.$route.params.name == 2){
+      this.tabName = "个人假期信息"
     }else{
-      this.tabName="个人基本信息"
+      this.tabName = "个人基本信息"
     };
     this.switchTab(this.tabName);
   },
   methods:{
     switchTab(name){
-      this.tabName=name;
-      console.log(this.tabName)
+      this.tabName = name;
       if(name=="个人薪资"){
         this.getSalary();
         this.$router.push('/layout/selfService/0');
@@ -420,10 +419,10 @@ export default {
         this.$router.push('/layout/selfService/3');
       }else if(name=="个人假期信息"){
         this.getHolidayInfo();
-         this.$router.push('/layout/selfService/2');
+        this.$router.push('/layout/selfService/2');
       }else{
-        this.getAddrBook();//调用通讯录
-         this.$router.push('/layout/selfService/1');
+        this._getAddressbook() //调用通讯录
+        this.$router.push('/layout/selfService/1');
       }
     },
     // 时间段日期返回的是一个数组需要拼接
@@ -446,9 +445,9 @@ export default {
       }
       this.getHolidayInfo()
     },
-    searchTel(){//搜索通讯录方法
-      this.telPageParam.pageNum=1;
-      this.getAddrBook();
+    searchTel(){ //搜索通讯录方法
+      this.telPageParam.pageNum = 1;
+      this._getAddressbook()
     },
     getSalary(){//获取个人薪资数据方法
       this.$ajax({
@@ -477,13 +476,14 @@ export default {
         // console.log(res.data.data);
       })
     },
-    getAddrBook(){//获取通讯录数据方法
-      this.$ajax({
-        method:'get',
-        url:'/addrBook',
-        params:{}
-      }).then(res=>{
-        this.addrBookData=res.data.data;
+    _getAddressbook(){ //获取通讯录数据方法
+      this.loadingAddrBook = true
+      getAddressbook().then(res => {
+        if (res.code === 1) {
+          this.addrBookData = res.data.list
+          this.telPageParam.total = res.data.total
+          this.loadingAddrBook = false
+        }
       })
     },
     postHolidayData(){//上传假期信息
@@ -501,21 +501,21 @@ export default {
         console.log(res);
       })
     },
-    changeSalaryPage (value) {//个人薪资-选择页码方法
-      this.salaryPageParam.pageNum=value;
+    changeSalaryPage (value) { //个人薪资-选择页码方法
+      this.salaryPageParam.pageNum = value;
       this.getSalary();
     },
-    changeSalaryPageSize(value){//个人薪资-选择每页显示多少条数据方法
+    changeSalaryPageSize(value){ //个人薪资-选择每页显示多少条数据方法
       this.salaryPageParam.pageSize = value;
       this.getSalary();
     },
     changeTelPage (value) {//通讯录-选择页码方法
-      this.telPageParam.pageNum=value;
-      this.getAddrBook();
+      this.telPageParam.pageNum = value;
+      this._getAddressbook()
     },
     changeTelPageSize(value){//通讯录-选择每页显示多少条数据方法
       this.telPageParam.pageSize = value;
-      this.getAddrBook();
+      this._getAddressbook()
     },
     exportSalaryExcel () {//导出个人薪资表
       if (this.salaryData.length) {

@@ -13,29 +13,31 @@
           <Row :gutter="16">
             <Col span="16">
             <FormItem label="新闻标题：">
-              <Input v-model="searchData.newsTitle"  clearable /></Input>
+              <Input v-model="searchData.title"  clearable /></Input>
             </FormItem>
             </Col>
             <Col span="8">
             <FormItem label="发起人：">
-              <Input v-model="searchData.originator"  clearable ></Input>
+              <Input v-model="searchData.creator"  clearable ></Input>
             </FormItem>
             </Col>
           </Row>
           <Row :gutter="16">
             <Col span="8">
             <FormItem label="发起时间：">
-              <DatePicker v-model="searchData.originatorTime" type="date" placeholder="选择时间" ></DatePicker>
+              <DatePicker v-model="searchData.createTime" type="date" placeholder="选择时间" ></DatePicker>
             </FormItem>
             </Col>
             <Col span="8">
             <FormItem label="所在部门：">
-              <Input v-model="searchData.department" clearable />
+              <Input v-model="searchData.dept" clearable />
             </FormItem>
             </Col>
             <Col span="8">
             <FormItem label="所在公司：">
-              <Input v-model="searchData.company" clearable />
+              <Select v-model="searchData.comp"  clearable>
+                <Option v-for="item in compList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+              </Select>
             </FormItem>
             </Col>
           </Row>
@@ -45,7 +47,7 @@
         </Form>
       </div>
       <div class="tableData">
-        <Table border  :columns="theadData" :data="tbodyData"></Table>
+        <Table border :loading="loading" :columns="theadData" :data="newsList"></Table>
         <div style="margin: 10px;height:35px;">
           <div style="float: right;">
             <Page placement="top" show-total show-sizer :total="pageData.total" :current="pageData.pageNum" :page-size="pageData.pageSize"
@@ -58,13 +60,22 @@
 </template>
 
 <script>
+import { getCompList } from 'api/department'
+import { getNews } from 'api/news'
 export default {
   data(){
     return {
-      searchData:{newsTitle:"",originator:"",originatorTime:"",department:"",company:""},
+      compList: [],
+      searchData:{
+        title: '',
+        creator: '',
+        createTime: '',
+        dept: '',
+        comp: ''
+      },
       theadData:[ //表头
-        {title:'发布时间',key:'originatorTime'},
-        {title:'标题',key:'newsTitle',className: 'overEllipsis',width:350,
+        { title: '发布时间', key: 'createTime' },
+        { title: '标题', key: 'title', className: 'overEllipsis', width: 350,
           render: (h, params) => {
             return h('a', {
               // attrs:{
@@ -74,48 +85,60 @@ export default {
               // },
               on: {
                 click: () => {
-                  this.$router.push('/layout/newsDetail')
+                  this.$router.push('/layout/newsDetail/' + this.newsList[params.index].id)
                 }
               }
-            },this.tbodyData[params.index].newsTitle);
+            },this.newsList[params.index].title);
           }
         },
-        {title:'发起人',key:'originator'},
-        {title:'部门',key:'department'},
-        {title:'公司',key:'company'}
+        { title: '发起人', key: 'creator' },
+        { title: '部门', key: 'dept' },
+        { title: '公司', key: 'comp' }
       ],
-      tbodyData:[],
-      pageData:{total:11,pageSize:10,pageNum:1}//分页参数
+      newsList: [],
+      loading: false,
+      pageData: {
+        total: 0,
+        pageSize: 10,
+        pageNum: 1
+      } //分页参数
     }
   },
   created(){
-    this.getData();
+    this._getCompList()
+    this._getList()
   },
   methods:{
-    // 时间参数需要格式化new Date(时间参数).Format('时间格式')
-    getData(){
-      this.$ajax({
-        method:'get',
-        url:'/newsList',
-        params:{}
-      }).then(res=>{
-        console.log(res);
-        this.tbodyData=res.data.data;
+    _getList() {
+      this.loading = true
+      getNews(this.pageData.pageNum, this.pageData.pageSize, this.searchData.title, this.searchData.creator, this.searchData.createTime, this.searchData.dept, this.searchData.comp).then(res => {
+        if (res.code === 1) {
+          this.newsList = res.data.list
+          this.pageData.total = res.data.total
+          this.loading = false
+        }
+      })
+    },
+    _getCompList() {
+      getCompList().then(res => {
+        if (res.code === 1) {
+          this.compList = res.data
+        }
       })
     },
     searchFunc(){
-      this.pageData.pageNum=1;
-      this.getData();
+      this.pageData.pageNum = 1
+      this._getList()
     },
     changePage (value) {
       //选择页码
-      this.pageData.pageNum=value;
-      this.getData();
+      this.pageData.pageNum = value
+      this._getList()
     },
     changePageSize(value){
       //选择每页显示多少条数据
-      this.pageData.pageSize = value;
-      this.getData();
+      this.pageData.pageSize = value
+      this._getList()
     },
   }
 }

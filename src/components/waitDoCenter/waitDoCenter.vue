@@ -51,7 +51,9 @@
             </Col>
             <Col span="8">
             <FormItem label="所在公司：">
-              <Input v-model="searchData.company" clearable />
+              <Select v-model="searchData.company"  clearable>
+                <Option v-for="item in compList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+              </Select>
             </FormItem>
             </Col>
             <Col span="8">
@@ -165,8 +167,8 @@ export default {
       })
     },
     searchFunc(){
-      this.pageData.pageNum=1;
-      this.getData();
+      this.pageData.pageNum = 1;
+      this._getList()
     },
     changePage (value) {
       //选择页码

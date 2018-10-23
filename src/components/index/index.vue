@@ -3,12 +3,11 @@
     <div class="content">
       <span class="navBtn" :class="{'navHideB':isA,'navShowB':!isA}" @click="toggle()"></span>
       <div class="nav_left"  ref="homePage" :class="{'navHide':isA,'navShow':!isA}" >
-
         <ul>
-          <li v-for="(item,index) in nav_left" :key="index">
-            <a href="#">
-              <span><img :src="item.pic" alt=""/></span>
-              <p>{{item.title}}</p>
+          <li v-for="(item,index) in appList" :key="index">
+            <a :href="item.link">
+              <span><img :src="'/resource/uploads/Application/' + item.logo" alt="" width="100%"/></span>
+              <p>{{ item.name }}</p>
             </a>
           </li>
         </ul>
@@ -25,18 +24,17 @@
                 <div class="h-model-tool">
                   <span><img src="../../assets/images/33.png" alt=""/></span>
                   <span><img src="../../assets/images/22.png" alt=""/></span>
-                  <span><img src="../../assets/images/11.png" alt=""/></span>
+                  <span><img src="../../assets/images/11.png" alt="" @click="_getPicNews"/></span>
                 </div>
                 <!--轮播图{-->
                 <div class="slide-wr">
                   <Carousel autoplay>
-                    <Carousel-item v-for="(item,index) in slideData" :key="index" >
-                      <div class="slide-Pic"><img :src="item.pic" alt=""/>
+                    <Carousel-item v-for="(item,index) in picNewsList" :key="index" >
+                      <div class="slide-Pic"><img :src="'/resource/tempfileuploads/' + item.thumb" alt=""/>
                         <div class="slide-tit">
-                          <p><span>●</span> {{item.title}}</p>
+                          <p><span>●</span> {{ item.title }}</p>
                         </div>
                       </div>
-
                     </Carousel-item>
                   </Carousel>
                 </div>
@@ -52,51 +50,47 @@
                 <div class="h-model-tool">
                   <router-link to="/layout/newsCenter"><span><img src="../../assets/images/33.png" alt=""/></span></router-link>
                   <span><img src="../../assets/images/22.png" alt=""/></span>
-                  <span><img src="../../assets/images/11.png" alt=""/></span>
+                  <span><img src="../../assets/images/11.png" alt="" @click="_getNews"/></span>
                 </div>
                 <div class="h-newsList">
                   <ul>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
+                    <li v-for="item in newsList" :key="item.id">
+                      <a href=""><span>●</span> <em>{{ item.title }}</em> <i>{{ item.createDate }}</i></a>
+                    </li>
                   </ul>
                 </div>
               </div>
             </Col>
             <Col span="8">
-            <div class="h-model">
-              <span class="h-model-c"></span>
-              <div class="h-model-tit">
-                员工自助 / SELF-SERVICE
+              <div class="h-model">
+                <span class="h-model-c"></span>
+                <div class="h-model-tit">
+                  员工自助 / SELF-SERVICE
+                </div>
+                <div class="h-model-tool">
+                  <span><img src="../../assets/images/33.png" alt=""/></span>
+                  <span><img src="../../assets/images/22.png" alt=""/></span>
+                  <span><img src="../../assets/images/11.png" alt=""/></span>
+                </div>
+                <div class="selfHelp">
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/0"><img src="../../assets/images/zizhu2.png" alt=""/><br/><span>薪资管理</span></router-link>
+                  </div>
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/1"><img src="../../assets/images/zizhu3.png" alt=""/><br/><span>企业通讯录</span></router-link>
+                  </div>
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/2"><img src="../../assets/images/zhuzhu1.png" alt=""/><br/><span>个人考勤休假</span></router-link>
+                  </div>
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/3"><img src="../../assets/images/zizhu4.png" alt=""/><br/><span>个人信息维护</span></router-link>
+                  </div>
+                </div>
               </div>
-              <div class="h-model-tool">
-                <span><img src="../../assets/images/33.png" alt=""/></span>
-                <span><img src="../../assets/images/22.png" alt=""/></span>
-                <span><img src="../../assets/images/11.png" alt=""/></span>
-              </div>
-              <div class="selfHelp">
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/0"><img src="../../assets/images/zizhu2.png" alt=""/><br/><span>薪资管理</span></router-link>
-                </div>
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/1"><img src="../../assets/images/zizhu3.png" alt=""/><br/><span>企业通讯录</span></router-link>
-                </div>
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/2"><img src="../../assets/images/zhuzhu1.png" alt=""/><br/><span>个人考勤休假</span></router-link>
-                </div>
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/3"><img src="../../assets/images/zizhu4.png" alt=""/><br/><span>个人信息维护</span></router-link>
-                </div>
-              </div>
-            </div>
             </Col>
           </Row>
 
           <Row :gutter="16">
-
             <Col span="12">
                <div class="h-model">
                   <span class="h-model-c"></span>
@@ -108,11 +102,11 @@
                       <span><img src="../../assets/images/33.png" alt=""/></span>
                     </router-link>
                     <span><img src="../../assets/images/22.png" alt=""/></span>
-                    <span><img src="../../assets/images/11.png" alt=""/></span>
+                    <span><img src="../../assets/images/11.png" alt="" @click="_refreshMsg"/></span>
                   </div>
                   <div class="centerList">
-                    <Tabs :animated="false" @on-click="switchMsgTab">
-                        <TabPane :name="item.name" v-for="(item,index) in msgTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    <Tabs :animated="false" @on-click="switchMsgTab" v-model="msgTabVal">
+                        <TabPane :name="item.sysName" v-for="(item,index) in msgTabs" :label="item.name+'('+item.count+')'" :key="index"></TabPane>
                     </Tabs>
                   </div>
                   <div class="centerList-bd">
@@ -131,15 +125,15 @@
                       <span><img src="../../assets/images/33.png" alt=""/></span>
                     </router-link>
                     <span><img src="../../assets/images/22.png" alt=""/></span>
-                    <span><img src="../../assets/images/11.png" alt=""/></span>
+                    <span><img src="../../assets/images/11.png" alt="" @click="_refreshSchedule"/></span>
                   </div>
                   <div class="centerList">
-                    <Tabs :animated="false" @on-click="switchWaitDoTab">
-                      <TabPane :name="item.name" v-for="(item,index) in waitDoTabs" :label="item.name+'('+item.num+')'" :key="index"></TabPane>
+                    <Tabs :animated="false" @on-click="switchWaitDoTab" v-model="scheduleTabVal">
+                      <TabPane :name="item.sysName" v-for="(item,index) in waitDoTabs" :label="item.name+'('+item.count+')'" :key="index"></TabPane>
                     </Tabs>
                   </div>
                   <div class="centerList-bd">
-                    <Table stripe loadingSchedule :columns="columnsSchedule" :data="schedule"></Table>
+                    <Table stripe :loading="loadingSchedule" :columns="columnsSchedule" :data="schedule"></Table>
                   </div>
                 </div>
             </Col>
@@ -171,188 +165,220 @@
 </template>
 
 <script>
-import { getMessage } from 'api/message'
-  export default {
-    data(){
-      return {
-        isA: false,
-        clientHeight:'',
-        clientWidth:'',
-        nav_left:[
-          {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
-          {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
-          {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
-          {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
-          {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
-          {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
-          {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
-          {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'},
-          {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
-          {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
-          {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
-          {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
-          {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
-          {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
-          {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
-          {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}
-        ],
-        slideData:[
-          {pic:require('../../assets/images/temp/slide1.png'),title:'切实关注基层人民生活状况切实关注基层人民生活状况切实关注基层人民生活状况'},
-          {pic:require('../../assets/images/temp/slide2.jpg'),title:'热烈庆祝'},
-          {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'}
-        ],
-        /**消息中心数据**/
-        columnsMessage: [
-          {
-            title: '发布时间',
-            key: 'postDt',
-            className: 'overEllipsis',
-            width: 120
-          },
-          {
-            title: '耗时',
-            key: 'duration',
-            width: 80
-          },
-          {
-            title: '标题',
-            key: 'messageName',
-            className: 'overEllipsis',
-            render: (h, params) => {
-              return h('a', {
-                attrs:{
-                  href:this.message[params.index].url,
-                  title:this.message[params.index].messageName,
-                  target:"_blank"
-                }
-              },this.message[params.index].messageName);
-            }
-          },
-          {
-            title: '发起人',
-            key: 'name',
-            width:150
+import { getMessage, getMsgCount } from 'api/message'
+import { getAppList } from 'api/application'
+import { getPicNews, getNews } from 'api/news'
+export default {
+  data(){
+    return {
+      clientHeight:'',
+      clientWidth:'',
+      isA: false,
+      appList: [],
+      picNewsList: [],
+      newsList: [],
+      /**消息中心数据**/
+      columnsMessage: [
+        {
+          title: '发布时间',
+          key: 'postDt',
+          className: 'overEllipsis',
+          width: 120
+        },
+        {
+          title: '耗时',
+          key: 'duration',
+          width: 80
+        },
+        {
+          title: '标题',
+          key: 'messageName',
+          className: 'overEllipsis',
+          render: (h, params) => {
+            return h('a', {
+              attrs:{
+                href:this.message[params.index].url,
+                title:this.message[params.index].messageName,
+                target:"_blank"
+              }
+            },this.message[params.index].messageName);
           }
-        ],
-        columnsSchedule: [
-          {
-            title: '发布时间',
-            key: 'postDt',
-            className: 'overEllipsis',
-            width:120
-          },
-          {
-            title: '耗时',
-            key: 'duration',
-            width: 80
-          },
-          {
-            title: '标题',
-            key: 'messageName',
-            className: 'overEllipsis',
-            render: (h, params) => {
-              return h('a', {
-                attrs:{
-                  href:this.schedule[params.index].url,
-                  title:this.schedule[params.index].messageName,
-                  target:"_blank"
-                }
-              },this.schedule[params.index].messageName);
-            }
-          },
-          {
-            title: '类型',
-            key: 'messageTodoState',
-            className: 'overEllipsis',
-            width: 80,
-          },
-          {
-            title: '发起人',
-            key: 'name',
-            width: 150
+        },
+        {
+          title: '发起人',
+          key: 'name',
+          width:150
+        }
+      ],
+      columnsSchedule: [
+        {
+          title: '发布时间',
+          key: 'postDt',
+          className: 'overEllipsis',
+          width:120
+        },
+        {
+          title: '耗时',
+          key: 'duration',
+          width: 80
+        },
+        {
+          title: '标题',
+          key: 'messageName',
+          className: 'overEllipsis',
+          render: (h, params) => {
+            return h('a', {
+              attrs:{
+                href:this.schedule[params.index].url,
+                title:this.schedule[params.index].messageName,
+                target:"_blank"
+              }
+            },this.schedule[params.index].messageName);
           }
-        ],
-        message: [],
-        schedule: [],
-        loadingMsg: false,
-        loadingSchedule: false,
-        msgTabs:[
-          {name:"全部",num:"18"},
-          {name:"合同",num:"3"},
-          {name:"OA",num:"5"},
-          {name:"人资",num:"5"},
-          {name:"其他",num:"5"}
-        ],
-        waitDoTabs:[
-          {name:"全部",num:"18"},
-          {name:"合同",num:"3"},
-          {name:"OA",num:"5"},
-          {name:"人资",num:"5"},
-          {name:"其他",num:"5"}
-        ]
-      }
+        },
+        {
+          title: '类型',
+          key: 'messageTodoState',
+          className: 'overEllipsis',
+          width: 80,
+        },
+        {
+          title: '发起人',
+          key: 'name',
+          width: 150
+        }
+      ],
+      message: [],
+      schedule: [],
+      loadingMsg: false,
+      loadingSchedule: false,
+      msgTabs:[],
+      waitDoTabs:[],
+      msgTabVal: '',
+      scheduleTabVal: ''
+    }
+  },
+  mounted(){
+    this.initHeight();
+    this._getAppList()
+    this._getPicNews()
+    this._getNews()
+    this._getMessage()
+    this._getSchedule()
+    this._getAppList()
+    this._getMsgCount()
+    this._getScheduleCount()
+  },
+  methods:{
+    _getAppList() {
+      getAppList().then(res => {
+        if (res.code === 1) {
+          this.appList = res.data
+        }
+      })
     },
-    mounted(){
-      this.initHeight();
-      this._getMessage()
-      this._getSchedule()
+    _getNews() {
+      getNews(1, 6).then(res => {
+        if (res.code === 1) {
+          this.newsList = res.data.list
+        }
+      })
     },
-
-    methods:{
-      _getMessage() {
-        this.loadingMsg = true
-        getMessage(1, 4, '0').then(res => {
-          if (res.code === 1) {
-            this.message = res.data.list
-          }
-          this.loadingMsg = false
-        })
-      },
-      _getSchedule() {
+    _getPicNews() {
+      getPicNews().then(res => {
+        if (res.code === 1) {
+          this.picNewsList = res.data
+        }
+      })
+    },
+    _getMsgCount() {
+      getMsgCount().then(res => {
+        if (res.code === 1) {
+          this.msgTabs = res.data
+          this.msgTabVal = res.data[0].sysName
+        }
+      })
+    },
+    _getScheduleCount() {
+      getMsgCount(1).then(res => {
+        if (res.code === 1) {
+          this.waitDoTabs = res.data
+          this.scheduleTabVal = res.data[0].sysName
+        }
+      })
+    },
+    _getMessage() {
+      this.loadingMsg = true
+      getMessage(1, 4, '0').then(res => {
+        if (res.code === 1) {
+          this.message = res.data.list
+        }
+        this.loadingMsg = false
+      })
+    },
+    _getSchedule() {
+      this.loadingSchedule = true
+      getMessage(1, 4, '1').then(res => {
+        if (res.code === 1) {
+          this.schedule = res.data.list
+        }
         this.loadingSchedule = false
-        getMessage(1, 4, '1').then(res => {
-          if (res.code === 1) {
-            this.schedule = res.data.list
-          }
-          this.loadingSchedule = false
-        })
-      },
-      getNewsData(){ //获取新闻数据
-        this.$ajax({
-          method:'get',
-          url:'',
-          params:{}
-        }).then(res=>{
-          console.log(res);
-        })
-      },
-      switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
-        console.log(name);
-        this.getMsgData();
-      },
-      switchWaitDoTab(name){ //点击待办中心tabs标签搜索对应数据
-        console.log(name);
-        this.getWaitDoData();
-      },
-      changeFixed(clientHeight){
-        this.$refs.homePage.style.height = clientHeight+'px';
-      },
-      initHeight(){
+      })
+    },
+    _refreshMsg() {
+      this._getMessage()
+      this._getMsgCount()
+    },
+    _refreshSchedule() {
+      this._getSchedule()
+      this._getScheduleCount()
+    },
+    getNewsData(){ //获取新闻数据
+      this.$ajax({
+        method:'get',
+        url:'',
+        params:{}
+      }).then(res=>{
+        console.log(res);
+      })
+    },
+    switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
+      this.loadingMsg = true
+      getMessage(1, 4, '0', '', '', '', '', '', name).then(res => {
+        if (res.code === 1) {
+          this.message = res.data.list
+        }
+        this.loadingMsg = false
+      })
+    },
+    switchWaitDoTab(name){ //点击待办中心tabs标签搜索对应数据
+      this.loadingSchedule = true
+      getMessage(1, 4, '1', '', '', '', '', '', name).then(res => {
+        if (res.code === 1) {
+          this.schedule = res.data.list
+        }
+        this.loadingSchedule = false
+      })
+    },
+    changeFixed(clientHeight){
+      this.$refs.homePage.style.height = clientHeight+'px';
+    },
+    initHeight(){
+      this.clientHeight = document.body.clientHeight-80;
+      window.onresize = () => {
         this.clientHeight = document.body.clientHeight-80;
-        window.onresize = () => {
-          this.clientHeight = document.body.clientHeight-80;
-        };
-      },
-      toggle:function () {
-        this.isA=!this.isA
-      }
+      };
     },
-    watch: {
-      clientHeight: function () {
-        this.changeFixed(this.clientHeight)
-      }
-    },
-  }
+    toggle:function () {
+      this.isA=!this.isA
+    }
+  },
+  watch: {
+    clientHeight: function () {
+      this.changeFixed(this.clientHeight)
+    }
+  },
+}
 </script>
 
 

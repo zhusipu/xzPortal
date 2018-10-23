@@ -70,7 +70,7 @@ Vue.use(Router)
             component: Setting
           },
           {
-            path:'newsDetail',
+            path:'newsDetail/:id',
             component:NewsDetail
           },
           {
