@@ -12,6 +12,7 @@ import './assets/css/common.css'
 import './assets/css/font/iconfont.css'
 import common from './assets/js/util'
 import qs from 'qs';
+import Grid from 'vue-js-grid'
 
 import store from './store/store'
 
@@ -20,6 +21,7 @@ Vue.use(element)
 Vue.use(iView)
 Vue.use(vueResource)
 Vue.use(common)
+Vue.use(Grid)
 Vue.prototype.$qs = qs;
 Vue.prototype.$ajax = axios
 axios.defaults.baseURL = '/api'

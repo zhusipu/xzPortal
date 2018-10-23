@@ -71,7 +71,7 @@ Vue.use(Router)
             component:Theme
           },
           {
-            path:'newsDetail',
+            path:'newsDetail/:id',
             component:NewsDetail
           },
           {

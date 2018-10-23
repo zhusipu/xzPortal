@@ -1,17 +1,18 @@
 <template>
   <div class="zxGate">
     <div class="content">
-      <div class="nav_left"  ref="homePage">
+      <span class="navBtn" :class="{'navHideB':isA,'navShowB':!isA}" @click="toggle()"></span>
+      <div class="nav_left"  ref="homePage" :class="{'navHide':isA,'navShow':!isA}" >
         <ul>
-          <li v-for="(item,index) in nav_left" :key="index">
-            <a href="#">
-              <span><img :src="item.pic" alt=""/></span>
-              <p>{{item.title}}</p>
+          <li v-for="(item,index) in appList" :key="index">
+            <a :href="item.link">
+              <span><img :src="'/resource/uploads/Application/' + item.logo" alt="" width="100%"/></span>
+              <p>{{ item.name }}</p>
             </a>
           </li>
         </ul>
       </div>
-      <div class="main">
+      <div class="main" :class="{'mainW':isA,'mainWhide':!isA}">
         <div class="mian-wr">
           <Row :gutter="16">
             <Col span="8">
@@ -23,18 +24,17 @@
                 <div class="h-model-tool">
                   <span><img src="../../assets/images/33.png" alt=""/></span>
                   <span><img src="../../assets/images/22.png" alt=""/></span>
-                  <span><img src="../../assets/images/11.png" alt=""/></span>
+                  <span><img src="../../assets/images/11.png" alt="" @click="_getPicNews"/></span>
                 </div>
                 <!--轮播图{-->
                 <div class="slide-wr">
                   <Carousel autoplay>
-                    <Carousel-item v-for="(item,index) in slideData" :key="index" >
-                      <div class="slide-Pic"><img :src="item.pic" alt=""/>
+                    <Carousel-item v-for="(item,index) in picNewsList" :key="index" >
+                      <div class="slide-Pic"><img :src="'/resource/tempfileuploads/' + item.thumb" alt=""/>
                         <div class="slide-tit">
-                          <p><span>●</span> {{item.title}}</p>
+                          <p><span>●</span> {{ item.title }}</p>
                         </div>
                       </div>
-
                     </Carousel-item>
                   </Carousel>
                 </div>
@@ -50,51 +50,47 @@
                 <div class="h-model-tool">
                   <router-link to="/layout/newsCenter"><span><img src="../../assets/images/33.png" alt=""/></span></router-link>
                   <span><img src="../../assets/images/22.png" alt=""/></span>
-                  <span><img src="../../assets/images/11.png" alt=""/></span>
+                  <span><img src="../../assets/images/11.png" alt="" @click="_getNews"/></span>
                 </div>
                 <div class="h-newsList">
                   <ul>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
-                    <li> <a href=""><span>●</span> <em>差旅费用报销</em> <i>2018-08-23</i></a></li>
+                    <li v-for="item in newsList" :key="item.id">
+                      <a href=""><span>●</span> <em>{{ item.title }}</em> <i>{{ item.createDate }}</i></a>
+                    </li>
                   </ul>
                 </div>
               </div>
             </Col>
             <Col span="8">
-            <div class="h-model">
-              <span class="h-model-c"></span>
-              <div class="h-model-tit">
-                员工自助 / SELF-SERVICE
+              <div class="h-model">
+                <span class="h-model-c"></span>
+                <div class="h-model-tit">
+                  员工自助 / SELF-SERVICE
+                </div>
+                <div class="h-model-tool">
+                  <span><img src="../../assets/images/33.png" alt=""/></span>
+                  <span><img src="../../assets/images/22.png" alt=""/></span>
+                  <span><img src="../../assets/images/11.png" alt=""/></span>
+                </div>
+                <div class="selfHelp">
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/0"><img src="../../assets/images/zizhu2.png" alt=""/><br/><span>薪资管理</span></router-link>
+                  </div>
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/1"><img src="../../assets/images/zizhu3.png" alt=""/><br/><span>企业通讯录</span></router-link>
+                  </div>
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/2"><img src="../../assets/images/zhuzhu1.png" alt=""/><br/><span>个人考勤休假</span></router-link>
+                  </div>
+                  <div class="selfHelpItem">
+                    <router-link to="/layout/selfService/3"><img src="../../assets/images/zizhu4.png" alt=""/><br/><span>个人信息维护</span></router-link>
+                  </div>
+                </div>
               </div>
-              <div class="h-model-tool">
-                <span><img src="../../assets/images/33.png" alt=""/></span>
-                <span><img src="../../assets/images/22.png" alt=""/></span>
-                <span><img src="../../assets/images/11.png" alt=""/></span>
-              </div>
-              <div class="selfHelp">
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/0"><img src="../../assets/images/zizhu2.png" alt=""/><br/><span>薪资管理</span></router-link>
-                </div>
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/1"><img src="../../assets/images/zizhu3.png" alt=""/><br/><span>企业通讯录</span></router-link>
-                </div>
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/2"><img src="../../assets/images/zhuzhu1.png" alt=""/><br/><span>个人考勤休假</span></router-link>
-                </div>
-                <div class="selfHelpItem">
-                  <router-link to="/layout/selfService/3"><img src="../../assets/images/zizhu4.png" alt=""/><br/><span>个人信息维护</span></router-link>
-                </div>
-              </div>
-            </div>
             </Col>
           </Row>
 
           <Row :gutter="16">
-
             <Col span="12">
                <div class="h-model">
                   <span class="h-model-c"></span>
@@ -171,35 +167,16 @@
 <script>
 import { getMessage, getMsgCount } from 'api/message'
 import { getAppList } from 'api/application'
+import { getPicNews, getNews } from 'api/news'
 export default {
   data(){
     return {
       clientHeight:'',
       clientWidth:'',
+      isA: false,
       appList: [],
-      nav_left:[
-        {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
-        {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
-        {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
-        {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
-        {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
-        {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
-        {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
-        {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'},
-        {pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
-        {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
-        {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
-        {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
-        {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
-        {pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
-        {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
-        {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}
-      ],
-      slideData:[
-        {pic:require('../../assets/images/temp/slide1.png'),title:'切实关注基层人民生活状况切实关注基层人民生活状况切实关注基层人民生活状况'},
-        {pic:require('../../assets/images/temp/slide2.jpg'),title:'热烈庆祝'},
-        {pic:require('../../assets/images/temp/slide3.jpg'),title:'热烈庆祝4444'}
-      ],
+      picNewsList: [],
+      newsList: [],
       /**消息中心数据**/
       columnsMessage: [
         {
@@ -283,18 +260,34 @@ export default {
   },
   mounted(){
     this.initHeight();
+    this._getAppList()
+    this._getPicNews()
+    this._getNews()
     this._getMessage()
     this._getSchedule()
     this._getAppList()
     this._getMsgCount()
     this._getScheduleCount()
   },
-  
   methods:{
     _getAppList() {
       getAppList().then(res => {
         if (res.code === 1) {
           this.appList = res.data
+        }
+      })
+    },
+    _getNews() {
+      getNews(1, 6).then(res => {
+        if (res.code === 1) {
+          this.newsList = res.data.list
+        }
+      })
+    },
+    _getPicNews() {
+      getPicNews().then(res => {
+        if (res.code === 1) {
+          this.picNewsList = res.data
         }
       })
     },
@@ -375,6 +368,9 @@ export default {
       window.onresize = () => {
         this.clientHeight = document.body.clientHeight-80;
       };
+    },
+    toggle:function () {
+      this.isA=!this.isA
     }
   },
   watch: {
@@ -541,5 +537,46 @@ export default {
   background: #ff8a00;
   color: #fff;
 }
+.navBtn{
+  display: block;
+  width: 12px;
+  height: 54px;
+  position: fixed;
+  top: 80px;
+  left: 90px;
+  cursor: pointer;
+  background: url("../../assets/images/hide.png");
 
+}
+  .nav_left, .navBtn, .mainW, .mainWhide{
+    /*  Webkit内核浏览器：Safari and Chrome*/
+    -webkit-transition-property: all;
+    -webkit-transition-duration: .5s;
+    -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    /*  Mozilla内核浏览器：firefox3.5+*/
+    -moz-transition-property: all;
+    -moz-transition-duration: .5s;
+    -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    /*  Opera*/
+    -o-transition-property: all;
+    -o-transition-duration: .5s;
+    -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+    /*  IE9*/
+    -ms-transition-property: all;
+    -ms-transition-duration: .5s;
+    -ms-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  }
+  .navHide{
+    width:0;
+  }
+  .navHideB{
+    left: 0;
+    background: url("../../assets/images/show.png");
+  }
+  .mainW{
+    margin-left: 0;
+  }
+  .mainWhide{
+    margin-left: 90px;
+  }
 </style>
