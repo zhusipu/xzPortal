@@ -1,4 +1,4 @@
-import request from '@/assets/js/request'
+import request from 'utils/request'
 
 export function getAppList(typeId = 1) {
   return request({

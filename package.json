@@ -56,7 +56,8 @@
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0",
-    "vue-js-grid": "1.0.1"
+    "vue-js-grid": "1.0.1",
+    "js-cookie": "2.2.0"
   },
   "engines": {
     "node": ">= 6.0.0",

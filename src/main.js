@@ -14,7 +14,7 @@ import common from './assets/js/util'
 import qs from 'qs';
 import Grid from 'vue-js-grid'
 
-import store from './store/store'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(element)
