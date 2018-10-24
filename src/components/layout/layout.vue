@@ -61,10 +61,6 @@
       }
     },
     created:function(){
-<<<<<<< HEAD
-=======
-      // console.log("用户名:"+this.$store.state.title+"密码:"+this.$store.state.token)
->>>>>>> a957ab3f9631cf808e234cb1501d317674a4d543
     },
     computed: mapState({
       title: state => state.title,
