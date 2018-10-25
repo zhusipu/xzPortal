@@ -267,7 +267,9 @@
               <Row :gutter="64">
                 <Col span="8">
                 <FormItem label="所属组织：">
-                  <Input v-model="searchTelParam.group" clearable></Input>
+                  <Select v-model="searchTelParam.dept"  clearable>
+                    <Option v-for="item in privilegedDept" :value="item.id" :key="item.id">{{ item.name }}</Option>
+                  </Select>
                 </FormItem>
                 </Col>
                 <Col span="8">
@@ -284,7 +286,7 @@
               <Row :gutter="64">
                 <Col span="8">
                 <FormItem label="手机号码：">
-                  <Input v-model="searchTelParam.duration" clearable></Input>
+                  <Input v-model="searchTelParam.phone" clearable></Input>
                 </FormItem>
                 </Col>
                 <Col span="16">
@@ -309,13 +311,14 @@
 </template>
 
 <script>
+import { getPrivilegedDept, getAddressbook } from 'api/addressbook'
 import excel from '@/assets/js/excel'
 export default {
   data(){
     return {
       exportLoading: false,
       searchSalaryParam:{ group: '',empNo: '',empName: '',duration: '' }, //个人薪资搜索参数
-      searchTelParam:{ group: '', empNo: '', empName: '', phoneNo: '' }, //通讯录搜索参数
+      searchTelParam:{ dept: '', empNo: '', empName: '', phone: '' }, //通讯录搜索参数
       searchHolidayParam:{ group: '', empNo: '', empName: '', duration: '' }, //个人假期信息搜索参数
       postHolidayParam:{ startTime: '',endTime: '',longTime: '',explain: '' }, //上传假期信息
       salaryThead:[ //个人薪资表头
@@ -392,7 +395,8 @@ export default {
       loadingAddrBook: false,
       num: 0,
       title:'基本信息',
-      tabName:''
+      tabName:'',
+      privilegedDept: [] // 通讯录搜索功能，有权限查看的部门列表
     }
   },
   created(){
@@ -400,7 +404,6 @@ export default {
       this.tabName = "个人薪资"
     }else if(this.$route.params.name == 1){
       this.tabName = "通讯录"
-      this._getAddressbook()
     }else if(this.$route.params.name == 2){
       this.tabName = "个人假期信息"
     }else{
@@ -421,6 +424,7 @@ export default {
         this.getHolidayInfo();
         this.$router.push('/layout/selfService/2');
       }else{
+        this._getPrivilegedDept()
         this._getAddressbook() //调用通讯录
         this.$router.push('/layout/selfService/1');
       }
@@ -476,9 +480,16 @@ export default {
         // console.log(res.data.data);
       })
     },
+    _getPrivilegedDept() { // 获取有权限查看的部门
+      getPrivilegedDept().then(res => {
+        if (res.code === 1) {
+          this.privilegedDept = res.data
+        }
+      })
+    },
     _getAddressbook(){ //获取通讯录数据方法
       this.loadingAddrBook = true
-      getAddressbook().then(res => {
+      getAddressbook(this.telPageParam.pageNum, this.telPageParam.total, this.searchTelParam.dept, this.searchTelParam.empNo, this.searchTelParam.empName, this.searchTelParam.phone).then(res => {
         if (res.code === 1) {
           this.addrBookData = res.data.list
           this.telPageParam.total = res.data.total

@@ -55,7 +55,7 @@
                 <div class="h-newsList">
                   <ul>
                     <li v-for="item in newsList" :key="item.id">
-                      <a href=""><span>●</span> <em>{{ item.title }}</em> <i>{{ item.createDate }}</i></a>
+                      <div @click="$router.push('/layout/newsDetail/' + item.id)"><span>●</span> <em>{{ item.title }}</em> <i>{{ item.createDate }}</i></div>
                     </li>
                   </ul>
                 </div>
@@ -333,15 +333,6 @@ export default {
       this._getSchedule()
       this._getScheduleCount()
     },
-    getNewsData(){ //获取新闻数据
-      this.$ajax({
-        method:'get',
-        url:'',
-        params:{}
-      }).then(res=>{
-        console.log(res);
-      })
-    },
     switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
       this.loadingMsg = true
       getMessage(1, 4, '0', '', '', '', '', '', name).then(res => {
@@ -578,5 +569,8 @@ export default {
   }
   .mainWhide{
     margin-left: 90px;
+  }
+  .h-newsList div {
+    cursor: pointer;
   }
 </style>
