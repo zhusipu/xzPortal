@@ -299,9 +299,9 @@
             </Form>
           </div>
           <div class="tableData">
-            <Table border  :columns="addrBookThead" :data="addrBookData" ref="table"></Table>
+            <Table border :loading="loadingAddrBook" :columns="addrBookThead" :data="addrBookData" ref="table"></Table>
             <div class="pagnation-wr">
-              <Page placement="top" :loading="loadingAddrBook" show-total show-sizer :total="telPageParam.total" :current="telPageParam.pageNum" :page-size="telPageParam.pageSize"  @on-change="changeTelPage" @on-page-size-change="changeTelPageSize"></Page>
+              <Page placement="top" show-total show-sizer :total="telPageParam.total" :current="telPageParam.pageNum" :page-size="telPageParam.pageSize"  @on-change="changeTelPage" @on-page-size-change="changeTelPageSize"></Page>
             </div>
           </div>
         </TabPane>
@@ -350,12 +350,12 @@ export default {
             return h('div', {}, params.index + 1)
           }
         },
-        { title: '员工编号', key: 'staffNo' },
-        { title: '姓名', key: 'staffName' },
+        { title: '员工编号', key: 'empNo', width: 120 },
+        { title: '姓名', key: 'name', width: 120 },
         { title: '所属组织', key: 'department' },
         { title: '岗位', key: 'position' },
-        { title: '手机号码', key: 'phoneNo' },
-        { title: '办公电话', key: 'officeNo' },
+        { title: '手机号码', key: 'mobile', width: 130 },
+        { title: '办公电话', key: 'office_phone', width: 120 },
         { title: '电子邮件', key: 'email' },
         { title: '通讯地址', key: 'address' }
       ],
@@ -489,7 +489,7 @@ export default {
     },
     _getAddressbook(){ //获取通讯录数据方法
       this.loadingAddrBook = true
-      getAddressbook(this.telPageParam.pageNum, this.telPageParam.total, this.searchTelParam.dept, this.searchTelParam.empNo, this.searchTelParam.empName, this.searchTelParam.phone).then(res => {
+      getAddressbook(this.telPageParam.pageNum, this.telPageParam.pageSize, this.searchTelParam.dept, this.searchTelParam.empNo, this.searchTelParam.empName, this.searchTelParam.phone).then(res => {
         if (res.code === 1) {
           this.addrBookData = res.data.list
           this.telPageParam.total = res.data.total
@@ -545,20 +545,24 @@ export default {
       }
     },
     exportTelExcel () {//导出通讯录
-      if (this.addrBookData.length) {
-        this.exportLoading = true
-        const params = {
-          title: ['员工编号','姓名', '所属组织','岗位','手机号码','办公电话','电子邮件','通讯地址','通讯电子编码','其他'],
-          key: ['staffNo', 'staffName','department','position','phoneNo','officeNo','email','address','addrCode','other'],
-          data: this.addrBookData,
-          autoWidth: true,
-          filename: '通信录'
+      getAddressbook(this.telPageParam.pageNum, this.telPageParam.total, this.searchTelParam.dept, this.searchTelParam.empNo, this.searchTelParam.empName, this.searchTelParam.phone).then(res => {
+        if (res.code === 1) {
+          if (res.data.list.length) {
+            this.exportLoading = true
+            const params = {
+              title: ['员工编号','姓名', '所属组织','岗位','手机号码','办公电话','电子邮件','通讯地址'],
+              key: ['empNo', 'name','department','position','mobile','office_phone','email','address'],
+              data: res.data.list,
+              autoWidth: true,
+              filename: '通信录'
+            }
+            excel.export_array_to_excel(params)
+            this.exportLoading = false
+          } else {
+            this.$Message.info('表格数据不能为空！')
+          }
         }
-        excel.export_array_to_excel(params)
-        this.exportLoading = false
-      } else {
-        this.$Message.info('表格数据不能为空！')
-      }
+      })
     },
     tab(index) { // 个人基本信息选项卡方法
       this.num = index;
