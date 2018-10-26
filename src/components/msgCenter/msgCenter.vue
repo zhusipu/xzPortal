@@ -97,7 +97,7 @@ export default {
               // },
               on: {
                 click: () => {
-                  this.$router.push('/layout/msgDetail')
+                  this.$router.push('/layout/msgDetail/' + this.message[params.index].messageId)
                 }
               }
             },this.tbodyData[params.index].messageName);

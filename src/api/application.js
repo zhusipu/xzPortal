@@ -9,3 +9,14 @@ export function getAppList(typeId = 1) {
     }
   })
 }
+
+// 修改个人的应用现实排序
+export function changeSort(data) {
+  return request({
+    url: '/Application/changeSort',
+    method: 'post',
+    data: {
+      data
+    }
+  })
+}

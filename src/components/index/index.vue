@@ -196,10 +196,10 @@ export default {
           className: 'overEllipsis',
           render: (h, params) => {
             return h('a', {
-              attrs:{
-                href:this.message[params.index].url,
-                title:this.message[params.index].messageName,
-                target:"_blank"
+              on: {
+                click: () => {
+                  this.$router.push('/layout/msgDetail/' + this.message[params.index].messageId)
+                }
               }
             },this.message[params.index].messageName);
           }
@@ -265,7 +265,6 @@ export default {
     this._getNews()
     this._getMessage()
     this._getSchedule()
-    this._getAppList()
     this._getMsgCount()
     this._getScheduleCount()
   },
@@ -318,7 +317,7 @@ export default {
     },
     _getSchedule() {
       this.loadingSchedule = true
-      getMessage(1, 4, '1').then(res => {
+      getMessage(1, 4, '1', '', '', '', '0').then(res => {
         if (res.code === 1) {
           this.schedule = res.data.list
         }

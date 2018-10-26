@@ -74,7 +74,7 @@ Vue.use(Router)
             component:NewsDetail
           },
           {
-            path:'msgDetail',
+            path:'msgDetail/:id',
             component:MsgDetail
           },
           {
