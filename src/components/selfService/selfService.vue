@@ -67,6 +67,7 @@
               <ul>
                 <li
                   v-for="(item,index) in tabs"
+                  :key="index"
                   :class="{active:index == num}"
                   @click="tab(index)">{{item}}</li>
               </ul>
@@ -127,6 +128,27 @@
                   <h4>{{title}}</h4>
               </div>
               <div v-show="num==5">
+                  <h4>{{title}}</h4>
+              </div>
+              <div v-show="num==6">
+                  <h4>{{title}}</h4>
+              </div>
+              <div v-show="num==7">
+                  <h4>{{title}}</h4>
+              </div>
+              <div v-show="num==8">
+                  <h4>{{title}}</h4>
+              </div>
+              <div v-show="num==9">
+                  <h4>{{title}}</h4>
+              </div>
+              <div v-show="num==10">
+                  <h4>{{title}}</h4>
+              </div>
+              <div v-show="num==11">
+                  <h4>{{title}}</h4>
+              </div>
+              <div v-show="num==12">
                   <h4>{{title}}</h4>
               </div>
             </div>
@@ -363,7 +385,7 @@ export default {
       addrBookData:[],//通讯录数据
       salaryPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //个人薪资分页参数
       telPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //通讯录分页参数
-      tabs: [ '基本信息', '联系方式', '任职资格', '职业信息', '企业任职经历', '任职资格' ],//个人基本信息tab
+      tabs: [ '基本信息', '联系方式', '任职资格', '职业信息', '企业任职经历', '社会工作经历', '教育经历', '项目经历', '社会关系', '语言能力', '技能信息', '绩效信息', '培训记录' ],//个人基本信息tab
       tabContents:[ //个人基本信息数据
         {
           name:"张朝阳",
@@ -566,7 +588,7 @@ export default {
     },
     tab(index) { // 个人基本信息选项卡方法
       this.num = index;
-      this.title=this.tabs[index]
+      this.title = this.tabs[index]
     }
   }
 }
