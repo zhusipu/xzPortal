@@ -6,7 +6,7 @@
         <ul>
           <li v-for="(item,index) in appList" :key="index">
             <a :href="item.link">
-              <span><img :src="'/resource/uploads/Application/' + item.logo" alt="" width="100%"/></span>
+              <span><img :src="'/resource/uploads/Application/' + item.logo" alt="" width="40" height="40"/></span>
               <p>{{ item.name }}</p>
             </a>
           </li>

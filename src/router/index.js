@@ -17,6 +17,8 @@ import MsgDetail from '@/components/msgCenter/msgDetail'
 
 import store from '@/store'
 
+import { authorizeUrl } from 'api/action'
+
 Vue.use(Router)
 
 // export default new Router({
@@ -93,20 +95,13 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(store.getters)
-    if (to.matched.some(r => r.meta.requireAuth)) {
-        if (store.getters.token) {
-            next();
-        }
-        else {
-            next({
-                path: '/login',
-            })
-        }
-    }
-    else {
-        next();
-    }
+  if (!store.getters.token && to.path !== 'logout') {
+    store.dispatch('GetUserInfo').then((data) => {
+      next();
+    })
+  } else {
+    next();
+  }
 })
 
 export default router;

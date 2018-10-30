@@ -1,7 +1,8 @@
 import axios from 'axios'
-// import { Message } from 'element-ui'
 import store from '@/store'
+import { Modal } from 'iview'
 import { getToken } from 'utils/auth'
+import { authorizeUrl } from 'api/action'
 
 // create an axios instance
 const service = axios.create({
@@ -9,8 +10,8 @@ const service = axios.create({
   timeout: 5000 // request timeout
 })
 
-// request interceptor
-service.interceptors.request.use(
+// response interceptor
+service.interceptors.response.use(
   config => {
     // Do something before request is sent
     if (store.getters.token) {
@@ -18,32 +19,39 @@ service.interceptors.request.use(
       config.headers['X-Token'] = getToken()
     }
     return config
-  },
-  error => {
-    // Do something with request error
-    console.log(error) // for debug
-    Promise.reject(error)
   }
 )
 
-// response interceptor
 service.interceptors.response.use(
   response => {
     const res = response.data
     // 50014:Token 过期了;
-    if (res.code === 50014) {
-      this.$confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        store.dispatch('FedLogOut').then(() => {
-          location.reload() // 为了重新实例化vue-router对象 避免bug
-        })
+    if (res.code === 403) {
+      Modal.confirm({
+        title: '提示',
+        content: res.msg, 
+        okText: '重新登录',
+        cancelText: '取消',
+        type: 'warning',
+        onOk: () => {
+          store.dispatch('FedLogOut').then(() => {
+            authorizeUrl(window.location.href).then((data) => {
+              if (data.code === 1) {
+                window.location.href = data.data.authorizeUrl
+              }
+            })
+          })
+        }
       })
       return Promise.reject('error.axios')
+    } else if (res.code === 50014) { 
+      authorizeUrl(window.location.href).then((data) => {
+        if (data.code === 1) {
+          window.location.href = data.data.authorizeUrl
+        }
+      })
     } else {
-      return res
+      return response.data
     }
   },
   /**
@@ -81,11 +89,7 @@ service.interceptors.response.use(
   // },
   error => {
     console.log('err' + error) // for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    Message.error(error.message)
     return Promise.reject(error)
   }
 )

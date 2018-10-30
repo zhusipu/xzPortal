@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import { login } from 'api/action'
+  import { login, authorizeUrl } from 'api/action'
   export default {
     data () {
       return {
@@ -66,10 +66,8 @@
     this.getCookie();
   },
   methods: {
-
     changeFixed(clientHeight){
       this.$refs.homePage.style.height = clientHeight+'px';
-
     },
     initHeight(){
       this.clientHeight = document.body.clientHeight;
@@ -123,13 +121,10 @@
   },
   login_submit(){
     if (this.password_ji == true) {
-      console.log("checked == true");
       this.setCookie(this.username, this.password, 7);
     }else {
-      console.log("清空Cookie");
       this.clearCookie();
     }
-    console.log("登陆成功");
   }
 
   }

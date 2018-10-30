@@ -15,14 +15,27 @@ export function login(username, password, remember) {
 
 export function getUserInfo() {
   return request({
-    url: '/action/userinfo',
+    url: '/action/getUserInfo',
     method: 'get'
   })
 }
 
-export function logout() {
+export function authorizeUrl(returnUrl) {
+  return request({
+    url: '/action/authorizeUrl',
+    method: 'get',
+    params: {
+      returnUrl
+    }
+  })
+}
+
+export function logout(returnUrl) {
   return request({
     url: '/action/logout',
-    method: 'post'
+    method: 'post',
+    data: {
+      returnUrl
+    }
   })
 }

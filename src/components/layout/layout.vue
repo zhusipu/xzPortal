@@ -4,14 +4,15 @@
         <div class="header-logo"></div>
         <div class="header-right">
           <div class="headerlinks">
-            <Dropdown>
+            <Dropdown @on-click="headerLinksOnClick">
               <Icon type="md-settings"  size="24" color="#c5c5c5"/>
               <DropdownMenu slot="list">
-                <DropdownItem><router-link  to="/layout/setting/主题管理">主题管理</router-link></DropdownItem>
-                <DropdownItem><router-link  to="/layout/setting/布局管理">布局管理</router-link></DropdownItem>
-                <DropdownItem><router-link  to="/layout/setting/界面设置">界面设置</router-link></DropdownItem>
-                <DropdownItem><router-link  to="/layout/setting/设置应用">设置应用</router-link></DropdownItem>
-                <DropdownItem divided><router-link to="/layout/selfService/3">个人中心</router-link></DropdownItem>
+                <DropdownItem name="/layout/setting/主题管理">主题管理</DropdownItem>
+                <DropdownItem name="/layout/setting/布局管理">布局管理</DropdownItem>
+                <DropdownItem name="/layout/setting/界面设置">界面设置</DropdownItem>
+                <DropdownItem name="/layout/setting/设置应用">设置应用</DropdownItem>
+                <DropdownItem name="/layout/selfService/3" divided>个人中心</DropdownItem>
+                <DropdownItem name="logout">退出登录</DropdownItem>
               </DropdownMenu>
             </Dropdown>
           </div>
@@ -23,7 +24,8 @@
           </div>-->
 
           <span>
-            <i class="header-right-logo"> <img src="../../assets/images/logo1.png" alt=""/></i> {{this.$store.state.title}}
+            <i class="header-right-logo"> <!--<img src="../../assets/images/logo1.png" alt=""/>--></i> 
+            {{this.$store.getters.name}}
           </span>
           <div class="serchBar">
             <input type="text" placeholder="输入搜索的内容"/>
@@ -44,8 +46,8 @@
 
       <section><router-view/></section>
       <footer class="footer">
-          <p>Copyright &copy; www.Xzcsgdjt.com, All Rights Reserved.</p>
-          <p>Email : xzcsgdjt@qq.com QQ : 5698401</p>
+          <p>Copyright &copy; www.bmsoft.com.cn, All Rights Reserved.</p>
+          <!--<p>Email : xzcsgdjt@qq.com QQ : 5698401</p>-->
       </footer>
   </div>
 
@@ -57,7 +59,6 @@
   export default {
     data(){
       return {
-
       }
     },
     created:function(){
@@ -66,10 +67,31 @@
       title: state => state.title,
       token: state => state.token
     }),
+    methods: {
+      logout() {
+        this.$store.dispatch('FedLogOut').then((data) => {
+          this.$router.push({ path: '/' })
+          this.$Message.success("退出成功!")
+        }).catch((error) => {
+          this.$Message.error(error)
+        })
+      },
+      headerLinksOnClick(name) {
+        if (name === 'logout') {
+          this.logout()
+        } else {
+          this.$router.push({ path: name })
+        }
+      }
+    }
   }
 </script>
 
 <style>
+.headerlinks a{
+  display: block;
+  width: 100%;
+}
 .ivu-table-border td, .ivu-table-border th{
   text-align: center;
 }

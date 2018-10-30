@@ -1,6 +1,6 @@
 <template>
   <div class="zxGate">
-    <div class="content">
+    <div class="content" style="padding-top: 60px">
       <div class="pageare">
         <div class="breadCrub">
           <Breadcrumb>

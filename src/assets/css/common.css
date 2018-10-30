@@ -107,7 +107,7 @@ li{
 .header-logo{
   width: 178px;
   height: 31px;
-  background: url('../images/logo.png');
+  /* background: url('../images/logo.png'); */
   margin-left: 40px;
   margin-top: 15px;
   float: left;
@@ -146,7 +146,7 @@ li{
 
 .zxGate .content{
   width: 100%;
-  padding-top:60px;
+  padding-top: 80px;
 
 }
 .zxGate .main{
