@@ -52,17 +52,17 @@
           </div>
         </TabPane>
         <TabPane name="个人基本信息" label="个人基本信息" class="selfInfo">
-          <div class="presonalInfo-hd">
+          <div class="presonalInfo-hd" v-if="loadSelfInfo === true">
             <div class="presonalInfo-pic">
-              <img src="../../assets/images/temp/timg.jpg" alt="" />
+              <img src="../../assets/images/temp/default_headsmall.png" alt="" />
             </div>
             <div class="presonalInfo-tit">
               <h3>{{tabContents[0].name}}</h3>
-              <p>{{tabContents[0].department}}</p>
-              <p>{{tabContents[0].position}}</p>
+              <p>{{tabContents[0].dept}}</p>
+              <p>{{tabContents[0].post}}</p>
             </div>
           </div>
-          <div class="presonalInfo-bd clearfix">
+          <div class="presonalInfo-bd clearfix" v-if="loadSelfInfo === true">
             <div class="presonalInfo-bd-list">
               <ul>
                 <li
@@ -76,47 +76,47 @@
               <div v-show="num==0">
                   <h4>{{title}}</h4>
                   <dl>
-                    <dt>编码：</dt><dd>{{tabContents[0].baseInfo.no}}</dd>
-                    <dt>姓名：</dt><dd>{{tabContents[0].baseInfo.name}}</dd>
+                    <dt>编码：</dt><dd>{{tabContents[0].baseInfo.empNo}}</dd>
+                    <dt>姓名：</dt><dd>{{tabContents[0].baseInfo.FNAME_L2}}</dd>
                   </dl>
                   <dl>
-                    <dt>出生日期：</dt><dd>{{tabContents[0].baseInfo.birth}}</dd>
-                    <dt>性别：</dt><dd>{{tabContents[0].baseInfo.sex}}</dd>
+                    <dt>出生日期：</dt><dd>{{tabContents[0].baseInfo.FBIRTHDAY}}</dd>
+                    <dt>性别：</dt><dd>{{tabContents[0].baseInfo.FGENDER}}</dd>
                   </dl>
                   <dl>
-                    <dt>国籍：</dt><dd>{{tabContents[0].baseInfo.country}}</dd>
-                    <dt>籍贯：</dt><dd>{{tabContents[0].baseInfo.nativePlace}}</dd>
+                    <dt>国籍：</dt><dd>{{tabContents[0].baseInfo.FNATIONALITYID}}</dd>
+                    <dt>籍贯：</dt><dd>{{tabContents[0].baseInfo.FNATIVEPLACE_L2}}</dd>
                   </dl>
                   <dl>
-                    <dt>民族：</dt><dd>{{tabContents[0].baseInfo.nation}}</dd>
-                    <dt>户口类型：</dt><dd>{{tabContents[0].baseInfo.accountType}}</dd>
+                    <dt>民族：</dt><dd>{{tabContents[0].baseInfo.FFOLKID}}</dd>
+                    <dt>户口类型：</dt><dd>{{tabContents[0].baseInfo.FREGRESIDENCEID}}</dd>
                   </dl>
                   <dl>
-                    <dt>户口所在地：</dt><dd>{{tabContents[0].baseInfo.accountAddr}}</dd>
-                    <dt>身份证地址：</dt><dd>{{tabContents[0].baseInfo.idCardAddr}}</dd>
+                    <dt>户口所在地：</dt><dd>{{tabContents[0].baseInfo.FHJADDRESS}}</dd>
+                    <dt>身份证地址：</dt><dd>{{tabContents[0].baseInfo.FIDCARDADDRESS}}</dd>
                   </dl>
                   <dl>
-                    <dt>出生地：</dt><dd>{{tabContents[0].baseInfo.birthAddr}}</dd>
-                    <dt>婚姻状况：</dt><dd>{{tabContents[0].baseInfo.marryState}}</dd>
+                    <dt>出生地：</dt><dd>{{tabContents[0].baseInfo.FHOMEPLACE}}</dd>
+                    <dt>婚姻状况：</dt><dd>{{tabContents[0].baseInfo.FWEDID}}</dd>
                   </dl>
                   <dl>
-                    <dt>政治面貌：</dt><dd>{{tabContents[0].baseInfo.politicsStatus}}</dd>
-                    <dt>血型：</dt><dd>{{tabContents[0].baseInfo.bloodType}}</dd>
+                    <dt>政治面貌：</dt><dd>{{tabContents[0].baseInfo.FPOLITICALFACEID}}</dd>
+                    <dt>血型：</dt><dd>{{tabContents[0].baseInfo.FBLOODTYPE}}</dd>
                   </dl>
                   <dl>
-                    <dt>身高：</dt><dd>{{tabContents[0].baseInfo.height}}</dd>
+                    <dt>身高：</dt><dd>{{tabContents[0].baseInfo.FHEIGHT}}</dd>
                   </dl>
               </div>
               <div v-show="num==1">
                   <h4>{{title}}</h4>
-                  <dl>
+                  <!-- <dl>
                     <dt>联系方式：</dt><dd>{{tabContents[1].a}}</dd>
                     <dt>联系地址：</dt><dd>{{tabContents[1].b}}</dd>
                   </dl>
                   <dl>
                     <dt>联系方式：</dt><dd>{{tabContents[1].a}}</dd>
                     <dt>联系地址：</dt><dd>{{tabContents[1].b}}</dd>
-                  </dl>
+                  </dl> -->
               </div>
               <div v-show="num==2">
                   <h4>{{title}}</h4>
@@ -334,6 +334,7 @@
 
 <script>
 import { getPrivilegedDept, getAddressbook } from 'api/addressbook'
+import { getUserInfo } from 'api/user'
 import excel from '@/assets/js/excel'
 export default {
   data(){
@@ -386,39 +387,13 @@ export default {
       salaryPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //个人薪资分页参数
       telPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //通讯录分页参数
       tabs: [ '基本信息', '联系方式', '任职资格', '职业信息', '企业任职经历', '社会工作经历', '教育经历', '项目经历', '社会关系', '语言能力', '技能信息', '绩效信息', '培训记录' ],//个人基本信息tab
-      tabContents:[ //个人基本信息数据
-        {
-          name:"张朝阳",
-          department:"运营分公司/企划部",
-          position:"IT管理员",
-          baseInfo:{
-            no:"10086",
-            name:"张朝阳 ",
-            birth:"1992年11月2日",
-            sex:"男",
-            country:"中国",
-            nativePlace:"湖北武汉",
-            nation:"汉",
-            accountType:"城镇",
-            accountAddr:"湖北省武汉市洪山区185号",
-            idCardAddr:"湖北省武汉市洪山区185号",
-            birthAddr:"湖北省武汉市洪山区185号",
-            marryState:"未婚",
-            politicsStatus:"群众",
-            bloodType:"O型",
-            height:"180cm"
-          }
-        },
-        {
-          a:'13507128736',
-          b:'北京市朝阳区'
-        }
-      ],
+      tabContents:[], //个人基本信息数据
       loadingAddrBook: false,
       num: 0,
       title:'基本信息',
       tabName:'',
-      privilegedDept: [] // 通讯录搜索功能，有权限查看的部门列表
+      privilegedDept: [], // 通讯录搜索功能，有权限查看的部门列表
+      loadSelfInfo: false // 是否加载完成个人信息
     }
   },
   created(){
@@ -439,8 +414,8 @@ export default {
       if(name=="个人薪资"){
         this.getSalary();
         this.$router.push('/layout/selfService/0');
-      }else if(name=="个人基本情况"){
-        this.getBaseInfo()
+      }else if(name=="个人基本信息"){
+        this._getBaseInfo()
         this.$router.push('/layout/selfService/3');
       }else if(name=="个人假期信息"){
         this.getHolidayInfo();
@@ -484,13 +459,13 @@ export default {
         this.salaryData=res.data.data;
       })
     },
-    getBaseInfo(){//获取个人基本信息方法
-      this.$ajax({
-        method:'get',
-        url:'',
-        params:{}
-      }).then(res=>{
-        // console.log(res.data.data);
+    _getBaseInfo(){//获取个人基本信息方法
+      getUserInfo().then(res => {
+        if (res.code === 1) {
+          this.tabContents = res.data
+          console.log(this.tabContents)
+          this.loadSelfInfo = true
+        }
       })
     },
     getHolidayInfo(){//获取个人假期信息方法
