@@ -1,13 +1,13 @@
 import axios from 'axios'
 import store from '@/store'
-import { Modal } from 'iview'
+import { Modal, Message } from 'iview'
 import { getToken } from 'utils/auth'
 import { authorizeUrl } from 'api/action'
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.BASE_API, // api 的 base_url
-  timeout: 5000 // request timeout
+  // timeout: 5000 // request timeout
 })
 
 // response interceptor
