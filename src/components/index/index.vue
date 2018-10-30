@@ -55,7 +55,7 @@
                 <div class="h-newsList">
                   <ul>
                     <li v-for="item in newsList" :key="item.id">
-                      <a href=""><span>●</span> <em>{{ item.title }}</em> <i>{{ item.createDate }}</i></a>
+                      <div @click="$router.push('/layout/newsDetail/' + item.id)"><span>●</span> <em>{{ item.title }}</em> <i>{{ item.createDate }}</i></div>
                     </li>
                   </ul>
                 </div>
@@ -196,10 +196,10 @@ export default {
           className: 'overEllipsis',
           render: (h, params) => {
             return h('a', {
-              attrs:{
-                href:this.message[params.index].url,
-                title:this.message[params.index].messageName,
-                target:"_blank"
+              on: {
+                click: () => {
+                  this.$router.push('/layout/msgDetail/' + this.message[params.index].messageId)
+                }
               }
             },this.message[params.index].messageName);
           }
@@ -265,7 +265,6 @@ export default {
     this._getNews()
     this._getMessage()
     this._getSchedule()
-    this._getAppList()
     this._getMsgCount()
     this._getScheduleCount()
   },
@@ -318,7 +317,7 @@ export default {
     },
     _getSchedule() {
       this.loadingSchedule = true
-      getMessage(1, 4, '1').then(res => {
+      getMessage(1, 4, '1', '', '', '', '0').then(res => {
         if (res.code === 1) {
           this.schedule = res.data.list
         }
@@ -332,15 +331,6 @@ export default {
     _refreshSchedule() {
       this._getSchedule()
       this._getScheduleCount()
-    },
-    getNewsData(){ //获取新闻数据
-      this.$ajax({
-        method:'get',
-        url:'',
-        params:{}
-      }).then(res=>{
-        console.log(res);
-      })
     },
     switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
       this.loadingMsg = true
@@ -578,5 +568,8 @@ export default {
   }
   .mainWhide{
     margin-left: 90px;
+  }
+  .h-newsList div {
+    cursor: pointer;
   }
 </style>

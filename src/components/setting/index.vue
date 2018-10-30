@@ -66,7 +66,6 @@
             <TabPane label="设置应用" name="设置应用">
               <div class="appList-wr">
                 <div class="appList">
-
                   <h3>应用管理</h3>
                   <!-- <draggable class="list-group clearfix" element="ul" v-model="list" :options="dragOptions" :move="onMove" @start="isDragging=true" @end="isDragging=false">
                      <transition-group type="transition" :name="'flip-list'">
@@ -82,194 +81,215 @@
                     :sortable="true"
                     :items="list"
                     :height="100"
-
-                    :cellWidth="120">
+                    :cellWidth="120"
+                    @sort="_onSort">
                     <template slot="cell"  slot-scope="props">
                       <div class="list-group-item">
                         <!--<span class="pic"><img :src="props.item.pic" alt=""></span>-->
-                        <span class="pic" :style="'background-image: url('+props.item.pic+');'"></span>
-                        <p>{{props.item.title}}</p>
+                        <span class="pic" :style="'background-image: url(/resource/uploads/Application/'+props.item.logo+');background-size: fill;'"></span>
+                        <p>{{ props.item.name }}</p>
                       </div>
                     </template>
                   </grid>
                 </div>
-
                 <div class="btn-wr">
-                  <button type="submit">确定</button>
-                  <button type="submit" class="reset">取消</button>
+                  <button @click="_changeSort">确定</button>
+                  <button class="reset" @click="$router.go(-1)">取消</button>
                 </div>
               </div>
-
             </TabPane>
           </Tabs>
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
-
 <script>
-  export default {
+import { getAppList, changeSort } from 'api/application'
+export default {
+  components: {
+  },
+  data(){
+    return {
+      thmeList:[
+        {bg:'#F1823D',title:'活力橙'},
+        {bg:'#A93439',title:'酒红色'},
+        {bg:'#4A90E2 ',title:'天空蓝'},
+        {bg:'#B8E986 ',title:'清新绿'},
+        {bg:'#9A704B ',title:'护眼褐'},
+        {bg:'#F1823D',title:'活力橙'},
+        {bg:'#A93439',title:'酒红色'},
+        {bg:'#4A90E2 ',title:'天空蓝'},
+        {bg:'#B8E986 ',title:'清新绿'},
+        {bg:'#9A704B ',title:'护眼褐'}
+      ],
+      modleList:[
+        {modleName:'新闻中心',switch1: false},
+        {modleName:'新闻中心',switch1: true},
+        {modleName:'新闻中心',switch1: true},
+        {modleName:'新闻中心',switch1: true},
+        {modleName:'新闻中心',switch1: true},
+        {modleName:'新闻中心',switch1: true}
+      ],
+      themePageParam:{total:11,pageSize:10,pageNum:1},//主题管理分页参数
+      layoutPageParam:{total:11,pageSize:10,pageNum:1},//主题管理分页参数
+      tabName:"主题管理",
+      list: [],
+      afterSort: {
+        items: []
+      },
+      editable: true,
+      isDragging: false,
+      delayedDragging: false,
+      isChoose:0
+    }
+  },
+  mounted() {
+    document.getElementsByTagName('img')[0].onmousedown = function(e){
+      e.preventDefault()
+    }
+  },
+  created() {
+    this.changeTab()
+    this._getAppList()
+  },
+  methods:{
+    _getAppList() {
+      getAppList().then(res => {
+        if (res.code === 1) {
+          this.list = res.data.map(function(item) {
+            item.logo = item.logo.replace(/\\/, '/')
+            return item
+          })
+          var that= this
+          this.list.forEach(function(item, i) {
+            var obj = {
+              item: item,
+              sort: i
+            }
+            that.afterSort.items.push(obj)
+          })
+        }
+      })
+    },
+    _changeSort() {
+      changeSort(this.afterSort.items).then(res => {
+        if (res.code === 1) {
+          this.$message.success(res.msg)
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    changeTab() {
+      if (this.$route.params.hasOwnProperty('id')) {
+        this.tabName = this.$route.params['id']
+      }
+    },
+    chooseTheme(e){
+      console.log(e)
+      this.isChoose=e;
+    },
+    switchTab(name){
+      this.tabName=name;
+    },
+    getThemeData(){//获取主题管理数据
+      this.$ajax({
+        method:'get',
+        url:'',
+        params:{}
+      }).then(res=>{
+        // console.log(res);
+      })
+    },
+    getLayoutData(){//获取布局管理数据
+      this.$ajax({
+        method:'get',
+        url:'',
+        params:{}
+      }).then(res=>{
+        // console.log(res);
+      })
+    },
+    getInterfaceData(){//获取界面设置数据
+      this.$ajax({
+        method:'get',
+        url:'',
+        params:{}
+      }).then(res=>{
+        // console.log(res);
+      })
+    },
 
-    components: {
+    changeThemePage (value) { //主题管理选择页码
+      this.themePageParam.pageNum=value;
+      this.getThemeData();
     },
-    data(){
+    changeThemePageSize(value){//主题管理选择每页显示多少条数据
+      this.themePageParam.pageSize = value;
+      this.getThemeData();
+    },
+    changeLayoutPage (value) { //布局管理选择页码
+      this.layoutPageParam.pageNum=value;
+      this.getLayoutData();
+    },
+    changeLayoutPageSize(value){//布局管理选择每页显示多少条数据
+      this.layoutPageParam.pageSize = value;
+      this.getLayoutData();
+    },
+    _onSort(items) {
+      this.afterSort = items
+    },
+    onMove({ relatedContext, draggedContext }) {
+      const relatedElement = relatedContext.element;
+      const draggedElement = draggedContext.element;
+      return (
+        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      );
+    }
+  },
+  computed:{
+    id() {
+      if (this.$route.params.hasOwnProperty('id')) {
+        return this.$route.params['id']
+      } else {
+        return false
+      }
+    },
+    dragOptions() {
       return {
-        thmeList:[
-          {bg:'#F1823D',title:'活力橙'},
-          {bg:'#A93439',title:'酒红色'},
-          {bg:'#4A90E2 ',title:'天空蓝'},
-          {bg:'#B8E986 ',title:'清新绿'},
-          {bg:'#9A704B ',title:'护眼褐'},
-          {bg:'#F1823D',title:'活力橙'},
-          {bg:'#A93439',title:'酒红色'},
-          {bg:'#4A90E2 ',title:'天空蓝'},
-          {bg:'#B8E986 ',title:'清新绿'},
-          {bg:'#9A704B ',title:'护眼褐'}
-        ],
-        modleList:[
-          {modleName:'新闻中心',switch1: false},
-          {modleName:'新闻中心',switch1: true},
-          {modleName:'新闻中心',switch1: true},
-          {modleName:'新闻中心',switch1: true},
-          {modleName:'新闻中心',switch1: true},
-          {modleName:'新闻中心',switch1: true}
-        ],
-        themePageParam:{total:11,pageSize:10,pageNum:1},//主题管理分页参数
-        layoutPageParam:{total:11,pageSize:10,pageNum:1},//主题管理分页参数
-        tabName:"主题管理",
-        list: [{pic:require('../../assets/images/temp/1.png'),title:'OA系统'},
-          {pic:require('../../assets/images/temp/2.png'),title:'知识管理系统'},
-          {pic:require('../../assets/images/temp/3.png'),title:'人力资源系统'},
-          {pic:require('../../assets/images/temp/4.png'),title:'合同管理系统'},
-          {pic:require('../../assets/images/temp/5.png'),title:'财务管理系统'},
-          ],
-        list2: [{pic:require('../../assets/images/temp/6.png'),title:'站务管理系统'},
-          {pic:require('../../assets/images/temp/7.png'),title:'物资管理系统'},
-          {pic:require('../../assets/images/temp/8.png'),title:'采购管理系统'}],
-        editable: true,
-        isDragging: false,
-        delayedDragging: false,
-        isChoose:0
-      }
+        animation: 0,
+        group: "description",
+        disabled: !this.editable,
+        ghostClass: "ghost"
+      };
     },
-    mounted() {
-      document.getElementsByTagName('img')[0].onmousedown = function(e){
-        e.preventDefault()
-      }
+    listString() {
+      return JSON.stringify(this.list, null, 2);
     },
-    created() {
+    list2String() {
+      return JSON.stringify(this.list2, null, 2);
+    }
+  },
+  watch:{
+    isDragging(newValue) {
+      if (newValue) {
+        this.delayedDragging = true;
+        return;
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false;
+      });
+    },
+    id() {
       this.changeTab()
     },
-    methods:{
-      changeTab() {
-        if (this.$route.params.hasOwnProperty('id')) {
-          this.tabName = this.$route.params['id']
-        }
-      },
-      chooseTheme(e){
-        console.log(e)
-        this.isChoose=e;
-      },
-      switchTab(name){
-        this.tabName=name;
-      },
-      getThemeData(){//获取主题管理数据
-        this.$ajax({
-          method:'get',
-          url:'',
-          params:{}
-        }).then(res=>{
-          // console.log(res);
-        })
-      },
-      getLayoutData(){//获取布局管理数据
-        this.$ajax({
-          method:'get',
-          url:'',
-          params:{}
-        }).then(res=>{
-          // console.log(res);
-        })
-      },
-      getInterfaceData(){//获取界面设置数据
-        this.$ajax({
-          method:'get',
-          url:'',
-          params:{}
-        }).then(res=>{
-          // console.log(res);
-        })
-      },
-
-      changeThemePage (value) { //主题管理选择页码
-        this.themePageParam.pageNum=value;
-        this.getThemeData();
-      },
-      changeThemePageSize(value){//主题管理选择每页显示多少条数据
-        this.themePageParam.pageSize = value;
-        this.getThemeData();
-      },
-      changeLayoutPage (value) { //布局管理选择页码
-        this.layoutPageParam.pageNum=value;
-        this.getLayoutData();
-      },
-      changeLayoutPageSize(value){//布局管理选择每页显示多少条数据
-        this.layoutPageParam.pageSize = value;
-        this.getLayoutData();
-      },
-
-      onMove({ relatedContext, draggedContext }) {
-        const relatedElement = relatedContext.element;
-        const draggedElement = draggedContext.element;
-        return (
-          (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-        );
-      }
-    },
-    computed:{
-      id() {
-        if (this.$route.params.hasOwnProperty('id')) {
-          return this.$route.params['id']
-        } else {
-          return false
-        }
-      },
-      dragOptions() {
-        return {
-          animation: 0,
-          group: "description",
-          disabled: !this.editable,
-          ghostClass: "ghost"
-        };
-      },
-      listString() {
-        return JSON.stringify(this.list, null, 2);
-      },
-      list2String() {
-        return JSON.stringify(this.list2, null, 2);
-      }
-    },
-    watch:{
-      isDragging(newValue) {
-        if (newValue) {
-          this.delayedDragging = true;
-          return;
-        }
-        this.$nextTick(() => {
-          this.delayedDragging = false;
-        });
-      },
-      id() {
-        this.changeTab()
-      },
-      tabName(val) {
-        this.$router.push({path: '/layout/setting/' + val})
-      }
+    tabName(val) {
+      this.$router.push({path: '/layout/setting/' + val})
     }
   }
+}
 </script>
 
 

@@ -38,3 +38,14 @@ export function getMsgCount(typeId = 0) {
     }
   })
 }
+
+// 获取消息详情
+export function getMessageDetail(id) {
+  return request({
+    url: '/Message/getMessageDetail',
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
