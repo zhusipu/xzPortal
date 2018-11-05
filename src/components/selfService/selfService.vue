@@ -73,83 +73,77 @@
               </ul>
             </div>
             <div class="tabCon">
-              <div v-show="num==0">
+              <div v-show="num==0">  <!-- 员工个人信息 -->
                   <h4>{{title}}</h4>
                   <dl>
-                    <dt>编码：</dt><dd>{{tabContents[0].baseInfo.empNo}}</dd>
+                    <dt>员工编码：</dt><dd>{{tabContents[0].baseInfo.empNo}}</dd>
                     <dt>姓名：</dt><dd>{{tabContents[0].baseInfo.FNAME_L2}}</dd>
                   </dl>
                   <dl>
-                    <dt>出生日期：</dt><dd>{{tabContents[0].baseInfo.FBIRTHDAY}}</dd>
                     <dt>性别：</dt><dd>{{tabContents[0].baseInfo.FGENDER}}</dd>
+                    <dt>出生日期：</dt><dd>{{tabContents[0].baseInfo.FBIRTHDAY}}</dd>
                   </dl>
                   <dl>
-                    <dt>国籍：</dt><dd>{{tabContents[0].baseInfo.FNATIONALITYID}}</dd>
+                    <dt>电子邮件：</dt><dd>{{tabContents[0].baseInfo.FEMAIL}}</dd>
+                    <dt>通信地址：</dt><dd>{{tabContents[0].baseInfo.FADDRESS}}</dd>
+                  </dl>
+                  <dl>
+                    <dt>办公室电话：</dt><dd>{{tabContents[0].baseInfo.FOFFICEPHONE}}</dd>
+                    <dt>手机号码：</dt><dd>{{tabContents[0].baseInfo.FMOBILE}}</dd>
+                  </dl>
+                  <dl>
+                    <dt>身份证号码：</dt><dd>{{tabContents[0].baseInfo.FIDCARDNO}}</dd>
                     <dt>籍贯：</dt><dd>{{tabContents[0].baseInfo.FNATIVEPLACE_L2}}</dd>
                   </dl>
                   <dl>
-                    <dt>民族：</dt><dd>{{tabContents[0].baseInfo.FFOLKID}}</dd>
-                    <dt>户口类型：</dt><dd>{{tabContents[0].baseInfo.FREGRESIDENCEID}}</dd>
-                  </dl>
-                  <dl>
-                    <dt>户口所在地：</dt><dd>{{tabContents[0].baseInfo.FHJADDRESS}}</dd>
-                    <dt>身份证地址：</dt><dd>{{tabContents[0].baseInfo.FIDCARDADDRESS}}</dd>
-                  </dl>
-                  <dl>
-                    <dt>出生地：</dt><dd>{{tabContents[0].baseInfo.FHOMEPLACE}}</dd>
                     <dt>婚姻状况：</dt><dd>{{tabContents[0].baseInfo.FWEDID}}</dd>
+                    <dt>生育状况：</dt><dd>{{tabContents[0].baseInfo.CFSYZKID}}</dd>
                   </dl>
                   <dl>
                     <dt>政治面貌：</dt><dd>{{tabContents[0].baseInfo.FPOLITICALFACEID}}</dd>
-                    <dt>血型：</dt><dd>{{tabContents[0].baseInfo.FBLOODTYPE}}</dd>
+                    <dt>民族：</dt><dd>{{tabContents[0].baseInfo.FFOLKID}}</dd>
                   </dl>
                   <dl>
-                    <dt>身高：</dt><dd>{{tabContents[0].baseInfo.FHEIGHT}}</dd>
-                  </dl>
-              </div>
-              <div v-show="num==1">
-                  <h4>{{title}}</h4>
-                  <!-- <dl>
-                    <dt>联系方式：</dt><dd>{{tabContents[1].a}}</dd>
-                    <dt>联系地址：</dt><dd>{{tabContents[1].b}}</dd>
+                    <dt>户口所在地：</dt><dd>{{tabContents[0].baseInfo.FHJADDRESS}}</dd>
+                    <dt>工资卡号：</dt><dd>{{tabContents[0].baseInfo.CFGZKH}}</dd>
                   </dl>
                   <dl>
-                    <dt>联系方式：</dt><dd>{{tabContents[1].a}}</dd>
-                    <dt>联系地址：</dt><dd>{{tabContents[1].b}}</dd>
-                  </dl> -->
+                    <dt>特长：</dt><dd>{{tabContents[0].baseInfo.CFTC}}</dd>
+                    <dt>入党/团时间：</dt><dd>{{tabContents[0].baseInfo.CFRDT}}</dd>
+                  </dl>
               </div>
-              <div v-show="num==2">
+              <div v-show="num==1">  <!-- 员工职业信息 -->
                   <h4>{{title}}</h4>
+                  <dl>
+                    <dt>所在部门：</dt><dd>{{ tabContents[1].FPERSONDEP }}</dd>
+                    <dt>入职日期：</dt><dd>{{ tabContents[1].FENTERDATE }}</dd>
+                  </dl>
+                  <dl>
+                    <dt>司龄：</dt><dd>{{ tabContents[1].joinYears }}</dd> <!-- 集团司龄加运营司龄 FJOINGROUPYEARS + FJOINCOMPANYYEARS -->
+                    <dt>参加工作日期：</dt><dd>{{ tabContents[1].FJOBSTARTDATE }}</dd>
+                  </dl>
+                  <dl>
+                    <dt>工龄：</dt><dd>{{ tabContents[1].FLENOFACTUALSERVICE }}</dd>
+                    <dt>序列类别：</dt><dd>{{ tabContents[1].CFXLLBID }}</dd>
+                  </dl>
               </div>
-              <div v-show="num==3">
+              <div v-show="num==2">  <!-- 教育经历 -->
                   <h4>{{title}}</h4>
+                  <dl>
+                    <dt>最高学历：</dt><dd>{{ tabContents[2].FDIPLOMA }}</dd>
+                  </dl>
               </div>
-              <div v-show="num==4">
+              <div v-show="num==3">  <!-- 执业资格 -->
                   <h4>{{title}}</h4>
+                  <dl>
+                    <dt>执业资格名称：</dt><dd>{{ tabContents[3].CERTIFIEDCOMPETENCY}}</dd>
+                  </dl>
               </div>
-              <div v-show="num==5">
+              <div v-show="num==4">  <!-- 员工职称信息 -->
                   <h4>{{title}}</h4>
-              </div>
-              <div v-show="num==6">
-                  <h4>{{title}}</h4>
-              </div>
-              <div v-show="num==7">
-                  <h4>{{title}}</h4>
-              </div>
-              <div v-show="num==8">
-                  <h4>{{title}}</h4>
-              </div>
-              <div v-show="num==9">
-                  <h4>{{title}}</h4>
-              </div>
-              <div v-show="num==10">
-                  <h4>{{title}}</h4>
-              </div>
-              <div v-show="num==11">
-                  <h4>{{title}}</h4>
-              </div>
-              <div v-show="num==12">
-                  <h4>{{title}}</h4>
+                  <dl>
+                    <dt>职称名称：</dt><dd>{{ tabContents[4].TECHNICAL }}</dd>
+                  </dl>
               </div>
             </div>
           </div>
@@ -386,7 +380,7 @@ export default {
       addrBookData:[],//通讯录数据
       salaryPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //个人薪资分页参数
       telPageParam:{ total: 0, pageSize: 10, pageNum: 1 }, //通讯录分页参数
-      tabs: [ '基本信息', '联系方式', '任职资格', '职业信息', '企业任职经历', '社会工作经历', '教育经历', '项目经历', '社会关系', '语言能力', '技能信息', '绩效信息', '培训记录' ],//个人基本信息tab
+      tabs: [ '员工个人信息', '员工职业信息', '教育经历', '执业资格', '员工职称信息' ],//个人基本信息tab
       tabContents:[], //个人基本信息数据
       loadingAddrBook: false,
       num: 0,
@@ -463,7 +457,6 @@ export default {
       getUserInfo().then(res => {
         if (res.code === 1) {
           this.tabContents = res.data
-          console.log(this.tabContents)
           this.loadSelfInfo = true
         }
       })
@@ -643,11 +636,11 @@ dt,dd{
   display: inline-block;
 }
 dt{
-  width: 100px;
+  width: 150px;
   color: #909399;
 }
 dd{
-  width: 200px;
+  width: 300px;
 }
 dl{
   line-height: 3;
