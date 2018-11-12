@@ -49,3 +49,11 @@ export function getMessageDetail(id) {
     }
   })
 }
+
+// 读取oa接口的消息
+export function getOAMsg() {
+  return request({
+    url: '/Message/getOAMsg',
+    method: 'get'
+  })
+}

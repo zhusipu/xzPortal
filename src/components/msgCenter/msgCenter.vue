@@ -87,17 +87,15 @@ export default {
       dataSourcesList:[],//数据来源数据
       theadData:[ //表头
         {title:'发布时间',key:'postDt', width: 180},
-        {title:'标题',key:'messageName',className: 'overEllipsis',
+        {
+          title: '标题',
+          key: 'messageName',
+          className: 'overEllipsis',
           render: (h, params) => {
             return h('a', {
-              // attrs:{
-              //   href:this.tbodyData[params.index].url,
-              //   title:this.tbodyData[params.index].messageName,
-              //   target:"_blank"
-              // },
               on: {
                 click: () => {
-                  this.$router.push('/layout/msgDetail/' + this.message[params.index].messageId)
+                  this.$router.push('/layout/msgDetail/' + this.tbodyData[params.index].messageId)
                 }
               }
             },this.tbodyData[params.index].messageName);

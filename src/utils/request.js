@@ -44,7 +44,7 @@ service.interceptors.response.use(
         }
       })
       return Promise.reject('error.axios')
-    } else if (res.code === 50014) { 
+    } else if (res.code === 50014) {
       authorizeUrl(window.location.href).then((data) => {
         if (data.code === 1) {
           window.location.href = data.data.authorizeUrl

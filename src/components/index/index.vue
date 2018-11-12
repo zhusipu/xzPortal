@@ -6,7 +6,7 @@
         <ul>
           <li v-for="(item,index) in appList" :key="index">
             <a :href="item.link">
-              <span><img :src="'/resource/uploads/Application/' + item.logo" alt="" width="40" height="40"/></span>
+              <span><img :src="'/uploads/Application/' + item.logo" alt="" width="40" height="40"/></span>
               <p>{{ item.name }}</p>
             </a>
           </li>
@@ -30,7 +30,7 @@
                 <div class="slide-wr">
                   <Carousel autoplay>
                     <Carousel-item v-for="(item,index) in picNewsList" :key="index" >
-                      <div class="slide-Pic"><img :src="'/resource/tempfileuploads/' + item.thumb" alt=""/>
+                      <div class="slide-Pic"><img :src="'/tempfileuploads/' + item.thumb" alt=""/>
                         <div class="slide-tit">
                           <p><span>●</span> {{ item.title }}</p>
                         </div>
@@ -92,7 +92,7 @@
 
           <Row :gutter="16">
             <Col span="12">
-               <div class="h-model">
+               <div class="h-model h-model-new">
                   <span class="h-model-c"></span>
                   <div class="h-model-tit">
                     消息中心 / MESSAGE
@@ -115,7 +115,7 @@
                 </div>
             </Col>
             <Col span="12">
-               <div class="h-model">
+               <div class="h-model h-model-new">
                   <span class="h-model-c"></span>
                   <div class="h-model-tit">
                     待办中心 / SCHEDULE
@@ -138,6 +138,31 @@
                 </div>
             </Col>
           </Row>
+
+          <!-- 消息中心 -->
+          <!-- <Row :gutter="16">
+            <Col span="12">
+               <div class="h-model h-model-new">
+                  <span class="h-model-c"></span>
+                  <div class="h-model-tit">
+                    消息中心 / MESSAGE
+                  </div>
+                  <div class="h-model-tool">
+                    <router-link to="/layout/msgCenter">
+                      <span><img src="../../assets/images/33.png" alt=""/></span>
+                    </router-link>
+                    <span><img src="../../assets/images/22.png" alt=""/></span>
+                    <span><img src="../../assets/images/11.png" alt="" @click="_refreshMsg"/></span>
+                  </div>
+                  <div class="centerList">
+                  </div>
+                  <div class="centerList-bd">
+                    <Table stripe :loading="loadingOAMsg" :columns="columnsOAMessage" :data="oaMessage"></Table>
+                  </div>
+                </div>
+            </Col>
+          </Row> -->
+
           <!--领导驾驶舱-->
           <div class="h-model">
             <span class="h-model-c"></span>
@@ -165,7 +190,7 @@
 </template>
 
 <script>
-import { getMessage, getMsgCount } from 'api/message'
+import { getMessage, getMsgCount, getOAMsg } from 'api/message'
 import { getAppList } from 'api/application'
 import { getPicNews, getNews } from 'api/news'
 export default {
@@ -248,10 +273,44 @@ export default {
           width: 150
         }
       ],
+      columnsOAMessage: [
+        {
+          title: '发布时间',
+          key: 'createTime',
+          className: 'overEllipsis',
+          width: 120
+        },
+        {
+          title: '耗时',
+          key: 'duration',
+          width: 80
+        },
+        {
+          title: '标题',
+          key: 'requestName',
+          className: 'overEllipsis',
+          render: (h, params) => {
+            return h('a', {
+              on: {
+                click: () => {
+                  window.location.href = this.oaMessage[params.index].gopage
+                }
+              }
+            },this.oaMessage[params.index].requestName);
+          }
+        },
+        {
+          title: '发起人',
+          key: 'creatorName',
+          width:150
+        }
+      ],
       message: [],
       schedule: [],
+      oaMessage: [],
       loadingMsg: false,
       loadingSchedule: false,
+      loadingOAMsg: false,
       msgTabs:[],
       waitDoTabs:[],
       msgTabVal: '',
@@ -265,6 +324,7 @@ export default {
     this._getNews()
     this._getMessage()
     this._getSchedule()
+    this._getOAMsg()
     this._getMsgCount()
     this._getScheduleCount()
   },
@@ -308,7 +368,7 @@ export default {
     },
     _getMessage() {
       this.loadingMsg = true
-      getMessage(1, 4, '0').then(res => {
+      getMessage(1, 8, '0').then(res => {
         if (res.code === 1) {
           this.message = res.data.list
         }
@@ -317,11 +377,20 @@ export default {
     },
     _getSchedule() {
       this.loadingSchedule = true
-      getMessage(1, 4, '1', '', '', '', '0').then(res => {
+      getMessage(1, 8, '1', '', '', '', '0').then(res => {
         if (res.code === 1) {
           this.schedule = res.data.list
         }
         this.loadingSchedule = false
+      })
+    },
+    _getOAMsg() {
+      this.loadingOAMsg = true
+      getOAMsg().then(res => {
+        if (res.code === 1) {
+          this.oaMessage = res.data
+          this.loadingOAMsg = false
+        }
       })
     },
     _refreshMsg() {
@@ -334,7 +403,7 @@ export default {
     },
     switchMsgTab(name){ //点击消息中心tabs标签搜索对应数据
       this.loadingMsg = true
-      getMessage(1, 4, '0', '', '', '', '', '', name).then(res => {
+      getMessage(1, 8, '0', '', '', '', '', '', name).then(res => {
         if (res.code === 1) {
           this.message = res.data.list
         }
@@ -343,7 +412,7 @@ export default {
     },
     switchWaitDoTab(name){ //点击待办中心tabs标签搜索对应数据
       this.loadingSchedule = true
-      getMessage(1, 4, '1', '', '', '', '', '', name).then(res => {
+      getMessage(1, 8, '1', '', '', '', '', '', name).then(res => {
         if (res.code === 1) {
           this.schedule = res.data.list
         }
@@ -383,6 +452,9 @@ export default {
   border-radius: 6px;
   height: 350px;
   margin-bottom: 16px;
+}
+.h-model-new {
+  height: 510px;
 }
 .h-model-tit{
   width: 100%;
